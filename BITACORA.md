@@ -13,12 +13,17 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-1. Conectar el repo a Cloudflare Workers (Workers Builds) y verificar el deploy en `binalis.com.py`.
-2. Cabeceras de seguridad (`public/_headers`) y redirección `www` → dominio raíz.
-3. Siguiente PR: layout + RF-01 (barra superior) y RF-02 (portada), con fuentes de marca.
-4. Instalar Gentle-AI en cada PC (Ponytail ya activo).
+1. Redirección `www.binalis.com.py` → dominio raíz (registro DNS + Redirect Rule en Cloudflare).
+2. Siguiente PR: layout + RF-01 (barra superior) y RF-02 (portada), con fuentes de marca.
+3. Instalar Gentle-AI en cada PC (Ponytail ya activo).
 
 ## Entradas
+
+### 2026-10-14 (6)
+
+- Sitio en vivo en `https://binalis.com.py` vía Workers Builds (PR #12).
+- Cabeceras de seguridad en `public/_headers`: CSP estricta sin `'unsafe-inline'` (CSS siempre externo con `inlineStylesheets: "never"`), HSTS sin `preload`, nosniff, DENY, Referrer y Permissions-Policy. Caché inmutable para `/_astro/*`.
+- La CSP se amplía cuando entren Turnstile (`challenges.cloudflare.com`) y los videos embebidos.
 
 ### 2026-10-14 (5)
 

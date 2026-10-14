@@ -4,5 +4,7 @@
   "assets": {
     "directory": "./dist",
   },
+  // Required by `wrangler preview` (Workers Builds per-PR previews).
+  "previews": {},
   "routes": [{ "pattern": "binalis.com.py", "custom_domain": true }],
 }

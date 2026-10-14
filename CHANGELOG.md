@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.7.1...binalis-web-v0.8.0) (2026-10-14)
+
+
+### Features
+
+* sección de proyectos ([#30](https://github.com/Marthinmezaa/binalis-web/issues/30)) ([6214cf3](https://github.com/Marthinmezaa/binalis-web/commit/6214cf3be723a7012ca5742c6a40a1b3c07e3dfd))
+
 ## [0.7.1](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.7.0...binalis-web-v0.7.1) (2026-10-14)
 
 

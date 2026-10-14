@@ -43,4 +43,6 @@ pnpm build       # build de producción en dist/
 
 Para reportar una vulnerabilidad, ver [`SECURITY.md`](SECURITY.md). No abrir issues públicos.
 
-© Binalis. Todos los derechos reservados.
+## Licencia
+
+© 2026 Marthin Meza — Binalis. Todos los derechos reservados. Ver [`LICENSE`](LICENSE).

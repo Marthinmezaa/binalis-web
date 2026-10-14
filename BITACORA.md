@@ -11,13 +11,25 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.2.0.
 - Repo con README, SECURITY.md (reporte privado de vulnerabilidades activado), descripción, topics y sitio web.
 
+## Configuración fuera del repo (panel de Cloudflare)
+
+- DNS: `binalis.com.py` → Worker `binalis-web` (custom domain); `www` → `AAAA 100::` con proxy (solo existe para redirigir).
+- Redirect Rule "Redirect www to root": `http.host eq "www.binalis.com.py"` → `concat("https://binalis.com.py", http.request.uri.path)`, 301, conserva query string.
+- SSL/TLS: modo Full, **Always Use HTTPS** activado, TLS mínimo 1.2.
+- Workers Builds: build `pnpm run build`, deploy `npx wrangler deploy`, preview `npx wrangler preview`, variable `PNPM_VERSION=11.20.0`, token de build propio del proyecto.
+
 ## Próximo paso
 
-1. Redirección `www.binalis.com.py` → dominio raíz (registro DNS + Redirect Rule en Cloudflare).
-2. Siguiente PR: layout + RF-01 (barra superior) y RF-02 (portada), con fuentes de marca.
-3. Instalar Gentle-AI en cada PC (Ponytail ya activo).
+1. Siguiente PR: layout + RF-01 (barra superior) y RF-02 (portada), con fuentes de marca.
+2. Instalar Gentle-AI en cada PC (Ponytail ya activo).
 
 ## Entradas
+
+### 2026-10-14 (7)
+
+- Cabeceras de seguridad en producción (PR #13) y release 0.3.0.
+- `www` redirige con 301 al dominio raíz; HTTP → HTTPS forzado; TLS 1.1 rechazado. Verificado con curl.
+- Lección: un espacio inicial pegado en el valor de la regla impedía que coincidiera. Revisar siempre el _Expression Preview_.
 
 ### 2026-10-14 (6)
 

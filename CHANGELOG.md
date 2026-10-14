@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.5.0...binalis-web-v0.5.1) (2026-10-14)
+
+
+### Bug Fixes
+
+* favicon nítido a 16 px ([#23](https://github.com/Marthinmezaa/binalis-web/issues/23)) ([5aec54f](https://github.com/Marthinmezaa/binalis-web/commit/5aec54f5325e5055bdb680fcf4d0d211978437ae))
+
 ## [0.5.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.4.1...binalis-web-v0.5.0) (2026-10-14)
 
 

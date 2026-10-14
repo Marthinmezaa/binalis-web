@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.6.0...binalis-web-v0.7.0) (2026-10-14)
+
+
+### Features
+
+* jetbrains mono en el proceso y símbolo más chico en celular ([#27](https://github.com/Marthinmezaa/binalis-web/issues/27)) ([82c8063](https://github.com/Marthinmezaa/binalis-web/commit/82c8063ee19a8b53c6bf3f2624c35fb01019c2e7))
+
 ## [0.6.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.5.1...binalis-web-v0.6.0) (2026-10-14)
 
 

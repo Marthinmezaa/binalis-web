@@ -22,7 +22,10 @@ pnpm lint        # ESLint + Prettier
 pnpm typecheck   # astro check
 pnpm test        # Vitest
 pnpm build       # build de producción en dist/
+pnpm test:e2e    # Playwright + axe sobre el build (correr pnpm build antes)
 ```
+
+La primera vez en cada PC: `pnpm exec playwright install chromium`.
 
 ## Cómo se trabaja
 

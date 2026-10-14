@@ -9,7 +9,7 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Dominio `binalis.com.py` habilitado y con DNS delegado a Cloudflare (`aurora` / `johnny.ns.cloudflare.com`).
 - Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04) y Proyectos (RF-05), con textos placeholder; favicon e íconos de app.
 - Pruebas e2e con Playwright + axe en el CI (escritorio y celular), bajo la misma CSP de producción.
-- release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.7.0.
+- release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.8.0.
 - Repo con README, SECURITY.md (reporte privado de vulnerabilidades activado), descripción, topics y sitio web.
 
 ## Configuración fuera del repo (panel de Cloudflare)
@@ -21,9 +21,10 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-1. Completar los placeholders de Proyectos (Problema y Resultado faltantes, capturas del sistema con datos de prueba y de YERON).
-2. RF-06: bloque "siguiente proyecto cargando…" con barra de progreso animada.
-3. Instalar Gentle-AI en cada PC (Ponytail ya activo).
+1. **Al volver a la PC de ocio:** `git pull`, `pnpm install` (entraron Playwright, axe y sharp) y una sola vez `pnpm exec playwright install chromium`; después `pnpm build && pnpm test:e2e` debe dar 18/18. Si `pnpm` no existe y `corepack enable` da EPERM, instalarlo con `npm install -g pnpm@11.20.0`.
+2. Completar los placeholders de Proyectos (Problema y Resultado faltantes, capturas del sistema con datos de prueba y de YERON).
+3. RF-06: bloque "siguiente proyecto cargando…" con barra de progreso animada.
+4. Instalar Gentle-AI en cada PC (Ponytail ya activo).
 
 ## Entradas
 

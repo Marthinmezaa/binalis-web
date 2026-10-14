@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
-  <!-- Small-size cut of src/components/BinalisSymbol.astro, on the brand background so it reads on light and dark tabs.
+  <!-- Small-size cut of src/components/BinalisSymbol.astro, no background: just the "b", filling the icon.
        Bolder strokes on a 16 px grid (10 units = 1 px): bar and ring edges land on whole pixels at 16, 32 and 48 px.
        Source of favicon.ico and apple-touch-icon.png: run `pnpm icons` after editing. -->
   <defs>
@@ -8,7 +8,6 @@
       <stop offset="100%" stop-color="#7B5CFF" />
     </linearGradient>
   </defs>
-  <rect id="fondo" width="160" height="160" rx="30" fill="#06080F" />
-  <rect x="40" y="20" width="20" height="120" rx="10" fill="url(#g)" />
-  <circle cx="80" cy="100" r="30" fill="none" stroke="url(#g)" stroke-width="20" />
+  <rect x="30" y="10" width="20" height="140" rx="10" fill="url(#g)" />
+  <circle cx="80" cy="100" r="40" fill="none" stroke="url(#g)" stroke-width="20" />
 </svg>

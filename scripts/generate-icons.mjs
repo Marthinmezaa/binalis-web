@@ -10,11 +10,11 @@ const svg = await readFile(new URL("favicon.svg", publicDir), "utf8");
 
 const ICO_SIZES = [16, 32, 48];
 const APPLE_SIZE = 180;
-// Leaves room for the glow; iOS rounds the corners itself.
-const APPLE_SVG_SIZE = 150;
+// The "b" fills the SVG, so this leaves room for the glow and iOS's rounded corners.
+const APPLE_SVG_SIZE = 128;
 // The hero's glow (BinalisSymbol.astro) scaled down to the symbol's size in the 180 px tile.
 const APPLE_GLOW =
-  "drop-shadow(0 0 5px rgb(0 240 255 / 55%)) drop-shadow(0 0 15px rgb(123 92 255 / 45%))";
+  "drop-shadow(0 0 4px rgb(0 240 255 / 55%)) drop-shadow(0 0 13px rgb(123 92 255 / 45%))";
 
 const browser = await chromium.launch();
 const page = await browser.newPage();
@@ -61,8 +61,7 @@ try {
   const applePng = await render(
     APPLE_SIZE,
     `body { display: grid; place-items: center; background: #06080f; }
-     svg { width: ${APPLE_SVG_SIZE}px; height: ${APPLE_SVG_SIZE}px; filter: ${APPLE_GLOW}; }
-     #fondo { display: none; }`,
+     svg { width: ${APPLE_SVG_SIZE}px; height: ${APPLE_SVG_SIZE}px; filter: ${APPLE_GLOW}; }`,
   );
   await writeFile(new URL("apple-touch-icon.png", publicDir), applePng);
 } finally {

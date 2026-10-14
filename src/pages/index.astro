@@ -1,28 +1,15 @@
 ---
-import "../styles/global.css";
-
-const title = "Binalis — Desarrollo de software y páginas web";
-const description = "[DESCRIPCIÓN META DEL SITIO]";
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
 ---
 
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
-  </head>
-  <body>
-    <main>
-      <h1>
-        bin<span class="accent">alis</span>
-      </h1>
-    </main>
-  </body>
-</html>
-
-<style>
-  .accent {
-    color: var(--color-cyan);
-  }
-</style>
+<Layout
+  title="Binalis — Desarrollo de software y páginas web"
+  description="[DESCRIPCIÓN META DEL SITIO]"
+>
+  <Header />
+  <main id="contenido">
+    <Hero />
+  </main>
+</Layout>

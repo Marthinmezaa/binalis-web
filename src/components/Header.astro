@@ -1,0 +1,101 @@
+---
+// shortcut: these anchors point to sections that arrive with RF-03..RF-08; until then they go nowhere.
+const links = [
+  { href: "#servicios", label: "Servicios" },
+  { href: "#proceso", label: "Proceso" },
+  { href: "#proyectos", label: "Proyectos" },
+];
+---
+
+<header class="header">
+  <div class="container header-inner">
+    <a class="wordmark" href="/" aria-label="Binalis, inicio">
+      bin<span class="wordmark-accent">alis</span>
+    </a>
+    <nav aria-label="Principal">
+      <ul class="nav-list">
+        {links.map(({ href, label }) => (
+          <li>
+            <a class="nav-link" href={href}>
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <a class="cta button button-primary" href="#cotizacion">
+      Cotizá tu proyecto
+    </a>
+  </div>
+</header>
+
+<style>
+  .header {
+    border-bottom: 1px solid var(--color-surface);
+  }
+
+  .header-inner {
+    display: grid;
+    grid-template-areas:
+      "logo cta"
+      "nav nav";
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    padding-block: 1rem;
+  }
+
+  @media (min-width: 48rem) {
+    .header-inner {
+      grid-template-areas: "logo nav cta";
+      grid-template-columns: auto 1fr auto;
+      gap: 2rem;
+    }
+
+    nav {
+      justify-self: end;
+    }
+  }
+
+  nav {
+    grid-area: nav;
+  }
+
+  .cta {
+    grid-area: cta;
+  }
+
+  .wordmark {
+    grid-area: logo;
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+
+  .wordmark-accent {
+    color: var(--color-cyan);
+  }
+
+  .nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav-link {
+    display: inline-block;
+    padding-block: 0.5rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+
+  .nav-link:hover {
+    color: var(--color-text);
+  }
+</style>

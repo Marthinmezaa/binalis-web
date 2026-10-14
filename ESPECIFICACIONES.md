@@ -50,7 +50,7 @@ Blog, versión en otros idiomas, panel de administración, pagos.
 ## 8. Decisiones tomadas
 
 - Nombre: **Binalis**. Identidad: oscuro, futurista, neón; wordmark y símbolo "b".
-- Dominio: `binalis.com.py`, pagado en NIC.PY (2026-10-14); habilitación pendiente de NIC.PY.
+- Dominio: `binalis.com.py`, registrado en NIC.PY y habilitado (2026-10-14).
 - Hosting: **Cloudflare Pages**, con DNS en Cloudflare.
 - Repositorio **público** en GitHub (`Marthinmezaa/binalis-web`), `main` protegida, cambios solo por PR. CodeQL activo.
 

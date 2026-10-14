@@ -6,17 +6,25 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 - Diseño de la web aprobado en lienzo (4 láminas: logo, color y tipografía, aplicaciones, web).
 - Repo público en GitHub con `main` protegida (4 checks obligatorios: calidad, gitleaks, dependencias, CodeQL).
-- Dominio `binalis.com.py` pagado; esperando que NIC.PY lo habilite.
-- Estructura Astro + TypeScript lista (PR `feat/estructura-astro`): página base con tokens de marca, sin secciones aún.
+- Dominio `binalis.com.py` habilitado en NIC.PY; falta delegar DNS a Cloudflare.
+- Estructura Astro + TypeScript mergeada (PR #6): página base con tokens de marca, sin secciones aún.
+- release-please con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo) para que el PR de release dispare el CI.
 
 ## Próximo paso
 
-1. Mergear el PR de estructura; luego rebasar/recrear los PRs de Dependabot (#1–#5), que fallaban por falta de `package.json`.
-2. Conectar Cloudflare Pages al repo; cuando NIC.PY habilite el dominio, delegar DNS a Cloudflare.
+1. Confirmar que el PR de release (#7) dispara el CI; revisar y mergear los PRs de Dependabot (#1–#5) una vez rebasados.
+2. Conectar Cloudflare Pages al repo y delegar el DNS de `binalis.com.py` a Cloudflare.
 3. Siguiente PR: layout + RF-01 (barra superior) y RF-02 (portada), con fuentes de marca.
 4. Instalar Gentle-AI en cada PC (Ponytail ya activo).
 
 ## Entradas
+
+### 2026-10-14 (3)
+
+- Mergeado PR #6 (estructura Astro).
+- Dominio `binalis.com.py` habilitado por NIC.PY.
+- release-please: primer fallo por falta de `package.json`; el segundo fue un error 500 de GitHub, transitorio, resuelto al reintentar. Creado el secreto `RELEASE_PLEASE_TOKEN`.
+- Pedido `@dependabot rebase` en #1–#5: sus checks fallidos eran de antes del PR #6.
 
 ### 2026-10-14 (2)
 

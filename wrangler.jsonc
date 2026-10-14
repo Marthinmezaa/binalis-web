@@ -1,0 +1,8 @@
+{
+  "name": "binalis-web",
+  "compatibility_date": "2026-10-14",
+  "assets": {
+    "directory": "./dist",
+  },
+  "routes": [{ "pattern": "binalis.com.py", "custom_domain": true }],
+}

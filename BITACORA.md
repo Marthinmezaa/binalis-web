@@ -6,18 +6,25 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 - Diseño de la web aprobado en lienzo (4 láminas: logo, color y tipografía, aplicaciones, web).
 - Repo público en GitHub con `main` protegida (4 checks obligatorios: calidad, gitleaks, dependencias, CodeQL).
-- Dominio `binalis.com.py` habilitado en NIC.PY; falta delegar DNS a Cloudflare.
+- Dominio `binalis.com.py` habilitado y con DNS delegado a Cloudflare (`aurora` / `johnny.ns.cloudflare.com`).
 - Estructura Astro + TypeScript mergeada (PR #6): página base con tokens de marca, sin secciones aún.
 - release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.2.0.
 - Repo con README, SECURITY.md (reporte privado de vulnerabilidades activado), descripción, topics y sitio web.
 
 ## Próximo paso
 
-1. Conectar Cloudflare Pages al repo y delegar el DNS de `binalis.com.py` a Cloudflare.
-2. Siguiente PR: layout + RF-01 (barra superior) y RF-02 (portada), con fuentes de marca.
-3. Instalar Gentle-AI en cada PC (Ponytail ya activo).
+1. Conectar el repo a Cloudflare Workers (Workers Builds) y verificar el deploy en `binalis.com.py`.
+2. Cabeceras de seguridad (`public/_headers`) y redirección `www` → dominio raíz.
+3. Siguiente PR: layout + RF-01 (barra superior) y RF-02 (portada), con fuentes de marca.
+4. Instalar Gentle-AI en cada PC (Ponytail ya activo).
 
 ## Entradas
+
+### 2026-10-14 (5)
+
+- Licencia propietaria mergeada (PR #11).
+- DNS de `binalis.com.py` delegado a Cloudflare.
+- Hosting: Pages → **Workers** (static assets). Cloudflare marca Pages como _legacy_; para un sitio estático el cambio es solo `wrangler.jsonc`.
 
 ### 2026-10-14 (4)
 

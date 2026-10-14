@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.3.0...binalis-web-v0.4.0) (2026-10-14)
+
+
+### Features
+
+* barra superior y portada con símbolo de marca ([#16](https://github.com/Marthinmezaa/binalis-web/issues/16)) ([ebd92ff](https://github.com/Marthinmezaa/binalis-web/commit/ebd92fff2ec1140acbe96290e2a3d3dab3814cd4))
+
 ## [0.3.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.2.0...binalis-web-v0.3.0) (2026-10-14)
 
 

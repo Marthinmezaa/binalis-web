@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.5.1...binalis-web-v0.6.0) (2026-10-14)
+
+
+### Features
+
+* secciones de servicios y proceso ([#25](https://github.com/Marthinmezaa/binalis-web/issues/25)) ([da4767c](https://github.com/Marthinmezaa/binalis-web/commit/da4767c0f1bd3b994ff4ffeb53ed39218909cc7e))
+
 ## [0.5.1](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.5.0...binalis-web-v0.5.1) (2026-10-14)
 
 

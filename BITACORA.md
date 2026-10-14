@@ -26,6 +26,12 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Entradas
 
+### 2026-10-14 (10)
+
+- Favicon `public/favicon.svg`: símbolo "b" sobre fondo de marca redondeado (se lee en pestañas claras y oscuras), sin glow porque a 16 px no se distingue. Producción daba 404 en `/favicon.ico`.
+- Misma geometría que `BinalisSymbol.astro`, copiada a mano: al reemplazar el símbolo por el SVG del lienzo de marca, actualizar los dos.
+- Verificado en Chrome (compu de trabajo): CSP activa en producción (bloquea script y estilo inline), consola limpia, foco visible, portada sin scroll horizontal a 390 px.
+
 ### 2026-10-14 (8)
 
 - RF-01 (barra superior) y RF-02 (portada): layout, wordmark, navegación sin JS (en celular: wordmark + botón arriba, links abajo; el botón queda fuera de la nav porque es una acción), enlace "Saltar al contenido".

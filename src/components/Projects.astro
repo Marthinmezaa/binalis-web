@@ -1,0 +1,203 @@
+---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+import cosmosTrakWeb from "../assets/proyectos/cosmos-trak-web.png";
+
+interface Project {
+  id: string;
+  name: string;
+  tags: string[];
+  description: string;
+  // A real capture, or the placeholder text describing the media still missing.
+  media: { image: ImageMetadata; alt: string } | { placeholder: string };
+  problem: string;
+  solution: string;
+  result: string;
+}
+
+const projects: Project[] = [
+  {
+    id: "cosmos-trak-web",
+    name: "Cosmos Trak · Sitio web",
+    tags: ["Página web", "Node.js", "MySQL"],
+    description:
+      "Sitio institucional de Cosmos Trak, empresa paraguaya de rastreo satelital y monitoreo GPS de autos, motos y flotas.",
+    media: {
+      image: cosmosTrakWeb,
+      alt: "Portada del sitio de Cosmos Trak, con el formulario para cotizar.",
+    },
+    problem: "[PROBLEMA: COSMOS TRAK SITIO WEB]",
+    solution:
+      "Sitio mobile-first en HTML y CSS puros, sin frameworks pesados, con modo oscuro y un formulario de cotización que guarda cada pedido y avisa al equipo por correo y por WhatsApp.",
+    result: "[RESULTADO: COSMOS TRAK SITIO WEB]",
+  },
+  {
+    id: "cosmos-trak-sistema",
+    name: "Cosmos Trak · Sistema administrativo",
+    tags: ["Sistema a medida", "React", "PostgreSQL"],
+    description:
+      "Sistema web para gestionar los clientes, contratos, cobros e inventario de equipos GPS de Cosmos Trak.",
+    media: { placeholder: "[CAPTURAS DEL SISTEMA CON DATOS DE PRUEBA]" },
+    problem:
+      "Toda la gestión de clientes, contratos, cobros e inventario se llevaba en una planilla de Excel.",
+    solution:
+      "Un sistema web responsive con un rol para cada área (administración, ventas, instalación y alta en la plataforma de rastreo), donde cada persona carga y ve lo que le corresponde.",
+    result: "En producción, reemplazando la planilla de Excel.",
+  },
+  {
+    id: "yeron-promo",
+    name: "YERON · Promoción con sorteos",
+    tags: ["Promoción", "Next.js", "Electron"],
+    description:
+      "Plataforma para una promoción de la marca YERON, en la que los consumidores participan cargando la foto de su factura.",
+    media: { placeholder: "[VIDEO O CAPTURAS DE LA PROMOCIÓN]" },
+    problem: "[PROBLEMA: PROMOCIÓN YERON]",
+    solution:
+      "El consumidor entra por un QR, se registra y sube la foto de su factura: cada factura válida es un cupón. Los sorteos se hacen ante escribanía con una app de escritorio que funciona sin conexión.",
+    result: "[RESULTADO: AL CIERRE DE LA CAMPAÑA, DICIEMBRE DE 2026]",
+  },
+];
+---
+
+<section id="proyectos" class="section" aria-labelledby="proyectos-title">
+  <div class="container">
+    <h2 id="proyectos-title" class="section-title">
+      Proyectos
+    </h2>
+    <div class="projects">
+      {projects.map(
+        ({ id, name, tags, description, media, problem, solution, result }) => (
+          <article class="project" aria-labelledby={`${id}-title`}>
+            <div class="project-media">
+              {"image" in media ? (
+                <Image
+                  src={media.image}
+                  alt={media.alt}
+                  widths={[640, 1280]}
+                  sizes="(min-width: 48rem) 36rem, 100vw"
+                />
+              ) : (
+                <p class="media-placeholder">{media.placeholder}</p>
+              )}
+            </div>
+            <div>
+              <ul class="tags" aria-label="Etiquetas">
+                {tags.map((tag) => (
+                  <li>{tag}</li>
+                ))}
+              </ul>
+              <h3 id={`${id}-title`}>{name}</h3>
+              <p class="description">{description}</p>
+              <dl class="story">
+                <div>
+                  <dt>Problema</dt>
+                  <dd>{problem}</dd>
+                </div>
+                <div>
+                  <dt>Solución</dt>
+                  <dd>{solution}</dd>
+                </div>
+                <div>
+                  <dt>Resultado</dt>
+                  <dd>{result}</dd>
+                </div>
+              </dl>
+            </div>
+          </article>
+        ),
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects {
+    display: grid;
+    gap: clamp(3rem, 8vw, 5rem);
+  }
+
+  .project {
+    display: grid;
+    align-items: center;
+    gap: 1.5rem 3rem;
+  }
+
+  @media (min-width: 48rem) {
+    .project {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .project:nth-child(even) .project-media {
+      order: 1;
+    }
+  }
+
+  .project-media img,
+  .media-placeholder {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border: 1px solid rgb(255 255 255 / 6%);
+    border-radius: 1rem;
+  }
+
+  .media-placeholder {
+    display: grid;
+    place-items: center;
+    margin: 0;
+    padding: 1.5rem;
+    border-style: dashed;
+    border-color: rgb(255 255 255 / 15%);
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0 0 1rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tags li {
+    padding: 0.2rem 0.75rem;
+    border: 1px solid rgb(0 240 255 / 35%);
+    border-radius: 999px;
+    color: var(--color-cyan);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+
+  h3 {
+    margin: 0 0 0.5rem;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .description {
+    margin: 0 0 1.5rem;
+    color: var(--color-text-muted);
+  }
+
+  .story {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+  }
+
+  dt {
+    font-family: var(--font-heading);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  dd {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+</style>

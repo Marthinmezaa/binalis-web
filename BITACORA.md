@@ -7,9 +7,9 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Diseño de la web aprobado en lienzo (4 láminas: logo, color y tipografía, aplicaciones, web).
 - Repo público en GitHub con `main` protegida (4 checks obligatorios: calidad, gitleaks, dependencias, CodeQL).
 - Dominio `binalis.com.py` habilitado y con DNS delegado a Cloudflare (`aurora` / `johnny.ns.cloudflare.com`).
-- Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03) y Proceso (RF-04), con textos placeholder; favicon e íconos de app.
+- Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04) y Proyectos (RF-05), con textos placeholder; favicon e íconos de app.
 - Pruebas e2e con Playwright + axe en el CI (escritorio y celular), bajo la misma CSP de producción.
-- release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.6.0.
+- release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.7.0.
 - Repo con README, SECURITY.md (reporte privado de vulnerabilidades activado), descripción, topics y sitio web.
 
 ## Configuración fuera del repo (panel de Cloudflare)
@@ -21,10 +21,19 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-1. RF-05 Proyectos: definir qué proyectos se muestran y si los clientes autorizan nombrarlos.
-2. Instalar Gentle-AI en cada PC (Ponytail ya activo).
+1. Completar los placeholders de Proyectos (Problema y Resultado faltantes, capturas del sistema con datos de prueba y de YERON).
+2. RF-06: bloque "siguiente proyecto cargando…" con barra de progreso animada.
+3. Instalar Gentle-AI en cada PC (Ponytail ya activo).
 
 ## Entradas
+
+### 2026-10-14 (16)
+
+- RF-05 Proyectos con los tres elegidos por el dueño: Cosmos Trak · Sitio web, Cosmos Trak · Sistema administrativo y YERON · Promoción con sorteos. Cada uno con etiquetas, descripción, medio y Problema / Solución / Resultado (`<dl>`). En escritorio, imagen y texto alternan de lado.
+- El contenido sale de los README de cada repo y del sitio en vivo; lo que no figura ahí queda como placeholder (ver spec, sección 6). Los repos son privados: sin enlace al código.
+- Medio: captura de la portada pública de cosmostrak.com.py (`src/assets/proyectos/`). Al sistema administrativo no se le sacan capturas porque tiene datos reales de clientes; YERON no tiene URL pública.
+- Nueva dependencia `sharp`, que `astro:assets` necesita para optimizar imágenes: la captura pasa de 473 KB a 22 KB (640 px) o 50 KB (1280 px) en WebP.
+- Prueba inestable corregida: inyectar la CSP con `page.route` + `route.fetch` hacía un pedido extra que bajo carga daba `ETIMEDOUT` (1 de cada 450). Ahora `astro preview` envía la CSP de `public/_headers` (`server.headers`, solo en preview porque `astro dev` necesita scripts inline). Verificado: 450/450 con 8 workers.
 
 ### 2026-10-14 (15)
 
@@ -123,11 +132,3 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - TypeScript fijado en `~6.0`: `typescript-eslint` aún no soporta TS 7.
 - `.gitattributes` fuerza LF: con CRLF de Windows, `prettier --check` fallaría al alternar PCs.
 - Playwright + axe quedan para el PR con la primera sección real (hoy no hay nada que probar).
-
-### 2026-10-14
-
-- Elegido el nombre **Binalis**; dominio e Instagram disponibles (por registrar).
-- Aprobada la identidad de marca: wordmark y símbolo "b", paleta cian/violeta/magenta sobre fondo oscuro.
-- Hosting decidido: Cloudflare Pages con DNS en Cloudflare.
-- Definida la estructura de la web: proyectos con proceso y video corto, "siguiente proyecto cargando…", testimonios (pendientes), cotización y contacto. Solo español.
-- Armada la base del proyecto para trabajar en Claude Code desde dos PCs.

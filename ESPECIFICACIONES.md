@@ -38,7 +38,7 @@ Ver `CLAUDE.md` (tokens) y el lienzo de diseño "Binalis — Identidad de marca"
 
 ## 6. Contenido pendiente (placeholders)
 
-- Nombres, descripciones, medios y resultados de cada proyecto (hay que confirmar qué proyectos se muestran y si el cliente autoriza nombrarlo).
+- Proyectos: Problema y Resultado del sitio de Cosmos Trak y de la promoción YERON; capturas del sistema administrativo (con datos de prueba, nunca reales) y video o capturas de la promoción YERON.
 - Testimonios reales (se van a pedir a clientes).
 - Número de WhatsApp, correo, Instagram y LinkedIn.
 - Texto final del titular, de los servicios y de los pasos del proceso.
@@ -53,6 +53,7 @@ Blog, versión en otros idiomas, panel de administración, pagos.
 - Dominio: `binalis.com.py`, registrado en NIC.PY y habilitado (2026-10-14).
 - Hosting: **Cloudflare Workers** (static assets), con DNS en Cloudflare. Se descartó Pages porque Cloudflare lo marca como flujo _legacy_ (2026-10-14).
 - Repositorio **público** en GitHub (`Marthinmezaa/binalis-web`), `main` protegida, cambios solo por PR. CodeQL activo.
+- Proyectos a mostrar (RF-05), elegidos por el dueño (2026-10-14): Cosmos Trak · Sitio web, Cosmos Trak · Sistema administrativo y YERON · Promoción con sorteos. El contenido sale de sus repositorios (privados, sin enlace al código).
 
 ## 9. Preguntas abiertas
 

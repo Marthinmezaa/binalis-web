@@ -27,8 +27,11 @@ test("el primer foco es 'Saltar al contenido' y lleva al contenido", async ({
 });
 
 test("no genera scroll horizontal", async ({ page }) => {
+  // Not window.innerWidth: mobile browsers zoom out to fit overflowing content, so it grows with it.
   const overflows = await page.evaluate(
-    () => document.documentElement.scrollWidth > window.innerWidth,
+    () =>
+      document.documentElement.scrollWidth >
+      document.documentElement.clientWidth,
   );
 
   expect(overflows).toBe(false);

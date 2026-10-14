@@ -10,7 +10,6 @@ export default [
       "node_modules/",
       ".wrangler/",
       "test-results/",
-      "playwright-report/",
     ],
   },
   js.configs.recommended,

@@ -58,8 +58,15 @@ import BinalisSymbol from "./BinalisSymbol.astro";
     gap: 1rem;
   }
 
+  /* On phones the symbol sits below the buttons: kept small so Servicios starts within the first scroll. */
   .hero-symbol {
-    width: min(100%, 16rem);
+    width: 8rem;
     justify-self: center;
+  }
+
+  @media (min-width: 48rem) {
+    .hero-symbol {
+      width: min(100%, 16rem);
+    }
   }
 </style>

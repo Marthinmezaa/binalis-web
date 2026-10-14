@@ -8,8 +8,8 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Repo público en GitHub con `main` protegida (4 checks obligatorios: calidad, gitleaks, dependencias, CodeQL).
 - Dominio `binalis.com.py` habilitado y con DNS delegado a Cloudflare (`aurora` / `johnny.ns.cloudflare.com`).
 - Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03) y Proceso (RF-04), con textos placeholder; favicon e íconos de app.
-- Pruebas e2e con Playwright + axe en el CI (escritorio y celular).
-- release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.5.1.
+- Pruebas e2e con Playwright + axe en el CI (escritorio y celular), bajo la misma CSP de producción.
+- release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.6.0.
 - Repo con README, SECURITY.md (reporte privado de vulnerabilidades activado), descripción, topics y sitio web.
 
 ## Configuración fuera del repo (panel de Cloudflare)
@@ -21,11 +21,18 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-1. Decidir el tamaño del símbolo "b" en celular: hoy ocupa casi una pantalla entre la portada y Servicios.
-2. RF-05 Proyectos: definir qué proyectos se muestran y si los clientes autorizan nombrarlos.
-3. Instalar Gentle-AI en cada PC (Ponytail ya activo).
+1. RF-05 Proyectos: definir qué proyectos se muestran y si los clientes autorizan nombrarlos.
+2. Instalar Gentle-AI en cada PC (Ponytail ya activo).
 
 ## Entradas
+
+### 2026-10-14 (14)
+
+- JetBrains Mono en los números del proceso: recortada a los dígitos 0–9 y fijada en peso 700 con fonttools (1,2 KB contra 40 KB), con licencia OFL al lado. Marcada con `shortcut:`: cuando haya texto técnico con letras, usar el subset latin completo de Fontsource.
+- Símbolo "b" en celular: 8rem (antes ocupaba casi una pantalla). Servicios ahora aparece en la primera pantalla de un Pixel 7. En escritorio sigue en 16rem.
+- Bug evitado: Vite incrusta como `data:` los assets de menos de 4 KB, y la CSP (`font-src 'self'`) los bloquea en producción. Se desactivó con `assetsInlineLimit: 0`.
+- Las e2e ahora corren con la CSP de producción, leída de `public/_headers` e inyectada en el HTML, y fallan si la consola muestra errores. Así detectaron el bug anterior; se cierra el hueco "la CSP no se prueba en e2e" de la entrada (9).
+- Para recortar fuentes: `pip install fonttools brotli` en un venv, `fontTools.varLib.instancer` para fijar el peso y `pyftsubset --unicodes=... --flavor=woff2`.
 
 ### 2026-10-14 (13)
 

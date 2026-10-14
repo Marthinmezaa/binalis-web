@@ -29,7 +29,7 @@ Primero mercado local (Paraguay); a futuro, posiblemente el exterior. Idioma: **
 - Responsive: de celular a escritorio, sin scroll horizontal.
 - Accesibilidad objetivo WCAG 2.2 AA.
 - Rendimiento: objetivo propuesto de Lighthouse ≥ 90 en móvil (a confirmar).
-- SEO básico: `title`, `meta description`, Open Graph, `sitemap.xml`, `robots.txt`.
+- SEO básico: `title`, `meta description`, Open Graph, `sitemap.xml`, `robots.txt`, favicon con el símbolo "b".
 - Seguridad: HTTPS, cabeceras de seguridad, sin secretos en el repo, validación en servidor.
 
 ## 5. Marca

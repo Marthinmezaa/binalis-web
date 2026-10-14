@@ -25,14 +25,11 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Entradas
 
-### 2026-10-14 (9)
+### 2026-10-14 (10)
 
-- PC de trabajo preparada: `corepack enable` falla con EPERM (Node está en `C:\Nodejs`, requiere admin); se instaló pnpm 11.20.0 con `npm install -g`, que usa el perfil del usuario.
-- Playwright + axe: `e2e/*.e2e.ts` (sufijo propio para que Vitest no los tome) sobre `astro preview`, en Chromium de escritorio y celular (Pixel 7). Prueban WCAG 2.2 AA con axe, que el primer foco sea "Saltar al contenido" y que no haya scroll horizontal.
-- En el CI corren dentro del job `calidad` (check obligatorio), después del build.
-- `astro preview` no aplica `public/_headers`: la CSP no se prueba en e2e.
-- Verificado rompiendo la página a propósito (sin `lang`, skip-link a `#nada`, `main` de 200vw): fallan las 6 pruebas.
-- Lección: en celular la prueba de scroll pasaba con la página rota, porque el navegador aleja el zoom y `window.innerWidth` crece con el contenido. Se compara contra `clientWidth`.
+- Favicon `public/favicon.svg`: símbolo "b" sobre fondo de marca redondeado (se lee en pestañas claras y oscuras), sin glow porque a 16 px no se distingue. Producción daba 404 en `/favicon.ico`.
+- Misma geometría que `BinalisSymbol.astro`, copiada a mano: al reemplazar el símbolo por el SVG del lienzo de marca, actualizar los dos.
+- Verificado en Chrome (compu de trabajo): CSP activa en producción (bloquea script y estilo inline), consola limpia, foco visible, portada sin scroll horizontal a 390 px.
 
 ### 2026-10-14 (8)
 

@@ -28,7 +28,7 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ### 2026-10-14 (8)
 
-- RF-01 (barra superior) y RF-02 (portada): layout, wordmark, navegación sin JS (se acomoda en varias líneas en celular), enlace "Saltar al contenido".
+- RF-01 (barra superior) y RF-02 (portada): layout, wordmark, navegación sin JS (en celular: wordmark + botón arriba, links abajo; el botón queda fuera de la nav porque es una acción), enlace "Saltar al contenido".
 - Símbolo "b" armado en SVG a partir de la descripción de marca (barra = 1, aro = 0, degradé cian→violeta, glow con `drop-shadow`). Es una aproximación: reemplazar por el SVG del lienzo de marca cuando esté.
 - Fuentes Space Grotesk y Manrope autoalojadas (woff2 variables, subset latin, ~23 KB c/u, licencia OFL junto a los archivos). No se usa `<Font />` de Astro porque inyecta CSS inline y la CSP lo bloquea.
 - Titular, subtítulo y meta description quedan como placeholders.

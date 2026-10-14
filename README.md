@@ -6,7 +6,7 @@ Producción: <https://binalis.com.py>
 
 ## Stack
 
-Astro + TypeScript estricto, CSS con variables (tokens de marca) y JS mínimo. Formulario de cotización con Cloudflare Pages Functions + Turnstile. Hosting en Cloudflare Pages.
+Astro + TypeScript estricto, CSS con variables (tokens de marca) y JS mínimo. Formulario de cotización con un Cloudflare Worker + Turnstile. Hosting en Cloudflare Workers (static assets, ver `wrangler.jsonc`).
 
 ## Requisitos
 

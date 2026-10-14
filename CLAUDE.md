@@ -52,16 +52,16 @@ Trabajo guiado por especificaciones (SDD) para todo cambio no trivial:
 
 ## Stack
 
-| Capa                     | Elección                                                                                |
-| ------------------------ | --------------------------------------------------------------------------------------- |
-| Sitio                    | Astro + TypeScript estricto, CSS con variables (tokens de marca), JS mínimo             |
-| Formulario de cotización | Cloudflare Pages Functions (TypeScript) + validación en servidor + Cloudflare Turnstile |
-| Envío de correo          | Servicio transaccional (a definir), clave como secreto de Cloudflare                    |
-| Medios                   | Video corto en YouTube/Vimeo no listado o Cloudflare R2; imágenes con `astro:assets`    |
-| Calidad                  | pnpm, ESLint + Prettier, Vitest, Playwright (+ axe para accesibilidad)                  |
-| Git                      | Husky + lint-staged + commitlint                                                        |
-| Hosting                  | Cloudflare Pages conectado a GitHub (`main` = producción, cada PR = preview)            |
-| Versiones                | release-please                                                                          |
+| Capa                     | Elección                                                                                                                            |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Sitio                    | Astro + TypeScript estricto, CSS con variables (tokens de marca), JS mínimo                                                         |
+| Formulario de cotización | Cloudflare Worker (TypeScript) + validación en servidor + Cloudflare Turnstile                                                      |
+| Envío de correo          | Servicio transaccional (a definir), clave como secreto de Cloudflare                                                                |
+| Medios                   | Video corto en YouTube/Vimeo no listado o Cloudflare R2; imágenes con `astro:assets`                                                |
+| Calidad                  | pnpm, ESLint + Prettier, Vitest, Playwright (+ axe para accesibilidad)                                                              |
+| Git                      | Husky + lint-staged + commitlint                                                                                                    |
+| Hosting                  | Cloudflare Workers (static assets, `wrangler.jsonc`) con Workers Builds conectado a GitHub (`main` = producción, cada PR = preview) |
+| Versiones                | release-please                                                                                                                      |
 
 ## Comandos (deben existir en `package.json`)
 

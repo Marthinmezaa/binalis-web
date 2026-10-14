@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.4.0...binalis-web-v0.4.1) (2026-10-14)
+
+
+### Bug Fixes
+
+* agrega favicon con el símbolo de marca ([#19](https://github.com/Marthinmezaa/binalis-web/issues/19)) ([dba57fd](https://github.com/Marthinmezaa/binalis-web/commit/dba57fd2d92a285b87604ea4e539bdefcf7c8b93))
+
 ## [0.4.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.3.0...binalis-web-v0.4.0) (2026-10-14)
 
 

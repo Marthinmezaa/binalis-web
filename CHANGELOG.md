@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.4.1...binalis-web-v0.5.0) (2026-10-14)
+
+
+### Features
+
+* favicon.ico e ícono para la pantalla de inicio ([#21](https://github.com/Marthinmezaa/binalis-web/issues/21)) ([df2cf9b](https://github.com/Marthinmezaa/binalis-web/commit/df2cf9bde69598a3330344eb4389c6aee05dab05))
+
 ## [0.4.1](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.4.0...binalis-web-v0.4.1) (2026-10-14)
 
 

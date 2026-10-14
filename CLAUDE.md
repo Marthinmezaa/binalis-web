@@ -27,36 +27,41 @@ Se trabaja desde **dos computadoras** (trabajo y ocio): todo el contexto vive en
 ## Filosofía
 
 ### Clean Code
+
 - Nombres que revelan intención; funciones chicas con una sola responsabilidad.
 - Sin código muerto, sin duplicación, sin números mágicos.
-- Comentarios solo para explicar el *porqué*, nunca el *qué*.
+- Comentarios solo para explicar el _porqué_, nunca el _qué_.
 - Los errores se manejan en las fronteras (formularios, funciones serverless), no se ignoran.
 
 ### Ponytail (https://github.com/dietrichgebert/ponytail)
+
 Escribir solo lo que la tarea necesita, sin recortar validación, manejo de errores, seguridad ni accesibilidad.
 Antes de escribir código recorrer la escala: ¿hace falta? → ¿ya existe en el repo? → ¿lo resuelve la librería estándar? → ¿una función nativa de la plataforma? → ¿una dependencia ya instalada? → ¿una línea? → recién ahí, lo mínimo que funcione.
+
 - Atajos conscientes se marcan con un comentario `shortcut:` indicando cuándo revisarlos.
 - Comandos: `/ponytail`, `/ponytail-review` (revisar el diff antes de cada PR), `/ponytail-audit`, `/ponytail-debt`.
 - Cada respuesta cierra indicando qué se omitió o no se verificó.
 
 ### Gentle-AI (https://github.com/Gentleman-Programming/gentle-ai)
+
 Trabajo guiado por especificaciones (SDD) para todo cambio no trivial:
 **Explore → Proposal → Spec → Design → Tasks → Apply → Verify → Archive.**
-- La *Spec* vive en `ESPECIFICACIONES.md`; el *Archive* se registra en `BITACORA.md`.
+
+- La _Spec_ vive en `ESPECIFICACIONES.md`; el _Archive_ se registra en `BITACORA.md`.
 - Si Gentle-AI modifica este archivo al configurarse, revisar el diff: este `CLAUDE.md` es la fuente de verdad.
 
 ## Stack
 
-| Capa | Elección |
-|---|---|
-| Sitio | Astro + TypeScript estricto, CSS con variables (tokens de marca), JS mínimo |
+| Capa                     | Elección                                                                                |
+| ------------------------ | --------------------------------------------------------------------------------------- |
+| Sitio                    | Astro + TypeScript estricto, CSS con variables (tokens de marca), JS mínimo             |
 | Formulario de cotización | Cloudflare Pages Functions (TypeScript) + validación en servidor + Cloudflare Turnstile |
-| Envío de correo | Servicio transaccional (a definir), clave como secreto de Cloudflare |
-| Medios | Video corto en YouTube/Vimeo no listado o Cloudflare R2; imágenes con `astro:assets` |
-| Calidad | pnpm, ESLint + Prettier, Vitest, Playwright (+ axe para accesibilidad) |
-| Git | Husky + lint-staged + commitlint |
-| Hosting | Cloudflare Pages conectado a GitHub (`main` = producción, cada PR = preview) |
-| Versiones | release-please |
+| Envío de correo          | Servicio transaccional (a definir), clave como secreto de Cloudflare                    |
+| Medios                   | Video corto en YouTube/Vimeo no listado o Cloudflare R2; imágenes con `astro:assets`    |
+| Calidad                  | pnpm, ESLint + Prettier, Vitest, Playwright (+ axe para accesibilidad)                  |
+| Git                      | Husky + lint-staged + commitlint                                                        |
+| Hosting                  | Cloudflare Pages conectado a GitHub (`main` = producción, cada PR = preview)            |
+| Versiones                | release-please                                                                          |
 
 ## Comandos (deben existir en `package.json`)
 

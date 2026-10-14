@@ -1,0 +1,33 @@
+:root {
+  --color-cyan: #00f0ff;
+  --color-violet: #7b5cff;
+  --color-magenta: #ff2e9a;
+  --color-bg: #06080f;
+  --color-surface: #0d1220;
+  --color-text: #e8ecf7;
+  --color-text-muted: #8a94b0;
+
+  --font-heading: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Manrope", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 2px;
+}

@@ -1,12 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
-  <!-- Same geometry as src/components/BinalisSymbol.astro, on the brand background so it reads on light and dark tabs. -->
+  <!-- Same geometry as src/components/BinalisSymbol.astro, on the brand background so it reads on light and dark tabs.
+       Source of favicon.ico and apple-touch-icon.png: run `pnpm icons` after editing. -->
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#00F0FF" />
       <stop offset="100%" stop-color="#7B5CFF" />
     </linearGradient>
   </defs>
-  <rect width="160" height="160" rx="32" fill="#06080F" />
+  <rect id="fondo" width="160" height="160" rx="32" fill="#06080F" />
   <g transform="translate(28 10)">
     <rect x="10" y="10" width="16" height="120" rx="8" fill="url(#g)" />
     <circle cx="52" cy="88" r="34" fill="none" stroke="url(#g)" stroke-width="16" />

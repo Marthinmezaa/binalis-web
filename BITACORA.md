@@ -7,8 +7,9 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Diseño de la web aprobado en lienzo (4 láminas: logo, color y tipografía, aplicaciones, web).
 - Repo público en GitHub con `main` protegida (4 checks obligatorios: calidad, gitleaks, dependencias, CodeQL).
 - Dominio `binalis.com.py` habilitado y con DNS delegado a Cloudflare (`aurora` / `johnny.ns.cloudflare.com`).
-- Estructura Astro + TypeScript mergeada (PR #6): página base con tokens de marca, sin secciones aún.
-- release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.2.0.
+- En producción: barra superior (RF-01) y portada (RF-02), con textos placeholder; favicon e íconos de app.
+- Pruebas e2e con Playwright + axe en el CI (escritorio y celular).
+- release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.4.1.
 - Repo con README, SECURITY.md (reporte privado de vulnerabilidades activado), descripción, topics y sitio web.
 
 ## Configuración fuera del repo (panel de Cloudflare)
@@ -25,11 +26,27 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Entradas
 
+### 2026-10-14 (11)
+
+- Íconos completos: `favicon.ico` (16, 32 y 48 px, PNG embebidos) y `apple-touch-icon.png` (180 px, cuadrado opaco con el glow de la portada). Se generan desde `public/favicon.svg`, la única fuente, con `pnpm icons` (usa el Chromium de Playwright, sin dependencias nuevas).
+- Puede que no haya SVG definitivo del lienzo de marca: el símbolo actual queda como oficial. Si cambia, editar `BinalisSymbol.astro` y `favicon.svg` y correr `pnpm icons`.
+- Nueva prueba e2e: los 3 íconos del `<head>` responden 200.
+- Restaurada la entrada (9), que se había perdido al resolver el conflicto entre los PR #18 y #19.
+
 ### 2026-10-14 (10)
 
 - Favicon `public/favicon.svg`: símbolo "b" sobre fondo de marca redondeado (se lee en pestañas claras y oscuras), sin glow porque a 16 px no se distingue. Producción daba 404 en `/favicon.ico`.
 - Misma geometría que `BinalisSymbol.astro`, copiada a mano: al reemplazar el símbolo por el SVG del lienzo de marca, actualizar los dos.
 - Verificado en Chrome (compu de trabajo): CSP activa en producción (bloquea script y estilo inline), consola limpia, foco visible, portada sin scroll horizontal a 390 px.
+
+### 2026-10-14 (9)
+
+- PC de trabajo preparada: `corepack enable` falla con EPERM (Node está en `C:\Nodejs`, requiere admin); se instaló pnpm 11.20.0 con `npm install -g`, que usa el perfil del usuario.
+- Playwright + axe: `e2e/*.e2e.ts` (sufijo propio para que Vitest no los tome) sobre `astro preview`, en Chromium de escritorio y celular (Pixel 7). Prueban WCAG 2.2 AA con axe, que el primer foco sea "Saltar al contenido" y que no haya scroll horizontal.
+- En el CI corren dentro del job `calidad` (check obligatorio), después del build.
+- `astro preview` no aplica `public/_headers`: la CSP no se prueba en e2e.
+- Verificado rompiendo la página a propósito (sin `lang`, skip-link a `#nada`, `main` de 200vw): fallan las 6 pruebas.
+- Lección: en celular la prueba de scroll pasaba con la página rota, porque el navegador aleja el zoom y `window.innerWidth` crece con el contenido. Se compara contra `clientWidth`.
 
 ### 2026-10-14 (8)
 

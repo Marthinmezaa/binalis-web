@@ -25,7 +25,7 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - PR de release #7 cerrado y regenerado como #9 con `RELEASE_PLEASE_TOKEN`: el CI corrió; mergeado → v0.2.0.
 - Los commits `docs:` y `chore:` no actualizan el PR de release: el token solo se ejercita con `feat:`/`fix:` o al recrear el PR.
 - README y SECURITY.md; activado el reporte privado de vulnerabilidades; descripción, topics y web del repo.
-- Licencia: pendiente de decisión. Sin `LICENSE`, el código queda con todos los derechos reservados.
+- Licencia propietaria (`LICENSE`): repo público solo para consulta, todos los derechos reservados.
 
 ### 2026-10-14 (3)
 

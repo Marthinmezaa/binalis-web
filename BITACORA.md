@@ -8,16 +8,24 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Repo público en GitHub con `main` protegida (4 checks obligatorios: calidad, gitleaks, dependencias, CodeQL).
 - Dominio `binalis.com.py` habilitado en NIC.PY; falta delegar DNS a Cloudflare.
 - Estructura Astro + TypeScript mergeada (PR #6): página base con tokens de marca, sin secciones aún.
-- release-please con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo) para que el PR de release dispare el CI.
+- release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.2.0.
+- Repo con README, SECURITY.md (reporte privado de vulnerabilidades activado), descripción, topics y sitio web.
 
 ## Próximo paso
 
-1. Confirmar que el PR de release (#7) dispara el CI; revisar y mergear los PRs de Dependabot (#1–#5) una vez rebasados.
-2. Conectar Cloudflare Pages al repo y delegar el DNS de `binalis.com.py` a Cloudflare.
-3. Siguiente PR: layout + RF-01 (barra superior) y RF-02 (portada), con fuentes de marca.
-4. Instalar Gentle-AI en cada PC (Ponytail ya activo).
+1. Conectar Cloudflare Pages al repo y delegar el DNS de `binalis.com.py` a Cloudflare.
+2. Siguiente PR: layout + RF-01 (barra superior) y RF-02 (portada), con fuentes de marca.
+3. Instalar Gentle-AI en cada PC (Ponytail ya activo).
 
 ## Entradas
+
+### 2026-10-14 (4)
+
+- Mergeados los PRs de Dependabot #1–#5 (actions a su última versión mayor, CI en verde).
+- PR de release #7 cerrado y regenerado como #9 con `RELEASE_PLEASE_TOKEN`: el CI corrió; mergeado → v0.2.0.
+- Los commits `docs:` y `chore:` no actualizan el PR de release: el token solo se ejercita con `feat:`/`fix:` o al recrear el PR.
+- README y SECURITY.md; activado el reporte privado de vulnerabilidades; descripción, topics y web del repo.
+- Licencia: pendiente de decisión. Sin `LICENSE`, el código queda con todos los derechos reservados.
 
 ### 2026-10-14 (3)
 

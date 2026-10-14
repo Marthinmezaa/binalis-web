@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.1](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.7.0...binalis-web-v0.7.1) (2026-10-14)
+
+
+### Bug Fixes
+
+* favicon sin fondo, solo la b ([#29](https://github.com/Marthinmezaa/binalis-web/issues/29)) ([4c24643](https://github.com/Marthinmezaa/binalis-web/commit/4c2464322c5cbe13f27496f1eef1358e75dcf15c))
+
 ## [0.7.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.6.0...binalis-web-v0.7.0) (2026-10-14)
 
 

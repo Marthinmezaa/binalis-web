@@ -20,9 +20,8 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-1. Siguiente PR: Playwright + axe (pruebas de accesibilidad y humo sobre la portada).
-2. RF-03 Servicios y RF-04 Proceso.
-3. Instalar Gentle-AI en cada PC (Ponytail ya activo).
+1. RF-03 Servicios y RF-04 Proceso (sumar sus pruebas a `e2e/`).
+2. Instalar Gentle-AI en cada PC (Ponytail ya activo).
 
 ## Entradas
 

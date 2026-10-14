@@ -41,7 +41,7 @@ Ver `CLAUDE.md` (tokens) y el lienzo de diseño "Binalis — Identidad de marca"
 - Nombres, descripciones, medios y resultados de cada proyecto (hay que confirmar qué proyectos se muestran y si el cliente autoriza nombrarlo).
 - Testimonios reales (se van a pedir a clientes).
 - Número de WhatsApp, correo, Instagram y LinkedIn.
-- Texto final del titular y de los servicios.
+- Texto final del titular, de los servicios y de los pasos del proceso.
 
 ## 7. Fuera de alcance v1
 

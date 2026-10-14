@@ -39,6 +39,44 @@ test("los íconos declarados en el head existen", async ({ page, request }) => {
   }
 });
 
+// Exact titles from ESPECIFICACIONES.md (RF-03 and RF-04).
+const SECTIONS = [
+  {
+    name: "Servicios",
+    items: [
+      "Páginas web",
+      "Sistemas y apps a medida",
+      "Landing pages y promociones",
+    ],
+  },
+  {
+    name: "Proceso",
+    items: [
+      "Conversamos",
+      "Diseñamos",
+      "Construimos",
+      "Entregamos y acompañamos",
+    ],
+  },
+];
+
+for (const { name, items } of SECTIONS) {
+  test(`la sección ${name} tiene lo que pide la spec y se llega desde la barra`, async ({
+    page,
+  }) => {
+    const section = page.getByRole("region", { name });
+    await expect(section.getByRole("heading", { level: 3 })).toHaveText(items);
+
+    const navLink = page
+      .getByRole("navigation", { name: "Principal" })
+      .getByRole("link", { name });
+    await expect(navLink).toHaveAttribute(
+      "href",
+      `#${await section.getAttribute("id")}`,
+    );
+  });
+}
+
 test("no genera scroll horizontal", async ({ page }) => {
   // Not window.innerWidth: mobile browsers zoom out to fit overflowing content, so it grows with it.
   const overflows = await page.evaluate(

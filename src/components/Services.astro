@@ -1,0 +1,70 @@
+---
+const services = [
+  {
+    title: "Páginas web",
+    description: "[DESCRIPCIÓN DEL SERVICIO: PÁGINAS WEB]",
+  },
+  {
+    title: "Sistemas y apps a medida",
+    description: "[DESCRIPCIÓN DEL SERVICIO: SISTEMAS Y APPS A MEDIDA]",
+  },
+  {
+    title: "Landing pages y promociones",
+    description: "[DESCRIPCIÓN DEL SERVICIO: LANDING PAGES Y PROMOCIONES]",
+  },
+];
+---
+
+<section id="servicios" class="section" aria-labelledby="servicios-title">
+  <div class="container">
+    <h2 id="servicios-title" class="section-title">
+      Servicios
+    </h2>
+    <ul class="cards">
+      {services.map(({ title, description }) => (
+        <li class="card">
+          <h3>{title}</h3>
+          <p>{description}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .card {
+    position: relative;
+    overflow: hidden;
+    padding: 2rem 1.5rem 1.5rem;
+    border: 1px solid rgb(255 255 255 / 6%);
+    border-radius: 1rem;
+    background: var(--color-surface);
+  }
+
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-cyan), var(--color-violet));
+  }
+
+  h3 {
+    margin: 0 0 0.75rem;
+    font-size: 1.375rem;
+  }
+
+  p {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+</style>

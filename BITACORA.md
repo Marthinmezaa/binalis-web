@@ -7,9 +7,9 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Diseño de la web aprobado en lienzo (4 láminas: logo, color y tipografía, aplicaciones, web).
 - Repo público en GitHub con `main` protegida (4 checks obligatorios: calidad, gitleaks, dependencias, CodeQL).
 - Dominio `binalis.com.py` habilitado y con DNS delegado a Cloudflare (`aurora` / `johnny.ns.cloudflare.com`).
-- En producción: barra superior (RF-01) y portada (RF-02), con textos placeholder; favicon e íconos de app.
+- Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03) y Proceso (RF-04), con textos placeholder; favicon e íconos de app.
 - Pruebas e2e con Playwright + axe en el CI (escritorio y celular).
-- release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.4.1.
+- release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.5.1.
 - Repo con README, SECURITY.md (reporte privado de vulnerabilidades activado), descripción, topics y sitio web.
 
 ## Configuración fuera del repo (panel de Cloudflare)
@@ -21,10 +21,19 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-1. RF-03 Servicios y RF-04 Proceso (sumar sus pruebas a `e2e/`).
-2. Instalar Gentle-AI en cada PC (Ponytail ya activo).
+1. Decidir el tamaño del símbolo "b" en celular: hoy ocupa casi una pantalla entre la portada y Servicios.
+2. RF-05 Proyectos: definir qué proyectos se muestran y si los clientes autorizan nombrarlos.
+3. Instalar Gentle-AI en cada PC (Ponytail ya activo).
 
 ## Entradas
+
+### 2026-10-14 (13)
+
+- RF-03 Servicios (3 tarjetas en `<ul>`, con línea de degradé de marca) y RF-04 Proceso (4 pasos en `<ol>`; el número visible es decorativo, `aria-hidden`, porque la lista ya anuncia el orden). Descripciones como placeholders.
+- `.section` y `.section-title` en `global.css`, para reusar en las secciones que siguen.
+- Números de paso en Space Grotesk: JetBrains Mono costaría decenas de KB por cuatro dígitos. Se suma cuando haya texto técnico real.
+- E2E: los títulos de tarjetas y pasos coinciden exactos con la spec, y los links de la barra apuntan al `id` de cada sección. Verificado que fallan si se cambia un título o un `id`.
+- Lección: `git checkout --` no revierte archivos sin trackear; al romper a propósito archivos nuevos, revertir a mano.
 
 ### 2026-10-14 (12)
 

@@ -1,0 +1,68 @@
+---
+const steps = [
+  { title: "Conversamos", description: "[DESCRIPCIÓN DEL PASO: CONVERSAMOS]" },
+  { title: "Diseñamos", description: "[DESCRIPCIÓN DEL PASO: DISEÑAMOS]" },
+  { title: "Construimos", description: "[DESCRIPCIÓN DEL PASO: CONSTRUIMOS]" },
+  {
+    title: "Entregamos y acompañamos",
+    description: "[DESCRIPCIÓN DEL PASO: ENTREGAMOS Y ACOMPAÑAMOS]",
+  },
+];
+---
+
+<section id="proceso" class="section" aria-labelledby="proceso-title">
+  <div class="container">
+    <h2 id="proceso-title" class="section-title">
+      Proceso
+    </h2>
+    <ol class="steps">
+      {steps.map(({ title, description }, index) => (
+        <li class="step">
+          {/* The <ol> already announces the order; the visible number is decorative. */}
+          <span class="step-number" aria-hidden="true">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <h3>{title}</h3>
+          <p>{description}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: 2rem 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .step {
+    padding-top: 1.25rem;
+    border-top: 1px solid rgb(255 255 255 / 10%);
+  }
+
+  .step-number {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: var(--color-cyan);
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+  }
+
+  p {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+</style>

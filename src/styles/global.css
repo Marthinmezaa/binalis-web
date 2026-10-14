@@ -15,6 +15,17 @@
   src: url("../assets/fonts/manrope-latin-wght-normal.woff2") format("woff2");
 }
 
+/* shortcut: digits only, weight 700 (1.2 KB instead of 40 KB): mono is only used for the process step numbers.
+   When technical text with letters arrives, swap in the full latin variable subset from Fontsource. */
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url("../assets/fonts/jetbrains-mono-digits-700.woff2") format("woff2");
+  unicode-range: U+0030-0039;
+}
+
 :root {
   --color-cyan: #00f0ff;
   --color-violet: #7b5cff;

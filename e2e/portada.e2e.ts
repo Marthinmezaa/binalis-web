@@ -1,10 +1,39 @@
+import { readFileSync } from "node:fs";
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 const WCAG_22_AA = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 
+// astro preview ignores public/_headers, so the production CSP is injected here to test under it.
+const CSP = readFileSync("public/_headers", "utf8").match(
+  /^\s*Content-Security-Policy:\s*(.+)$/m,
+)?.[1];
+if (!CSP)
+  throw new Error("No Content-Security-Policy found in public/_headers");
+
 test.beforeEach(async ({ page }) => {
+  await page.route("**/*", async (route) => {
+    if (route.request().resourceType() !== "document") return route.continue();
+    const response = await route.fetch();
+    await route.fulfill({
+      response,
+      headers: { ...response.headers(), "content-security-policy": CSP },
+    });
+  });
   await page.goto("/");
+});
+
+test("no hay errores en consola bajo la CSP de producción", async ({
+  page,
+}) => {
+  const errors: string[] = [];
+  page.on("console", (message) => {
+    if (message.type() === "error") errors.push(message.text());
+  });
+  await page.reload();
+  await page.evaluate(() => document.fonts.ready);
+
+  expect(errors).toEqual([]);
 });
 
 test("no tiene violaciones de accesibilidad WCAG 2.2 AA", async ({ page }) => {

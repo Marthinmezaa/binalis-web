@@ -1,31 +1,19 @@
-import { readFileSync } from "node:fs";
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 const WCAG_22_AA = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 
-// astro preview ignores public/_headers, so the production CSP is injected here to test under it.
-const CSP = readFileSync("public/_headers", "utf8").match(
-  /^\s*Content-Security-Policy:\s*(.+)$/m,
-)?.[1];
-if (!CSP)
-  throw new Error("No Content-Security-Policy found in public/_headers");
-
 test.beforeEach(async ({ page }) => {
-  await page.route("**/*", async (route) => {
-    if (route.request().resourceType() !== "document") return route.continue();
-    const response = await route.fetch();
-    await route.fulfill({
-      response,
-      headers: { ...response.headers(), "content-security-policy": CSP },
-    });
-  });
   await page.goto("/");
 });
 
+// The preview server sends production's CSP (see astro.config.mjs).
 test("no hay errores en consola bajo la CSP de producción", async ({
   page,
 }) => {
+  const response = await page.request.get("/");
+  expect(response.headers()["content-security-policy"]).toBeTruthy();
+
   const errors: string[] = [];
   page.on("console", (message) => {
     if (message.type() === "error") errors.push(message.text());
@@ -68,7 +56,7 @@ test("los íconos declarados en el head existen", async ({ page, request }) => {
   }
 });
 
-// Exact titles from ESPECIFICACIONES.md (RF-03 and RF-04).
+// Exact titles from ESPECIFICACIONES.md (RF-03, RF-04 and the projects chosen for RF-05).
 const SECTIONS = [
   {
     name: "Servicios",
@@ -87,7 +75,36 @@ const SECTIONS = [
       "Entregamos y acompañamos",
     ],
   },
+  {
+    name: "Proyectos",
+    items: [
+      "Cosmos Trak · Sitio web",
+      "Cosmos Trak · Sistema administrativo",
+      "YERON · Promoción con sorteos",
+    ],
+  },
 ];
+
+test("cada proyecto muestra etiquetas, medio y Problema / Solución / Resultado", async ({
+  page,
+}) => {
+  const projects = page
+    .getByRole("region", { name: "Proyectos" })
+    .getByRole("article");
+  await expect(projects).toHaveCount(3);
+
+  for (const project of await projects.all()) {
+    await expect(
+      project.getByRole("list", { name: "Etiquetas" }).getByRole("listitem"),
+    ).not.toHaveCount(0);
+    await expect(project.locator(".project-media > *")).toHaveCount(1);
+    await expect(project.getByRole("term")).toHaveText([
+      "Problema",
+      "Solución",
+      "Resultado",
+    ]);
+  }
+});
 
 for (const { name, items } of SECTIONS) {
   test(`la sección ${name} tiene lo que pide la spec y se llega desde la barra`, async ({

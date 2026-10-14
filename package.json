@@ -13,6 +13,7 @@
     "format": "prettier --write .",
     "typecheck": "astro check",
     "test": "vitest run --passWithNoTests",
+    "test:e2e": "playwright test",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -24,9 +25,11 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@axe-core/playwright": "^4.13.0",
     "@commitlint/cli": "^21.2.3",
     "@commitlint/config-conventional": "^21.2.3",
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.64.0",
     "eslint": "^10.12.0",
     "eslint-plugin-astro": "^3.2.1",
     "husky": "^9.1.7",

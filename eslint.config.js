@@ -3,7 +3,15 @@ import tseslint from "typescript-eslint";
 import astro from "eslint-plugin-astro";
 
 export default [
-  { ignores: ["dist/", ".astro/", "node_modules/", ".wrangler/"] },
+  {
+    ignores: [
+      "dist/",
+      ".astro/",
+      "node_modules/",
+      ".wrangler/",
+      "test-results/",
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.strict,
   ...astro.configs.recommended,

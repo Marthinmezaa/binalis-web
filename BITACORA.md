@@ -20,11 +20,19 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-1. Siguiente PR: Playwright + axe (pruebas de accesibilidad y humo sobre la portada).
-2. RF-03 Servicios y RF-04 Proceso.
-3. Instalar Gentle-AI en cada PC (Ponytail ya activo).
+1. RF-03 Servicios y RF-04 Proceso (sumar sus pruebas a `e2e/`).
+2. Instalar Gentle-AI en cada PC (Ponytail ya activo).
 
 ## Entradas
+
+### 2026-10-14 (9)
+
+- PC de trabajo preparada: `corepack enable` falla con EPERM (Node está en `C:\Nodejs`, requiere admin); se instaló pnpm 11.20.0 con `npm install -g`, que usa el perfil del usuario.
+- Playwright + axe: `e2e/*.e2e.ts` (sufijo propio para que Vitest no los tome) sobre `astro preview`, en Chromium de escritorio y celular (Pixel 7). Prueban WCAG 2.2 AA con axe, que el primer foco sea "Saltar al contenido" y que no haya scroll horizontal.
+- En el CI corren dentro del job `calidad` (check obligatorio), después del build.
+- `astro preview` no aplica `public/_headers`: la CSP no se prueba en e2e.
+- Verificado rompiendo la página a propósito (sin `lang`, skip-link a `#nada`, `main` de 200vw): fallan las 6 pruebas.
+- Lección: en celular la prueba de scroll pasaba con la página rota, porque el navegador aleja el zoom y `window.innerWidth` crece con el contenido. Se compara contra `clientWidth`.
 
 ### 2026-10-14 (8)
 

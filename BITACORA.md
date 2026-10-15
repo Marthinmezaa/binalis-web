@@ -7,7 +7,7 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Diseño de la web aprobado en lienzo (4 láminas: logo, color y tipografía, aplicaciones, web).
 - Repo público en GitHub con `main` protegida (4 checks obligatorios: calidad, gitleaks, dependencias, CodeQL).
 - Dominio `binalis.com.py` habilitado y con DNS delegado a Cloudflare (`aurora` / `johnny.ns.cloudflare.com`).
-- Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04), Proyectos (RF-05), "siguiente proyecto cargando…" (RF-06), "Quién está detrás" (RF-10), Cotización por WhatsApp (RF-08) y pie (RF-09); quedan textos placeholder; favicon e íconos de app.
+- Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04), Proyectos (RF-05), "siguiente proyecto cargando…" (RF-06), "Quién está detrás" (RF-10, resumen en portada + página `/quien-soy/`), Cotización por WhatsApp (RF-08) y pie (RF-09); quedan textos placeholder; favicon e íconos de app.
 - Pruebas e2e con Playwright + axe en el CI (escritorio y celular), bajo la misma CSP de producción.
 - release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.8.0.
 - Repo con README, SECURITY.md (reporte privado de vulnerabilidades activado), descripción, topics y sitio web.
@@ -21,13 +21,24 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-1. **Correo** `contacto@binalis.com.py` en Zoho Mail (gratis). Antes de vincular Instagram, Facebook y LinkedIn: renovación automática del dominio en NIC.PY y verificación en dos pasos en todas las cuentas. Después, sumar correo y redes al pie.
-2. **Capturas de proyectos:** el sistema administrativo y YERON solo con datos de prueba (nunca reales). Sus repos no están en la PC Cardinallis-LAPTOP: ver si están en la otra PC o si hay una URL pública o un usuario de prueba sin datos de clientes.
-3. Sacar los placeholders visibles de Proyectos: tarjeta de código en lugar de medio faltante y ocultar Problema/Resultado si falta.
-4. Borradores de titular, subtítulo, servicios y proceso para que el dueño apruebe.
-5. **En una PC sin preparar:** `git pull`, `pnpm install`, una vez `pnpm exec playwright install chromium`; `pnpm build && pnpm test:e2e` debe dar 26/26. Si `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
+**Se sigue en la otra PC.** Al empezar: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **34/34**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
+
+Pendientes, en orden:
+
+1. **Sacar los placeholders visibles de Proyectos** (no depende del dueño): tarjeta tipo editor de código con el stack donde falta captura, y ocultar Problema/Resultado si falta. Ver spec, sección 6.
+2. **Borradores de textos** para que el dueño apruebe: titular y subtítulo de la portada, meta description, descripciones de los 3 servicios y los 4 pasos del proceso. Tono: primera persona, apasionado, "amo lo que hago".
+3. **Correo** `contacto@binalis.com.py` en Zoho Mail (gratis). Antes de vincular Instagram, Facebook y LinkedIn: renovación automática del dominio en NIC.PY y verificación en dos pasos en todas las cuentas. Después, sumar correo y redes al pie (RF-09).
+4. **Capturas de proyectos** con datos de prueba, nunca reales. Los repos de Cosmos Trak y YERON no están en la PC Cardinallis-LAPTOP: ver si están en la otra, o si hay URL pública o usuario de prueba.
+5. SEO pendiente de la spec: Open Graph (con la foto o el símbolo), `sitemap.xml` y `robots.txt`.
 
 ## Entradas
+
+### 2026-10-15 (21)
+
+- "Quién soy" en página propia, a propuesta del dueño: la portada muestra un resumen (foto, tarjeta de código, dos líneas y "Conocé mi historia") y `/quien-soy/` la historia completa con `h1`, más Cotización y pie. Un solo componente `About.astro` con la prop `full`.
+- Barra: links a `/#servicios`, `/#proceso` y `/#proyectos` (absolutos, para que funcionen desde otra página) y "Quién soy", con `aria-current="page"` en su página.
+- Los links van a `/quien-soy/` con barra final: Astro genera `quien-soy/index.html` y Cloudflare redirige la URL sin barra.
+- E2E: consola sin errores bajo la CSP, axe WCAG 2.2 AA y sin scroll horizontal ahora corren en las dos páginas. 34/34.
 
 ### 2026-10-15 (20)
 
@@ -127,9 +138,3 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Cabeceras de seguridad en producción (PR #13) y release 0.3.0.
 - `www` redirige con 301 al dominio raíz; HTTP → HTTPS forzado; TLS 1.1 rechazado. Verificado con curl.
 - Lección: un espacio inicial pegado en el valor de la regla impedía que coincidiera. Revisar siempre el _Expression Preview_.
-
-### 2026-10-14 (6)
-
-- Sitio en vivo en `https://binalis.com.py` vía Workers Builds (PR #12).
-- Cabeceras de seguridad en `public/_headers`: CSP estricta sin `'unsafe-inline'` (CSS siempre externo con `inlineStylesheets: "never"`), HSTS sin `preload`, nosniff, DENY, Referrer y Permissions-Policy. Caché inmutable para `/_astro/*`.
-- La CSP se amplía cuando entren Turnstile (`challenges.cloudflare.com`) y los videos embebidos.

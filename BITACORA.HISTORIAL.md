@@ -10,6 +10,11 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-14 — Sitio en vivo
+
+- Sitio publicado en `https://binalis.com.py` con Workers Builds (PR #12).
+- Cabeceras de seguridad en `public/_headers`: CSP estricta sin `'unsafe-inline'` (CSS siempre externo), HSTS sin `preload`, nosniff, DENY, Referrer y Permissions-Policy; caché inmutable para `/_astro/*`.
+
 ### 2026-10-14 — Licencia y hosting
 
 - Licencia propietaria mergeada (PR #11); DNS de `binalis.com.py` delegado a Cloudflare.

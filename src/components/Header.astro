@@ -1,8 +1,10 @@
 ---
+// Absolute anchors ("/#…") so they also work from /quien-soy.
 const links = [
-  { href: "#servicios", label: "Servicios" },
-  { href: "#proceso", label: "Proceso" },
-  { href: "#proyectos", label: "Proyectos" },
+  { href: "/#servicios", label: "Servicios" },
+  { href: "/#proceso", label: "Proceso" },
+  { href: "/#proyectos", label: "Proyectos" },
+  { href: "/quien-soy/", label: "Quién soy" },
 ];
 ---
 
@@ -15,7 +17,11 @@ const links = [
       <ul class="nav-list">
         {links.map(({ href, label }) => (
           <li>
-            <a class="nav-link" href={href}>
+            <a
+              class="nav-link"
+              href={href}
+              aria-current={href === Astro.url.pathname ? "page" : undefined}
+            >
               {label}
             </a>
           </li>
@@ -90,7 +96,8 @@ const links = [
     text-decoration: none;
   }
 
-  .nav-link:hover {
+  .nav-link:hover,
+  .nav-link[aria-current="page"] {
     color: var(--color-text);
   }
 </style>

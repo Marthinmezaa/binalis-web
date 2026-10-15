@@ -2,6 +2,14 @@
 import { Image } from "astro:assets";
 import photo from "../assets/marthin-meza.jpg";
 
+interface Props {
+  // Home shows a summary that links to /quien-soy; that page shows the full story.
+  full?: boolean;
+}
+
+const { full = false } = Astro.props;
+const Name = full ? "h1" : "h3";
+
 // Rendered as a JS object literal in the code card: strings, numbers or lists of strings.
 const profile: Record<string, string | number | string[]> = {
   titulo: "Ing. electromecánico",
@@ -25,11 +33,17 @@ const profile: Record<string, string | number | string[]> = {
 };
 ---
 
-<section id="quien" class="section" aria-labelledby="quien-title">
+<section
+  id={full ? undefined : "quien"}
+  class="section"
+  aria-labelledby={full ? "quien-nombre" : "quien-title"}
+>
   <div class="container">
-    <h2 id="quien-title" class="section-title">
-      Quién está detrás
-    </h2>
+    {!full && (
+      <h2 id="quien-title" class="section-title">
+        Quién está detrás
+      </h2>
+    )}
     <div class="about">
       <div class="aside">
         <Image
@@ -50,46 +64,65 @@ const profile: Record<string, string | number | string[]> = {
 ))}{"};"}</code></pre>
       </div>
       <div class="story">
-        <h3>Ing. Marthin Meza</h3>
+        <Name id="quien-nombre" class="name">
+          Ing. Marthin Meza
+        </Name>
         <p class="role">Fundador y CEO de Binalis · Desarrollador full stack</p>
-        <p>
-          Mi papá, el Dr. Juan Meza, PhD, trabajaba en la misma universidad
-          donde yo estudiaba. Una tarde, al salir de clases, lo vi cansado y
-          estresado, y le pregunté por qué seguía ahí. Me respondió:&nbsp;
-          <strong>«Porque amo lo que hago»</strong>. Esa frase se volvió mi
-          propósito: encontrar aquello que ame hacer.
-        </p>
-        <p>
-          Años después, cuando mi papá ya había partido, mi padrastro me mostró
-          los programas que él mismo había creado para su empresa y me dijo que
-          un ingeniero siempre tiene que saber programar. Ahí se encendió un
-          fuego en mí: quería hacer programas que le hicieran la vida más fácil
-          a la gente.
-        </p>
-        <p>
-          En 2023 empecé a aprender por mi cuenta. Arranqué con HTML y CSS; con
-          Python armé un programa de terminal que me decía cuánto había ganado
-          en el mes, y con JavaScript hice mi primera página web. En junio de
-          2026 terminé el curso de Desarrollador Full Stack en la UCSA, el mismo
-          mes en que conseguí mi primer contrato. Desde entonces no paré de
-          crecer, proyecto tras proyecto.
-        </p>
-        <p>
-          Soy ingeniero electromecánico y técnico en mecánica automotriz: me
-          apasiona entender cómo funcionan las cosas, desde un motor hasta una
-          línea de código. Busco proyectos que me desafíen y me hagan aprender;
-          hoy estudio machine learning.
-        </p>
-        <p>
-          Mis clientes me definen con una frase:&nbsp;
-          <strong>«Realmente amás lo que hacés»</strong>. Y cuando amás lo que
-          hacés, se nota en la calidad.
-        </p>
-        <p>
-          Fuera del código sirvo en alabanza, acompaño a jóvenes en una
-          organización y entreno CrossFit. Amo servir: todo lo que hago, lo hago
-          para Jesús, porque sin Él no soy nada.
-        </p>
+        {!full && (
+          <>
+            <p>
+              Ingeniero electromecánico que programa desde 2023 y encontró en el
+              código aquello que ama hacer. Mis clientes me definen con una
+              frase:&nbsp;
+              <strong>«Realmente amás lo que hacés»</strong>.
+            </p>
+            <a class="button button-secondary" href="/quien-soy/">
+              Conocé mi historia
+            </a>
+          </>
+        )}
+        {full && (
+          <Fragment>
+            <p>
+              Mi papá, el Dr. Juan Meza, PhD, trabajaba en la misma universidad
+              donde yo estudiaba. Una tarde, al salir de clases, lo vi cansado y
+              estresado, y le pregunté por qué seguía ahí. Me respondió:&nbsp;
+              <strong>«Porque amo lo que hago»</strong>. Esa frase se volvió mi
+              propósito: encontrar aquello que ame hacer.
+            </p>
+            <p>
+              Años después, cuando mi papá ya había partido, mi padrastro me
+              mostró los programas que él mismo había creado para su empresa y
+              me dijo que un ingeniero siempre tiene que saber programar. Ahí se
+              encendió un fuego en mí: quería hacer programas que le hicieran la
+              vida más fácil a la gente.
+            </p>
+            <p>
+              En 2023 empecé a aprender por mi cuenta. Arranqué con HTML y CSS;
+              con Python armé un programa de terminal que me decía cuánto había
+              ganado en el mes, y con JavaScript hice mi primera página web. En
+              junio de 2026 terminé el curso de Desarrollador Full Stack en la
+              UCSA, el mismo mes en que conseguí mi primer contrato. Desde
+              entonces no paré de crecer, proyecto tras proyecto.
+            </p>
+            <p>
+              Soy ingeniero electromecánico y técnico en mecánica automotriz: me
+              apasiona entender cómo funcionan las cosas, desde un motor hasta
+              una línea de código. Busco proyectos que me desafíen y me hagan
+              aprender; hoy estudio machine learning.
+            </p>
+            <p>
+              Mis clientes me definen con una frase:&nbsp;
+              <strong>«Realmente amás lo que hacés»</strong>. Y cuando amás lo
+              que hacés, se nota en la calidad.
+            </p>
+            <p>
+              Fuera del código sirvo en alabanza, acompaño a jóvenes en una
+              organización y entreno CrossFit. Amo servir: todo lo que hago, lo
+              hago para Jesús, porque sin Él no soy nada.
+            </p>
+          </Fragment>
+        )}
       </div>
     </div>
   </div>
@@ -157,7 +190,7 @@ const profile: Record<string, string | number | string[]> = {
     color: var(--color-text);
   }
 
-  h3 {
+  .name {
     margin: 0;
     font-size: clamp(1.75rem, 4vw, 2.5rem);
   }

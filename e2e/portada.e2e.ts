@@ -7,30 +7,49 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/");
 });
 
-// The preview server sends production's CSP (see astro.config.mjs).
-test("no hay errores en consola bajo la CSP de producción", async ({
-  page,
-}) => {
-  const response = await page.request.get("/");
-  expect(response.headers()["content-security-policy"]).toBeTruthy();
+const PAGES = ["/", "/quien-soy/"];
 
-  const errors: string[] = [];
-  page.on("console", (message) => {
-    if (message.type() === "error") errors.push(message.text());
+for (const path of PAGES) {
+  // The preview server sends production's CSP (see astro.config.mjs).
+  test(`${path}: no hay errores en consola bajo la CSP de producción`, async ({
+    page,
+  }) => {
+    const response = await page.request.get(path);
+    expect(response.headers()["content-security-policy"]).toBeTruthy();
+
+    const errors: string[] = [];
+    page.on("console", (message) => {
+      if (message.type() === "error") errors.push(message.text());
+    });
+    await page.goto(path);
+    await page.evaluate(() => document.fonts.ready);
+
+    expect(errors).toEqual([]);
   });
-  await page.reload();
-  await page.evaluate(() => document.fonts.ready);
 
-  expect(errors).toEqual([]);
-});
+  test(`${path}: no tiene violaciones de accesibilidad WCAG 2.2 AA`, async ({
+    page,
+  }) => {
+    await page.goto(path);
+    const { violations } = await new AxeBuilder({ page })
+      .withTags(WCAG_22_AA)
+      .analyze();
 
-test("no tiene violaciones de accesibilidad WCAG 2.2 AA", async ({ page }) => {
-  const { violations } = await new AxeBuilder({ page })
-    .withTags(WCAG_22_AA)
-    .analyze();
+    expect(violations).toEqual([]);
+  });
 
-  expect(violations).toEqual([]);
-});
+  test(`${path}: no genera scroll horizontal`, async ({ page }) => {
+    await page.goto(path);
+    // Not window.innerWidth: mobile browsers zoom out to fit overflowing content, so it grows with it.
+    const overflows = await page.evaluate(
+      () =>
+        document.documentElement.scrollWidth >
+        document.documentElement.clientWidth,
+    );
+
+    expect(overflows).toBe(false);
+  });
+}
 
 test("el primer foco es 'Saltar al contenido' y lleva al contenido", async ({
   page,
@@ -126,12 +145,12 @@ for (const { name, items } of SECTIONS) {
       .getByRole("link", { name });
     await expect(navLink).toHaveAttribute(
       "href",
-      `#${await section.getAttribute("id")}`,
+      `/#${await section.getAttribute("id")}`,
     );
   });
 }
 
-test("Quién está detrás muestra a Marthin con su foto y la tarjeta de código", async ({
+test("Quién está detrás resume a Marthin y lleva a su historia", async ({
   page,
 }) => {
   const section = page.getByRole("region", { name: "Quién está detrás" });
@@ -142,6 +161,29 @@ test("Quién está detrás muestra a Marthin con su foto y la tarjeta de código
     section.getByRole("img", { name: /Marthin Meza/ }),
   ).toBeVisible();
   await expect(section.locator("pre")).toContainText('stack: ["React"');
+
+  await section.getByRole("link", { name: "Conocé mi historia" }).click();
+  await expect(page).toHaveURL(/\/quien-soy\/$/);
+});
+
+test("/quien-soy/ cuenta la historia completa y la barra marca la página", async ({
+  page,
+}) => {
+  await page.goto("/quien-soy/");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Ing. Marthin Meza" }),
+  ).toBeVisible();
+  await expect(page.getByRole("main")).toContainText("Porque amo lo que hago");
+  await expect(
+    page
+      .getByRole("navigation", { name: "Principal" })
+      .getByRole("link", { name: "Quién soy" }),
+  ).toHaveAttribute("aria-current", "page");
+  await expect(
+    page
+      .getByRole("region", { name: "Cotizá tu proyecto" })
+      .getByRole("link", { name: "Hablemos por WhatsApp" }),
+  ).toBeVisible();
 });
 
 test("los botones de cotizar llevan a WhatsApp con el número y un mensaje", async ({
@@ -166,15 +208,4 @@ test("el pie muestra WhatsApp y el año actual", async ({ page }) => {
   const footer = page.getByRole("contentinfo");
   await expect(footer.getByRole("link", { name: "WhatsApp" })).toBeVisible();
   await expect(footer).toContainText(`© ${new Date().getFullYear()} Binalis`);
-});
-
-test("no genera scroll horizontal", async ({ page }) => {
-  // Not window.innerWidth: mobile browsers zoom out to fit overflowing content, so it grows with it.
-  const overflows = await page.evaluate(
-    () =>
-      document.documentElement.scrollWidth >
-      document.documentElement.clientWidth,
-  );
-
-  expect(overflows).toBe(false);
 });

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.9.0...binalis-web-v0.10.0) (2026-10-15)
+
+
+### Features
+
+* cotización por WhatsApp y pie de página ([#37](https://github.com/Marthinmezaa/binalis-web/issues/37)) ([d5ba79d](https://github.com/Marthinmezaa/binalis-web/commit/d5ba79d50fb0fd4cced7dbcd29d7fa4a93e35c2c))
+
 ## [0.9.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.8.0...binalis-web-v0.9.0) (2026-10-15)
 
 

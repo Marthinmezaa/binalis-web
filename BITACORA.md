@@ -7,7 +7,7 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Diseño de la web aprobado en lienzo (4 láminas: logo, color y tipografía, aplicaciones, web).
 - Repo público en GitHub con `main` protegida (4 checks obligatorios: calidad, gitleaks, dependencias, CodeQL).
 - Dominio `binalis.com.py` habilitado y con DNS delegado a Cloudflare (`aurora` / `johnny.ns.cloudflare.com`).
-- Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04), Proyectos (RF-05) y el bloque "siguiente proyecto cargando…" (RF-06), con textos placeholder; favicon e íconos de app.
+- Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04), Proyectos (RF-05), "siguiente proyecto cargando…" (RF-06), Cotización por WhatsApp (RF-08) y pie (RF-09); quedan textos placeholder; favicon e íconos de app.
 - Pruebas e2e con Playwright + axe en el CI (escritorio y celular), bajo la misma CSP de producción.
 - release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.8.0.
 - Repo con README, SECURITY.md (reporte privado de vulnerabilidades activado), descripción, topics y sitio web.
@@ -21,11 +21,21 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-1. **Aprobar o ajustar la propuesta de cambio de spec** (entrada 17): sitio funcional sin placeholders visibles y con identidad de programador. No se implementa nada de eso hasta que el dueño la apruebe.
-2. **En una PC sin preparar:** `git pull`, `pnpm install` y una sola vez `pnpm exec playwright install chromium`; después `pnpm build && pnpm test:e2e` debe dar 20/20. Si `pnpm` no existe y `corepack enable` da EPERM, instalarlo con `npm install -g pnpm@11.20.0`.
-3. Revisar el PR #34 de Dependabot (`release-please-action` v4 → v5, versión mayor).
+1. **Correo:** el dueño elige Zoho Mail gratis (recibir y responder) o Cloudflare Email Routing (solo reenvío) para `contacto@binalis.com.py`. Son excluyentes (los dos usan el MX). Después se suma al pie.
+2. Sacar los placeholders visibles de Proyectos: tarjeta de código en lugar de medio faltante y ocultar Problema/Resultado si falta.
+3. JetBrains Mono completa (subset latin) para etiquetas y detalles técnicos.
+4. Borradores de titular, subtítulo, servicios y proceso para que el dueño apruebe; RF-10 "Quién está detrás" con su texto.
+5. **En una PC sin preparar:** `git pull`, `pnpm install`, una vez `pnpm exec playwright install chromium`; `pnpm build && pnpm test:e2e` debe dar 24/24. Si `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
 
 ## Entradas
+
+### 2026-10-15 (18)
+
+- Cambio de spec aprobado por el dueño: sitio funcional antes que completo. Cotización por WhatsApp (el formulario serverless pasa a v2), ningún placeholder visible, testimonios ocultos hasta tener uno real, identidad de programador y nueva RF-10 "Quién está detrás".
+- RF-08: sección `#cotizacion` con "Hablemos por WhatsApp" (`wa.me` con mensaje ya escrito) y el número visible. Los botones "Cotizá tu proyecto" ya no apuntan a la nada.
+- RF-09: pie con wordmark, WhatsApp y © año. El año se fija al compilar (`shortcut:`): se actualiza con el primer deploy de cada año. El correo y las redes se suman cuando existan.
+- Número en un solo lugar: `src/contact.ts`. `.wordmark-accent` pasó a `global.css` (lo usan barra y pie).
+- Recomendación de correo: `contacto@binalis.com.py`, con Zoho gratis si se responde por correo o Cloudflare Email Routing si todo va por WhatsApp; Google Workspace (~US$7/mes) cuando se justifique.
 
 ### 2026-10-15 (17)
 
@@ -123,10 +133,3 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Los commits `docs:` y `chore:` no actualizan el PR de release: el token solo se ejercita con `feat:`/`fix:` o al recrear el PR.
 - README y SECURITY.md; activado el reporte privado de vulnerabilidades; descripción, topics y web del repo.
 - Licencia propietaria (`LICENSE`): repo público solo para consulta, todos los derechos reservados.
-
-### 2026-10-14 (3)
-
-- Mergeado PR #6 (estructura Astro).
-- Dominio `binalis.com.py` habilitado por NIC.PY.
-- release-please: primer fallo por falta de `package.json`; el segundo fue un error 500 de GitHub, transitorio, resuelto al reintentar. Creado el secreto `RELEASE_PLEASE_TOKEN`.
-- Pedido `@dependabot rebase` en #1–#5: sus checks fallidos eran de antes del PR #6.

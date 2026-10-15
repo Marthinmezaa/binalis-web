@@ -10,19 +10,22 @@ Presentar Binalis, mostrar los proyectos realizados con su proceso de trabajo y 
 
 Primero mercado local (Paraguay); a futuro, posiblemente el exterior. Idioma: **español** por ahora.
 
+La web tiene que reflejar la **identidad del dueño como programador**: estética de código (JetBrains Mono en etiquetas y detalles técnicos) y una persona real detrás de la marca (RF-10).
+
 ## 3. Alcance v1
 
-| ID    | Requisito                                                                                                                                                |
-| ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| RF-01 | Barra superior con wordmark y anclas: Servicios, Proceso, Proyectos y botón "Cotizá tu proyecto".                                                        |
-| RF-02 | Portada con titular, subtítulo, botones "Cotizá tu proyecto" y "Ver proyectos", y el símbolo "b" con glow neón.                                          |
-| RF-03 | Servicios (3 tarjetas): Páginas web · Sistemas y apps a medida · Landing pages y promociones.                                                            |
-| RF-04 | Proceso de trabajo en 4 pasos: Conversamos · Diseñamos · Construimos · Entregamos y acompañamos.                                                         |
-| RF-05 | Proyectos: por cada uno, etiquetas, nombre, descripción, medio (video corto o capturas) y bloques Problema / Solución / Resultado.                       |
-| RF-06 | Bloque final de proyectos "siguiente proyecto cargando…" con barra de progreso animada.                                                                  |
-| RF-07 | Testimonios: 3 espacios para completar cuando haya testimonios reales.                                                                                   |
-| RF-08 | Cotización: formulario (nombre, WhatsApp o correo, tipo de proyecto, mensaje), envío por función serverless, antispam y mensaje de confirmación o error. |
-| RF-09 | Botón de contacto por WhatsApp y pie con correo, redes y © año.                                                                                          |
+| ID    | Requisito                                                                                                                                        |
+| ----- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| RF-01 | Barra superior con wordmark y anclas: Servicios, Proceso, Proyectos y botón "Cotizá tu proyecto".                                                |
+| RF-02 | Portada con titular, subtítulo, botones "Cotizá tu proyecto" y "Ver proyectos", y el símbolo "b" con glow neón.                                  |
+| RF-03 | Servicios (3 tarjetas): Páginas web · Sistemas y apps a medida · Landing pages y promociones.                                                    |
+| RF-04 | Proceso de trabajo en 4 pasos: Conversamos · Diseñamos · Construimos · Entregamos y acompañamos.                                                 |
+| RF-05 | Proyectos: por cada uno, etiquetas, nombre, descripción, medio (video corto o capturas) y bloques Problema / Solución / Resultado.               |
+| RF-06 | Bloque final de proyectos "siguiente proyecto cargando…" con barra de progreso animada.                                                          |
+| RF-07 | Testimonios: hasta 3, solo reales. La sección no se muestra hasta tener al menos uno.                                                            |
+| RF-08 | Cotización (`#cotizacion`): botón que abre WhatsApp con un mensaje ya escrito. El formulario con envío serverless queda para v2 (ver sección 7). |
+| RF-09 | Pie con WhatsApp, correo y redes (cada uno cuando exista) y © año.                                                                               |
+| RF-10 | "Quién está detrás": el dueño, Marthin Meza, con su stack y su forma de trabajar. Texto escrito o aprobado por él.                               |
 
 ## 4. Requisitos no funcionales
 
@@ -38,17 +41,20 @@ Ver `CLAUDE.md` (tokens) y el lienzo de diseño "Binalis — Identidad de marca"
 
 ## 6. Contenido pendiente (placeholders)
 
+En el sitio publicado **no se ve ningún placeholder**: lo que falta se oculta o se reemplaza por diseño. Un proyecto sin capturas muestra una tarjeta de código con su stack; si falta Problema o Resultado, esa fila no aparece. Los textos de marca los aprueba el dueño antes de publicarse.
+
 - Proyectos: Problema y Resultado del sitio de Cosmos Trak y de la promoción YERON; capturas del sistema administrativo (con datos de prueba, nunca reales) y video o capturas de la promoción YERON.
 - Testimonios reales (se van a pedir a clientes).
-- Número de WhatsApp, correo, Instagram y LinkedIn.
+- Correo con el dominio, Instagram y LinkedIn (WhatsApp: +595 983 755 161).
 - Texto final del titular, de los servicios y de los pasos del proceso.
 
 ## 7. Fuera de alcance v1
 
-Blog, versión en otros idiomas, panel de administración, pagos.
+Blog, versión en otros idiomas, panel de administración, pagos. Para v2: formulario de cotización con envío serverless, servicio de correo y Turnstile.
 
 ## 8. Decisiones tomadas
 
+- Sitio funcional antes que completo (2026-10-15): contacto por WhatsApp en lugar del formulario serverless, sin placeholders visibles e identidad de programador. Aprobado por el dueño.
 - Nombre: **Binalis**. Identidad: oscuro, futurista, neón; wordmark y símbolo "b".
 - Dominio: `binalis.com.py`, registrado en NIC.PY y habilitado (2026-10-14).
 - Hosting: **Cloudflare Workers** (static assets), con DNS en Cloudflare. Se descartó Pages porque Cloudflare lo marca como flujo _legacy_ (2026-10-14).
@@ -57,10 +63,8 @@ Blog, versión en otros idiomas, panel de administración, pagos.
 
 ## 9. Preguntas abiertas
 
-- ¿Se oculta la sección de testimonios hasta tener al menos uno?
-- ¿Qué servicio de envío de correo se usa para el formulario?
-- ¿Qué correo con el dominio propio se va a usar?
+- ¿Qué correo con el dominio propio se va a usar? Recomendado: `contacto@binalis.com.py` con Zoho Mail (gratis) o Cloudflare Email Routing (solo reenvío).
 
 ## 10. Criterios de aceptación globales
 
-Todos los RF implementados · CI en verde · sin errores de accesibilidad críticos · formulario probado de punta a punta · sitio publicado en el dominio de Binalis.
+Todos los RF implementados · CI en verde · sin errores de accesibilidad críticos · sin placeholders visibles · sitio publicado en el dominio de Binalis.

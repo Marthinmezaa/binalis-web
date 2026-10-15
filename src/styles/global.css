@@ -122,6 +122,10 @@ a {
   background: rgb(0 240 255 / 10%);
 }
 
+.wordmark-accent {
+  color: var(--color-cyan);
+}
+
 .skip-link {
   position: absolute;
   top: -100%;

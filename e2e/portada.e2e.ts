@@ -131,6 +131,30 @@ for (const { name, items } of SECTIONS) {
   });
 }
 
+test("los botones de cotizar llevan a WhatsApp con el número y un mensaje", async ({
+  page,
+}) => {
+  for (const button of await page
+    .getByRole("link", { name: "Cotizá tu proyecto" })
+    .all()) {
+    await expect(button).toHaveAttribute("href", "#cotizacion");
+  }
+
+  const whatsapp = page
+    .getByRole("region", { name: "Cotizá tu proyecto" })
+    .getByRole("link", { name: "Hablemos por WhatsApp" });
+  await expect(whatsapp).toHaveAttribute(
+    "href",
+    /^https:\/\/wa\.me\/595983755161\?text=.+/,
+  );
+});
+
+test("el pie muestra WhatsApp y el año actual", async ({ page }) => {
+  const footer = page.getByRole("contentinfo");
+  await expect(footer.getByRole("link", { name: "WhatsApp" })).toBeVisible();
+  await expect(footer).toContainText(`© ${new Date().getFullYear()} Binalis`);
+});
+
 test("no genera scroll horizontal", async ({ page }) => {
   // Not window.innerWidth: mobile browsers zoom out to fit overflowing content, so it grows with it.
   const overflows = await page.evaluate(

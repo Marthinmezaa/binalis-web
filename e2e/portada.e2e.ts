@@ -208,4 +208,17 @@ test("el pie muestra WhatsApp y el año actual", async ({ page }) => {
   const footer = page.getByRole("contentinfo");
   await expect(footer.getByRole("link", { name: "WhatsApp" })).toBeVisible();
   await expect(footer).toContainText(`© ${new Date().getFullYear()} Binalis`);
+  await expect(footer.locator("figcaption")).toHaveText("Mateo 11:28");
+});
+
+test("el brillo de la b pulsa, salvo con movimiento reducido", async ({
+  page,
+}) => {
+  const symbol = page.locator(".symbol");
+  const animationCount = () =>
+    symbol.evaluate((element) => element.getAnimations().length);
+
+  expect(await animationCount()).toBe(1);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  expect(await animationCount()).toBe(0);
 });

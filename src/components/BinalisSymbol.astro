@@ -34,4 +34,18 @@
     filter: drop-shadow(0 0 0.75rem rgb(0 240 255 / 55%))
       drop-shadow(0 0 2.5rem rgb(123 92 255 / 45%));
   }
+
+  /* Neon "breathing": the glow swells and settles. Only the glow changes, never position or opacity. */
+  @media (prefers-reduced-motion: no-preference) {
+    .symbol {
+      animation: glow-pulse 2.4s ease-in-out infinite;
+    }
+  }
+
+  @keyframes glow-pulse {
+    50% {
+      filter: drop-shadow(0 0 1.25rem rgb(0 240 255 / 90%))
+        drop-shadow(0 0 4rem rgb(123 92 255 / 70%));
+    }
+  }
 </style>

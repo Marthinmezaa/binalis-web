@@ -45,29 +45,25 @@ const profile: Record<string, string | number | string[]> = {
       </h2>
     )}
     <div class="about">
-      <div class="aside">
-        <Image
-          class="photo"
-          src={photo}
-          alt="Marthin Meza, de saco azul y camisa blanca, sonriendo al aire libre."
-          widths={[400, 800]}
-          sizes="(min-width: 48rem) 22rem, 100vw"
-        />
-        <pre class="code"><code><span class="keyword">const</span> marthin = {"{"}{Object.entries(profile).map(([key, value]) => (
-  <span class="property">{key}: {Array.isArray(value) ? (
-    <>[{value.map((item, index) => (
-      <><span class="string">{JSON.stringify(item)}</span>{index < value.length - 1 && ", "}</>
-    ))}]</>
-  ) : (
-    <span class={typeof value === "number" ? "number" : "string"}>{JSON.stringify(value)}</span>
-  )},</span>
-))}{"};"}</code></pre>
-      </div>
       <div class="story">
-        <Name id="quien-nombre" class="name">
-          Ing. Marthin Meza
-        </Name>
-        <p class="role">Fundador y CEO de Binalis · Desarrollador full stack</p>
+        {/* Small avatar on purpose: Binalis is the protagonist, not the person. */}
+        <div class="byline">
+          <Image
+            class="photo"
+            src={photo}
+            alt="Marthin Meza, de saco azul y camisa blanca, sonriendo al aire libre."
+            widths={[96, 192]}
+            sizes="6rem"
+          />
+          <div>
+            <Name id="quien-nombre" class="name">
+              Ing. Marthin Meza
+            </Name>
+            <p class="role">
+              Fundador y CEO de Binalis · Desarrollador full stack
+            </p>
+          </div>
+        </div>
         {!full && (
           <>
             <p>
@@ -124,6 +120,15 @@ const profile: Record<string, string | number | string[]> = {
           </Fragment>
         )}
       </div>
+      <pre class="code"><code><span class="keyword">const</span> marthin = {"{"}{Object.entries(profile).map(([key, value]) => (
+  <span class="property">{key}: {Array.isArray(value) ? (
+    <>[{value.map((item, index) => (
+      <><span class="string">{JSON.stringify(item)}</span>{index < value.length - 1 && ", "}</>
+    ))}]</>
+  ) : (
+    <span class={typeof value === "number" ? "number" : "string"}>{JSON.stringify(value)}</span>
+  )},</span>
+))}{"};"}</code></pre>
     </div>
   </div>
 </section>
@@ -136,25 +141,26 @@ const profile: Record<string, string | number | string[]> = {
 
   @media (min-width: 48rem) {
     .about {
-      grid-template-columns: 22rem 1fr;
+      grid-template-columns: 1fr 22rem;
       align-items: start;
     }
   }
 
-  .aside {
-    display: grid;
-    gap: 1.5rem;
+  .byline {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
   }
 
   .photo {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 5;
+    flex: none;
+    width: 6rem;
+    height: 6rem;
     object-fit: cover;
-    object-position: 50% 30%;
-    border: 1px solid rgb(0 240 255 / 25%);
-    border-radius: 1rem;
+    object-position: 50% 20%;
+    border: 2px solid rgb(0 240 255 / 40%);
+    border-radius: 50%;
   }
 
   /* pre-wrap instead of a scrollable box: no horizontal scroll on phones. */
@@ -196,7 +202,7 @@ const profile: Record<string, string | number | string[]> = {
   }
 
   .role {
-    margin: 0.5rem 0 1.5rem;
+    margin: 0.5rem 0 0;
     color: var(--color-cyan);
     font-family: var(--font-mono);
     font-size: 0.875rem;

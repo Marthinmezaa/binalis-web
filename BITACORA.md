@@ -21,7 +21,7 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-**Se sigue en la otra PC.** Al empezar: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **34/34**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
+**Se sigue en la otra PC.** Al empezar: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **36/36**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
 
 Pendientes, en orden:
 
@@ -32,6 +32,14 @@ Pendientes, en orden:
 5. SEO pendiente de la spec: Open Graph (con la foto o el símbolo), `sitemap.xml` y `robots.txt`.
 
 ## Entradas
+
+### 2026-10-15 (22)
+
+- La "b" de la portada ahora "respira": el glow crece y baja cada 2,4 s, copiado del pulso de promoyeron.com.py (que lo aplica a su botón principal). Solo cambia la sombra, nunca posición ni opacidad, y no corre con `prefers-reduced-motion`.
+- Foto de "Quién soy": de 22rem a un avatar redondo de 6rem junto al nombre, a pedido del dueño ("la empresa es el centro"). La historia va primero y la tarjeta de código a la derecha (abajo en celular), así `/quien-soy/` arranca con el `h1`.
+- Versículo de Binalis en el pie de todas las páginas: Mateo 11:28 en RVR1960, en `<figure>` con `<blockquote>` y la cita en `figcaption`. Prueba e2e de la cita.
+- Nueva e2e: la "b" tiene una animación y ninguna con `reducedMotion: "reduce"` (verificado que falla si se quita la media query). Revisado en Chrome: pulso de 55% a 90% de intensidad, avatar de 96 px en WebP, orden de lectura foto → `h1` → código, consola limpia bajo la CSP. La vista previa de Workers no se revisó: el Chrome de la PC no tiene sesión en Cloudflare.
+- Esta PC necesitó `pnpm exec playwright install chromium` (el headless shell 1248 no estaba). 36/36.
 
 ### 2026-10-15 (21)
 
@@ -132,9 +140,3 @@ Pendientes, en orden:
 - Símbolo "b" armado en SVG a partir de la descripción de marca (barra = 1, aro = 0, degradé cian→violeta, glow con `drop-shadow`). Es una aproximación: reemplazar por el SVG del lienzo de marca cuando esté.
 - Fuentes Space Grotesk y Manrope autoalojadas (woff2 variables, subset latin, ~23 KB c/u, licencia OFL junto a los archivos). No se usa `<Font />` de Astro porque inyecta CSS inline y la CSP lo bloquea.
 - Titular, subtítulo y meta description quedan como placeholders.
-
-### 2026-10-14 (7)
-
-- Cabeceras de seguridad en producción (PR #13) y release 0.3.0.
-- `www` redirige con 301 al dominio raíz; HTTP → HTTPS forzado; TLS 1.1 rechazado. Verificado con curl.
-- Lección: un espacio inicial pegado en el valor de la regla impedía que coincidiera. Revisar siempre el _Expression Preview_.

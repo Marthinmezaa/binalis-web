@@ -48,7 +48,7 @@ Trabajo guiado por especificaciones (SDD) para todo cambio no trivial:
 **Explore → Proposal → Spec → Design → Tasks → Apply → Verify → Archive.**
 
 - La _Spec_ vive en `ESPECIFICACIONES.md`; el _Archive_ se registra en `BITACORA.md`.
-- Si Gentle-AI modifica este archivo al configurarse, revisar el diff: este `CLAUDE.md` es la fuente de verdad.
+- No se instala: solo se sigue su filosofía (decisión del dueño, 2026-10-15).
 
 ## Stack
 

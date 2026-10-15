@@ -21,13 +21,21 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-1. **Correo:** el dueño elige Zoho Mail gratis (recibir y responder) o Cloudflare Email Routing (solo reenvío) para `contacto@binalis.com.py`. Son excluyentes (los dos usan el MX). Después se suma al pie.
-2. Sacar los placeholders visibles de Proyectos: tarjeta de código en lugar de medio faltante y ocultar Problema/Resultado si falta.
-3. JetBrains Mono completa (subset latin) para etiquetas y detalles técnicos.
-4. Borradores de titular, subtítulo, servicios y proceso para que el dueño apruebe; RF-10 "Quién está detrás" con su texto.
-5. **En una PC sin preparar:** `git pull`, `pnpm install`, una vez `pnpm exec playwright install chromium`; `pnpm build && pnpm test:e2e` debe dar 24/24. Si `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
+1. **RF-10 "Quién está detrás"** (en curso): el dueño elige entre los borradores (versión historia o versión corta + tarjeta de código con sus datos) y manda su foto. Después se implementa.
+2. **Correo** `contacto@binalis.com.py` en Zoho Mail (gratis). Antes de vincular Instagram, Facebook y LinkedIn: renovación automática del dominio en NIC.PY y verificación en dos pasos en todas las cuentas. Después, sumar correo y redes al pie.
+3. **Capturas de proyectos:** el sistema administrativo y YERON solo con datos de prueba (nunca reales). Sus repos no están en la PC Cardinallis-LAPTOP: ver si están en la otra PC o si hay una URL pública o un usuario de prueba sin datos de clientes.
+4. Sacar los placeholders visibles de Proyectos: tarjeta de código en lugar de medio faltante y ocultar Problema/Resultado si falta.
+5. JetBrains Mono completa (subset latin) para etiquetas y detalles técnicos.
+6. Borradores de titular, subtítulo, servicios y proceso para que el dueño apruebe.
+7. **En una PC sin preparar:** `git pull`, `pnpm install`, una vez `pnpm exec playwright install chromium`; `pnpm build && pnpm test:e2e` debe dar 24/24. Si `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
 
 ## Entradas
+
+### 2026-10-15 (19)
+
+- Datos para RF-10, dados por el dueño: "Ing. Marthin Meza", 31 años, ingeniero electromecánico y técnico mecánico automotriz. Programa desde 2023, de forma autodidacta (HTML/CSS → Python → JavaScript); curso Full Stack terminado en junio de 2026, el mismo mes de su primer contrato. Hoy estudia machine learning. Lo que lo diferencia: la pasión ("realmente amás lo que hacés"). Fuera del código: baterista y bajista, sirve en alabanza y con jóvenes; la fe es central para él. Quiere su foto.
+- Zoho: el correo depende del dominio, no de Zoho. Si el plan gratis cambia, se migra cambiando los MX y la dirección sigue igual. El riesgo real es que venza el dominio.
+- Capturas: nunca de datos reales de clientes, aunque haya acceso.
 
 ### 2026-10-15 (18)
 
@@ -125,11 +133,3 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Licencia propietaria mergeada (PR #11).
 - DNS de `binalis.com.py` delegado a Cloudflare.
 - Hosting: Pages → **Workers** (static assets). Cloudflare marca Pages como _legacy_; para un sitio estático el cambio es solo `wrangler.jsonc`.
-
-### 2026-10-14 (4)
-
-- Mergeados los PRs de Dependabot #1–#5 (actions a su última versión mayor, CI en verde).
-- PR de release #7 cerrado y regenerado como #9 con `RELEASE_PLEASE_TOKEN`: el CI corrió; mergeado → v0.2.0.
-- Los commits `docs:` y `chore:` no actualizan el PR de release: el token solo se ejercita con `feat:`/`fix:` o al recrear el PR.
-- README y SECURITY.md; activado el reporte privado de vulnerabilidades; descripción, topics y web del repo.
-- Licencia propietaria (`LICENSE`): repo público solo para consulta, todos los derechos reservados.

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.10.0...binalis-web-v0.11.0) (2026-10-15)
+
+
+### Features
+
+* sección "quién está detrás" con foto y tarjeta de código ([#40](https://github.com/Marthinmezaa/binalis-web/issues/40)) ([8726b7b](https://github.com/Marthinmezaa/binalis-web/commit/8726b7b20b4ec43bb1949f194dc4f0c4f6ed4e26))
+
 ## [0.10.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.9.0...binalis-web-v0.10.0) (2026-10-15)
 
 

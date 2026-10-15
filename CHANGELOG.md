@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.11.0...binalis-web-v0.12.0) (2026-10-15)
+
+
+### Features
+
+* página "quién soy" y resumen en la portada ([#42](https://github.com/Marthinmezaa/binalis-web/issues/42)) ([e6b5a42](https://github.com/Marthinmezaa/binalis-web/commit/e6b5a42f595b2094187e2f4e78292a05d67e481c))
+
 ## [0.11.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.10.0...binalis-web-v0.11.0) (2026-10-15)
 
 

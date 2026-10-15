@@ -6,6 +6,16 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="footer">
+  {/* The verse the owner received for Binalis: on every page, quiet, closing the site. */}
+  <figure class="container verse">
+    <blockquote>
+      <p>
+        «Venid a mí todos los que estáis trabajados y cargados, y yo os haré
+        descansar.»
+      </p>
+    </blockquote>
+    <figcaption>Mateo 11:28</figcaption>
+  </figure>
   <div class="container footer-inner">
     <p class="wordmark">
       bin<span class="wordmark-accent">alis</span>
@@ -23,6 +33,27 @@ const year = new Date().getFullYear();
   .footer {
     margin-top: clamp(2.5rem, 6vw, 4.5rem);
     border-top: 1px solid var(--color-surface);
+  }
+
+  .verse {
+    margin-block: 0;
+    padding-block: 2.5rem 0;
+    text-align: center;
+  }
+
+  blockquote {
+    max-width: 34rem;
+    margin: 0 auto;
+    color: var(--color-text);
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+  }
+
+  figcaption {
+    margin-top: 0.5rem;
+    color: var(--color-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
   }
 
   .footer-inner {

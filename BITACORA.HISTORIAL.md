@@ -10,6 +10,11 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-14 — Cabeceras y redirecciones
+
+- Cabeceras de seguridad en producción (PR #13), release 0.3.0. `www` → raíz con 301, HTTP → HTTPS, TLS 1.1 rechazado (verificado con curl).
+- Lección: un espacio inicial en el valor de una regla de Cloudflare impide que coincida; revisar el _Expression Preview_.
+
 ### 2026-10-14 — Sitio en vivo
 
 - Sitio publicado en `https://binalis.com.py` con Workers Builds (PR #12).

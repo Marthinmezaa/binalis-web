@@ -17,14 +17,14 @@ La web tiene que reflejar la **identidad del dueño como programador**: estétic
 | ID    | Requisito                                                                                                                                                                                         |
 | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | RF-01 | Barra superior con wordmark, anclas a Servicios, Proceso y Proyectos, link a "Quién soy" (`/quien-soy/`) y botón "Cotizá tu proyecto".                                                            |
-| RF-02 | Portada con titular, subtítulo, botones "Cotizá tu proyecto" y "Ver proyectos", y el símbolo "b" con glow neón.                                                                                   |
+| RF-02 | Portada con titular, subtítulo, botones "Cotizá tu proyecto" y "Ver proyectos", y el símbolo "b" con glow neón que pulsa (salvo con movimiento reducido).                                         |
 | RF-03 | Servicios (3 tarjetas): Páginas web · Sistemas y apps a medida · Landing pages y promociones.                                                                                                     |
 | RF-04 | Proceso de trabajo en 4 pasos: Conversamos · Diseñamos · Construimos · Entregamos y acompañamos.                                                                                                  |
 | RF-05 | Proyectos: por cada uno, etiquetas, nombre, descripción, medio (video corto o capturas) y bloques Problema / Solución / Resultado.                                                                |
 | RF-06 | Bloque final de proyectos "siguiente proyecto cargando…" con barra de progreso animada.                                                                                                           |
 | RF-07 | Testimonios: hasta 3, solo reales. La sección no se muestra hasta tener al menos uno.                                                                                                             |
 | RF-08 | Cotización (`#cotizacion`): botón que abre WhatsApp con un mensaje ya escrito. El formulario con envío serverless queda para v2 (ver sección 7).                                                  |
-| RF-09 | Pie con WhatsApp, correo y redes (cada uno cuando exista) y © año.                                                                                                                                |
+| RF-09 | Pie con el versículo de Binalis (Mateo 11:28, RVR1960), WhatsApp, correo y redes (cada uno cuando exista) y © año.                                                                                |
 | RF-10 | "Quién está detrás": en la portada, un resumen (foto, tarjeta de código, dos líneas y "Conocé mi historia"); en `/quien-soy/`, la historia completa del Ing. Marthin Meza. Texto aprobado por él. |
 
 ## 4. Requisitos no funcionales
@@ -54,6 +54,7 @@ Blog, versión en otros idiomas, panel de administración, pagos. Para v2: formu
 
 ## 8. Decisiones tomadas
 
+- La empresa es la protagonista, no la persona (2026-10-15, pedido del dueño): en RF-10 la foto es un avatar chico junto al nombre. El versículo que el dueño recibió para Binalis va en el pie de todas las páginas.
 - "Quién soy" en página propia (2026-10-15): la portada queda corta y enfocada en cotizar, y la historia tiene su URL para Google y para compartir. "Quién soy" y no "Quiénes somos": hoy Binalis es una persona.
 - Sitio funcional antes que completo (2026-10-15): contacto por WhatsApp en lugar del formulario serverless, sin placeholders visibles e identidad de programador. Aprobado por el dueño.
 - Nombre: **Binalis**. Identidad: oscuro, futurista, neón; wordmark y símbolo "b".

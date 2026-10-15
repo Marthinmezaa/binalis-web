@@ -208,4 +208,5 @@ test("el pie muestra WhatsApp y el año actual", async ({ page }) => {
   const footer = page.getByRole("contentinfo");
   await expect(footer.getByRole("link", { name: "WhatsApp" })).toBeVisible();
   await expect(footer).toContainText(`© ${new Date().getFullYear()} Binalis`);
+  await expect(footer.locator("figcaption")).toHaveText("Mateo 11:28");
 });

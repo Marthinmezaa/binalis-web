@@ -106,6 +106,14 @@ test("cada proyecto muestra etiquetas, medio y Problema / Solución / Resultado"
   }
 });
 
+test("Proyectos cierra con 'Siguiente proyecto cargando…'", async ({
+  page,
+}) => {
+  await expect(
+    page.getByRole("region", { name: "Proyectos" }).locator(".next-project"),
+  ).toContainText("Siguiente proyecto cargando…");
+});
+
 for (const { name, items } of SECTIONS) {
   test(`la sección ${name} tiene lo que pide la spec y se llega desde la barra`, async ({
     page,

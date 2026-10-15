@@ -107,6 +107,12 @@ const projects: Project[] = [
         ),
       )}
     </div>
+    <div class="next-project">
+      <p>Siguiente proyecto cargando…</p>
+      <div class="progress" aria-hidden="true">
+        <span></span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -199,5 +205,67 @@ const projects: Project[] = [
   dd {
     margin: 0;
     color: var(--color-text-muted);
+  }
+
+  .next-project {
+    margin-top: clamp(3rem, 8vw, 5rem);
+    padding: clamp(1.5rem, 5vw, 2.5rem);
+    border: 1px dashed rgb(255 255 255 / 15%);
+    border-radius: 1rem;
+    background: var(--color-surface);
+    text-align: center;
+  }
+
+  .next-project p {
+    margin: 0 0 1.25rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    font-weight: 700;
+  }
+
+  .progress {
+    max-width: 32rem;
+    height: 0.5rem;
+    margin-inline: auto;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 8%);
+  }
+
+  /* Without scroll-driven animations (or with reduced motion) the bar stays still, partly filled. */
+  .progress span {
+    display: block;
+    width: 70%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--color-cyan), var(--color-violet));
+  }
+
+  /* Tied to scroll instead of a timer: it only moves while the user scrolls, so it never loops on its own (WCAG 2.2.2).
+     It fills while the whole block enters the screen, which works even when nothing below lets the page scroll further.
+     Longhands on purpose: the minifier would merge `animation` + `animation-timeline` into a shorthand Chrome rejects. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .next-project {
+        view-timeline-name: --next-project;
+      }
+
+      .progress span {
+        animation-name: next-project-load;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: --next-project;
+        animation-range: entry 0% entry 100%;
+      }
+    }
+  }
+
+  @keyframes next-project-load {
+    from {
+      width: 5%;
+    }
+
+    to {
+      width: 90%;
+    }
   }
 </style>

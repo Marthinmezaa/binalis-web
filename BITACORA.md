@@ -7,7 +7,7 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Diseño de la web aprobado en lienzo (4 láminas: logo, color y tipografía, aplicaciones, web).
 - Repo público en GitHub con `main` protegida (4 checks obligatorios: calidad, gitleaks, dependencias, CodeQL).
 - Dominio `binalis.com.py` habilitado y con DNS delegado a Cloudflare (`aurora` / `johnny.ns.cloudflare.com`).
-- Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04) y Proyectos (RF-05), con textos placeholder; favicon e íconos de app.
+- Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04), Proyectos (RF-05) y el bloque "siguiente proyecto cargando…" (RF-06), con textos placeholder; favicon e íconos de app.
 - Pruebas e2e con Playwright + axe en el CI (escritorio y celular), bajo la misma CSP de producción.
 - release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.8.0.
 - Repo con README, SECURITY.md (reporte privado de vulnerabilidades activado), descripción, topics y sitio web.
@@ -21,12 +21,18 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-1. **Al volver a la PC de ocio:** `git pull`, `pnpm install` (entraron Playwright, axe y sharp) y una sola vez `pnpm exec playwright install chromium`; después `pnpm build && pnpm test:e2e` debe dar 18/18. Si `pnpm` no existe y `corepack enable` da EPERM, instalarlo con `npm install -g pnpm@11.20.0`.
-2. Completar los placeholders de Proyectos (Problema y Resultado faltantes, capturas del sistema con datos de prueba y de YERON).
-3. RF-06: bloque "siguiente proyecto cargando…" con barra de progreso animada.
-4. Instalar Gentle-AI en cada PC (Ponytail ya activo).
+1. **Aprobar o ajustar la propuesta de cambio de spec** (entrada 17): sitio funcional sin placeholders visibles y con identidad de programador. No se implementa nada de eso hasta que el dueño la apruebe.
+2. **En una PC sin preparar:** `git pull`, `pnpm install` y una sola vez `pnpm exec playwright install chromium`; después `pnpm build && pnpm test:e2e` debe dar 20/20. Si `pnpm` no existe y `corepack enable` da EPERM, instalarlo con `npm install -g pnpm@11.20.0`.
+3. Revisar el PR #34 de Dependabot (`release-please-action` v4 → v5, versión mayor).
 
 ## Entradas
+
+### 2026-10-15 (17)
+
+- RF-06: al final de Proyectos, el bloque "Siguiente proyecto cargando…" con una barra de progreso de degradé de marca. Es solo CSS: se llena con el scroll (`animation-timeline`) mientras el bloque entra en pantalla, así nunca se mueve sola en bucle (WCAG 2.2.2). Si el navegador no lo soporta o el usuario pide menos movimiento, la barra queda quieta al 70%.
+- Dos trampas de esa animación: el minificador fusionaba `animation` + `animation-timeline` en un shorthand que Chrome descarta (se escriben longhands), y un `overflow: hidden` en la barra se volvía su contenedor de scroll y la dejaba congelada. Verificado midiendo el ancho a distintas alturas de scroll: 14% → 51% → 74% → 90%.
+- Gentle-AI no se instala: solo se sigue su filosofía (decisión del dueño). Actualizado `CLAUDE.md`.
+- El dueño quiere el sitio **funcional** sin tener que juntar ahora videos, fotos ni textos, y que represente su **identidad como programador**. Queda propuesta como cambio de spec, a la espera de aprobación.
 
 ### 2026-10-14 (16)
 
@@ -124,12 +130,3 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Dominio `binalis.com.py` habilitado por NIC.PY.
 - release-please: primer fallo por falta de `package.json`; el segundo fue un error 500 de GitHub, transitorio, resuelto al reintentar. Creado el secreto `RELEASE_PLEASE_TOKEN`.
 - Pedido `@dependabot rebase` en #1–#5: sus checks fallidos eran de antes del PR #6.
-
-### 2026-10-14 (2)
-
-- Verificado: repo público creado y `main` protegida.
-- Dominio `binalis.com.py` pagado en NIC.PY; pendiente de habilitación.
-- Estructura Astro 7 + TS estricto, ESLint + Prettier, Vitest, Husky + lint-staged + commitlint.
-- TypeScript fijado en `~6.0`: `typescript-eslint` aún no soporta TS 7.
-- `.gitattributes` fuerza LF: con CRLF de Windows, `prettier --check` fallaría al alternar PCs.
-- Playwright + axe quedan para el PR con la primera sección real (hoy no hay nada que probar).

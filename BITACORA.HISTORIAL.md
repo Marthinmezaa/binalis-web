@@ -10,6 +10,12 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-14 — Base del proyecto
+
+- Repo público creado con `main` protegida; dominio `binalis.com.py` pagado en NIC.PY.
+- Estructura Astro 7 + TS estricto, ESLint + Prettier, Vitest, Husky + lint-staged + commitlint.
+- TypeScript fijado en `~6.0` (`typescript-eslint` no soportaba TS 7) y `.gitattributes` con LF para alternar PCs Windows sin romper `prettier --check`.
+
 ### 2026-10-14 — Arranque
 
 - Nombre **Binalis** e identidad de marca aprobados: wordmark y símbolo "b", paleta cian/violeta/magenta sobre fondo oscuro.

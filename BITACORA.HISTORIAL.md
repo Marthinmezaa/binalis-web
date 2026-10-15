@@ -10,6 +10,11 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-14 — Licencia y hosting
+
+- Licencia propietaria mergeada (PR #11); DNS de `binalis.com.py` delegado a Cloudflare.
+- Hosting: Pages → Workers (static assets), porque Cloudflare marca Pages como legacy.
+
 ### 2026-10-14 — Dependabot, release y documentación
 
 - Mergeados los PRs de Dependabot #1–#5. PR de release regenerado con `RELEASE_PLEASE_TOKEN` → v0.2.0. Los commits `docs:`/`chore:` no actualizan el PR de release.

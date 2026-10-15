@@ -1,0 +1,180 @@
+---
+import { Image } from "astro:assets";
+import photo from "../assets/marthin-meza.jpg";
+
+// Rendered as a JS object literal in the code card: strings, numbers or lists of strings.
+const profile: Record<string, string | number | string[]> = {
+  titulo: "Ing. electromecánico",
+  rol: "Fundador y CEO de Binalis",
+  ciudad: "San Lorenzo, Paraguay",
+  // shortcut: fixed age; update it every birthday.
+  edad: 31,
+  programandoDesde: 2023,
+  stack: [
+    "React",
+    "Next.js",
+    "Node.js",
+    "PostgreSQL",
+    "MySQL",
+    "Electron",
+    "Python",
+  ],
+  aprendiendo: "Machine learning",
+  fueraDelCodigo: ["alabanza", "jóvenes", "CrossFit"],
+  motor: "Amar lo que hago",
+};
+---
+
+<section id="quien" class="section" aria-labelledby="quien-title">
+  <div class="container">
+    <h2 id="quien-title" class="section-title">
+      Quién está detrás
+    </h2>
+    <div class="about">
+      <div class="aside">
+        <Image
+          class="photo"
+          src={photo}
+          alt="Marthin Meza, de saco azul y camisa blanca, sonriendo al aire libre."
+          widths={[400, 800]}
+          sizes="(min-width: 48rem) 22rem, 100vw"
+        />
+        <pre class="code"><code><span class="keyword">const</span> marthin = {"{"}{Object.entries(profile).map(([key, value]) => (
+  <span class="property">{key}: {Array.isArray(value) ? (
+    <>[{value.map((item, index) => (
+      <><span class="string">{JSON.stringify(item)}</span>{index < value.length - 1 && ", "}</>
+    ))}]</>
+  ) : (
+    <span class={typeof value === "number" ? "number" : "string"}>{JSON.stringify(value)}</span>
+  )},</span>
+))}{"};"}</code></pre>
+      </div>
+      <div class="story">
+        <h3>Ing. Marthin Meza</h3>
+        <p class="role">Fundador y CEO de Binalis · Desarrollador full stack</p>
+        <p>
+          Mi papá, el Dr. Juan Meza, PhD, trabajaba en la misma universidad
+          donde yo estudiaba. Una tarde, al salir de clases, lo vi cansado y
+          estresado, y le pregunté por qué seguía ahí. Me respondió:&nbsp;
+          <strong>«Porque amo lo que hago»</strong>. Esa frase se volvió mi
+          propósito: encontrar aquello que ame hacer.
+        </p>
+        <p>
+          Años después, cuando mi papá ya había partido, mi padrastro me mostró
+          los programas que él mismo había creado para su empresa y me dijo que
+          un ingeniero siempre tiene que saber programar. Ahí se encendió un
+          fuego en mí: quería hacer programas que le hicieran la vida más fácil
+          a la gente.
+        </p>
+        <p>
+          En 2023 empecé a aprender por mi cuenta. Arranqué con HTML y CSS; con
+          Python armé un programa de terminal que me decía cuánto había ganado
+          en el mes, y con JavaScript hice mi primera página web. En junio de
+          2026 terminé el curso de Desarrollador Full Stack en la UCSA, el mismo
+          mes en que conseguí mi primer contrato. Desde entonces no paré de
+          crecer, proyecto tras proyecto.
+        </p>
+        <p>
+          Soy ingeniero electromecánico y técnico en mecánica automotriz: me
+          apasiona entender cómo funcionan las cosas, desde un motor hasta una
+          línea de código. Busco proyectos que me desafíen y me hagan aprender;
+          hoy estudio machine learning.
+        </p>
+        <p>
+          Mis clientes me definen con una frase:&nbsp;
+          <strong>«Realmente amás lo que hacés»</strong>. Y cuando amás lo que
+          hacés, se nota en la calidad.
+        </p>
+        <p>
+          Fuera del código sirvo en alabanza, acompaño a jóvenes en una
+          organización y entreno CrossFit. Amo servir: todo lo que hago, lo hago
+          para Jesús, porque sin Él no soy nada.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    display: grid;
+    gap: 2.5rem 4rem;
+  }
+
+  @media (min-width: 48rem) {
+    .about {
+      grid-template-columns: 22rem 1fr;
+      align-items: start;
+    }
+  }
+
+  .aside {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 30%;
+    border: 1px solid rgb(0 240 255 / 25%);
+    border-radius: 1rem;
+  }
+
+  /* pre-wrap instead of a scrollable box: no horizontal scroll on phones. */
+  .code {
+    margin: 0;
+    padding: 1.25rem;
+    border: 1px solid rgb(255 255 255 / 6%);
+    border-radius: 1rem;
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+  }
+
+  /* Hanging indent: a property that wraps keeps its continuation lines indented, like an editor. */
+  .property {
+    display: block;
+    padding-left: 4ch;
+    text-indent: -2ch;
+  }
+
+  .keyword {
+    color: var(--color-magenta);
+  }
+
+  .string {
+    color: var(--color-cyan);
+  }
+
+  .number {
+    color: var(--color-text);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+  }
+
+  .role {
+    margin: 0.5rem 0 1.5rem;
+    color: var(--color-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+  }
+
+  .story p:not(.role) {
+    margin: 0 0 1rem;
+    color: var(--color-text-muted);
+  }
+
+  strong {
+    color: var(--color-text);
+  }
+</style>

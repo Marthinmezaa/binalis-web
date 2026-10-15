@@ -131,6 +131,19 @@ for (const { name, items } of SECTIONS) {
   });
 }
 
+test("Quién está detrás muestra a Marthin con su foto y la tarjeta de código", async ({
+  page,
+}) => {
+  const section = page.getByRole("region", { name: "Quién está detrás" });
+  await expect(
+    section.getByRole("heading", { level: 3, name: "Ing. Marthin Meza" }),
+  ).toBeVisible();
+  await expect(
+    section.getByRole("img", { name: /Marthin Meza/ }),
+  ).toBeVisible();
+  await expect(section.locator("pre")).toContainText('stack: ["React"');
+});
+
 test("los botones de cotizar llevan a WhatsApp con el número y un mensaje", async ({
   page,
 }) => {

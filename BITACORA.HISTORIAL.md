@@ -10,6 +10,11 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-14 — Dependabot, release y documentación
+
+- Mergeados los PRs de Dependabot #1–#5. PR de release regenerado con `RELEASE_PLEASE_TOKEN` → v0.2.0. Los commits `docs:`/`chore:` no actualizan el PR de release.
+- README, SECURITY.md con reporte privado de vulnerabilidades y licencia propietaria (repo público solo para consulta).
+
 ### 2026-10-14 — Primer PR y dominio
 
 - Mergeado el PR #6 (estructura Astro). Dominio `binalis.com.py` habilitado por NIC.PY.

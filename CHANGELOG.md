@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.8.0...binalis-web-v0.9.0) (2026-10-15)
+
+
+### Features
+
+* bloque "siguiente proyecto cargando…" con barra animada ([#35](https://github.com/Marthinmezaa/binalis-web/issues/35)) ([4ad67f4](https://github.com/Marthinmezaa/binalis-web/commit/4ad67f49fae15b3a841808bbb394870f68b71433))
+
 ## [0.8.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.7.1...binalis-web-v0.8.0) (2026-10-14)
 
 

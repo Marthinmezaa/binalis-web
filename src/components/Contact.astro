@@ -1,0 +1,36 @@
+---
+import { whatsappDisplay, whatsappUrl } from "../contact";
+---
+
+<section id="cotizacion" class="section" aria-labelledby="cotizacion-title">
+  <div class="container contact">
+    <h2 id="cotizacion-title" class="section-title">
+      Cotizá tu proyecto
+    </h2>
+    <a class="button button-primary" href={whatsappUrl}>
+      Hablemos por WhatsApp
+    </a>
+    <p class="phone">{whatsappDisplay}</p>
+  </div>
+</section>
+
+<style>
+  .contact {
+    padding: clamp(2rem, 6vw, 3.5rem) var(--gutter);
+    border: 1px solid rgb(0 240 255 / 25%);
+    border-radius: 1rem;
+    background:
+      radial-gradient(circle at top, rgb(0 240 255 / 10%), transparent 70%),
+      var(--color-surface);
+    text-align: center;
+  }
+
+  .section-title {
+    margin-bottom: 1.5rem;
+  }
+
+  .phone {
+    margin: 1rem 0 0;
+    color: var(--color-text-muted);
+  }
+</style>

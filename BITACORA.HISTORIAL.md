@@ -10,6 +10,11 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-14 — Primer PR y dominio
+
+- Mergeado el PR #6 (estructura Astro). Dominio `binalis.com.py` habilitado por NIC.PY.
+- release-please: falló por falta de `package.json` y por un 500 transitorio de GitHub; se creó el secreto `RELEASE_PLEASE_TOKEN`.
+
 ### 2026-10-14 — Base del proyecto
 
 - Repo público creado con `main` protegida; dominio `binalis.com.py` pagado en NIC.PY.

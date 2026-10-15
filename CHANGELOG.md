@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.13.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.12.0...binalis-web-v0.13.0) (2026-10-15)
+
+
+### Features
+
+* b con brillo que pulsa, foto chica y versículo de Binalis en el pie ([#44](https://github.com/Marthinmezaa/binalis-web/issues/44)) ([82464c8](https://github.com/Marthinmezaa/binalis-web/commit/82464c85cd4d4e21ee686983ca10552d650f2995))
+
 ## [0.12.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.11.0...binalis-web-v0.12.0) (2026-10-15)
 
 

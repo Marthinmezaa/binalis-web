@@ -33,6 +33,12 @@ Pendientes, en orden:
 
 ## Entradas
 
+### 2026-10-16 (23)
+
+- La "b" ahora es la del lienzo de marca, a pedido del dueño: barra y aro separados por medio trazo, barra cian sólida y aro con degradé violeta→cian. Brillo más suave: solo cian, en reposo 0,5rem al 35 % y en el pico 1rem al 55 % (antes había además un halo violeta grande). Sigue pulsando (RF-02).
+- Íconos chicos como la lámina de aplicaciones: favicon = "b" oscura sobre disco cian (se lee en pestañas claras y oscuras, cierra el problema de contraste de la entrada 15); ícono de iOS = "b" de color sobre tile superficie `#0D1220`. Un solo SVG: `pnpm icons` oculta el disco y recolorea la "b" con CSS para el ícono de iOS.
+- Foto de "Quién soy" con borde cian sólido y glow, como el perfil de Instagram del lienzo.
+
 ### 2026-10-15 (22)
 
 - La "b" de la portada ahora "respira": el glow crece y baja cada 2,4 s, copiado del pulso de promoyeron.com.py (que lo aplica a su botón principal). Solo cambia la sombra, nunca posición ni opacidad, y no corre con `prefers-reduced-motion`.
@@ -133,10 +139,3 @@ Pendientes, en orden:
 - `astro preview` no aplica `public/_headers`: la CSP no se prueba en e2e.
 - Verificado rompiendo la página a propósito (sin `lang`, skip-link a `#nada`, `main` de 200vw): fallan las 6 pruebas.
 - Lección: en celular la prueba de scroll pasaba con la página rota, porque el navegador aleja el zoom y `window.innerWidth` crece con el contenido. Se compara contra `clientWidth`.
-
-### 2026-10-14 (8)
-
-- RF-01 (barra superior) y RF-02 (portada): layout, wordmark, navegación sin JS (en celular: wordmark + botón arriba, links abajo; el botón queda fuera de la nav porque es una acción), enlace "Saltar al contenido".
-- Símbolo "b" armado en SVG a partir de la descripción de marca (barra = 1, aro = 0, degradé cian→violeta, glow con `drop-shadow`). Es una aproximación: reemplazar por el SVG del lienzo de marca cuando esté.
-- Fuentes Space Grotesk y Manrope autoalojadas (woff2 variables, subset latin, ~23 KB c/u, licencia OFL junto a los archivos). No se usa `<Font />` de Astro porque inyecta CSS inline y la CSP lo bloquea.
-- Titular, subtítulo y meta description quedan como placeholders.

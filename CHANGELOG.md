@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.13.0...binalis-web-v0.14.0) (2026-10-16)
+
+
+### Features
+
+* b del lienzo de marca con brillo suave, íconos nuevos y foto con glow ([#46](https://github.com/Marthinmezaa/binalis-web/issues/46)) ([734a033](https://github.com/Marthinmezaa/binalis-web/commit/734a033672562f303ca37cf9dbd534fdb220bbb9))
+
 ## [0.13.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.12.0...binalis-web-v0.13.0) (2026-10-15)
 
 

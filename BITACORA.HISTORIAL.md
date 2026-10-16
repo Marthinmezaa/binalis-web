@@ -10,6 +10,11 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-14 — Barra superior y portada
+
+- RF-01 y RF-02: barra con navegación sin JS y "Saltar al contenido"; símbolo "b" en SVG con glow, aproximado desde la descripción de marca (reemplazado el 2026-10-16 por el del lienzo).
+- Fuentes Space Grotesk y Manrope autoalojadas (woff2 variables, subset latin, licencia OFL al lado); sin `<Font />` de Astro porque inyecta CSS inline que la CSP bloquea.
+
 ### 2026-10-14 — Cabeceras y redirecciones
 
 - Cabeceras de seguridad en producción (PR #13), release 0.3.0. `www` → raíz con 301, HTTP → HTTPS, TLS 1.1 rechazado (verificado con curl).

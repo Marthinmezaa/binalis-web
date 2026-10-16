@@ -35,7 +35,7 @@ Pendientes, en orden:
 
 ### 2026-10-16 (23)
 
-- La "b" ahora es la del lienzo de marca, a pedido del dueño: barra y aro separados por medio trazo, barra cian sólida y aro con degradé violeta→cian. Brillo más suave: solo cian, en reposo 0,5rem al 35 % y en el pico 1rem al 55 % (antes había además un halo violeta grande). Sigue pulsando (RF-02).
+- La "b" ahora es la del lienzo de marca, a pedido del dueño: el aro toca la barra (antes se superponían), barra cian sólida y aro con degradé violeta→cian. Brillo más suave: solo cian, en reposo 0,5rem al 35 % y en el pico 1rem al 55 % (antes había además un halo violeta grande). Sigue pulsando (RF-02).
 - Íconos chicos como la lámina de aplicaciones: favicon = "b" oscura sobre disco cian (se lee en pestañas claras y oscuras, cierra el problema de contraste de la entrada 15); ícono de iOS = "b" de color sobre tile superficie `#0D1220`. Un solo SVG: `pnpm icons` oculta el disco y recolorea la "b" con CSS para el ícono de iOS.
 - Foto de "Quién soy" con borde cian sólido y glow, como el perfil de Instagram del lienzo.
 

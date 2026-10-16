@@ -1,14 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
   <!-- Small-size cut of src/components/BinalisSymbol.astro: dark "b" on a cyan disc, readable on light and dark tabs.
        Bolder strokes on a 16 px grid (10 units = 1 px): every edge lands on whole pixels at 16, 32 and 48 px.
-       Source of favicon.ico and apple-touch-icon.png (which hides the disc and recolors the "b"): run `pnpm icons` after editing. -->
-  <defs>
-    <linearGradient id="ring-gradient">
-      <stop offset="0%" stop-color="#7B5CFF" />
-      <stop offset="100%" stop-color="#00F0FF" />
-    </linearGradient>
-  </defs>
-  <circle class="disc" cx="80" cy="80" r="80" fill="#00F0FF" />
-  <rect class="bar" x="30" y="30" width="20" height="100" rx="10" fill="#06080F" />
-  <circle class="ring" cx="85" cy="95" r="25" fill="none" stroke="#06080F" stroke-width="20" />
+       Source of favicon.ico: run `pnpm icons` after editing. -->
+  <circle cx="80" cy="80" r="80" fill="#00F0FF" />
+  <rect x="30" y="30" width="20" height="100" rx="10" fill="#06080F" />
+  <circle cx="85" cy="95" r="25" fill="none" stroke="#06080F" stroke-width="20" />
 </svg>

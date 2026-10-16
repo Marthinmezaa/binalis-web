@@ -1,27 +1,32 @@
-// Rasterizes public/favicon.svg (the single source) into favicon.ico and apple-touch-icon.png.
-// Run after editing the SVG: pnpm icons (needs `pnpm exec playwright install chromium` once).
+// Rasterizes public/favicon.svg into favicon.ico, and the hero's "b" (BinalisSymbol.astro) into apple-touch-icon.png.
+// Run after editing either: pnpm icons (needs `pnpm exec playwright install chromium` once).
 import { Buffer } from "node:buffer";
 import { readFile, writeFile } from "node:fs/promises";
 import { URL } from "node:url";
 import { chromium } from "@playwright/test";
 
 const publicDir = new URL("../public/", import.meta.url);
-const svg = await readFile(new URL("favicon.svg", publicDir), "utf8");
+const faviconSvg = await readFile(new URL("favicon.svg", publicDir), "utf8");
+const symbolSource = await readFile(
+  new URL("../src/components/BinalisSymbol.astro", import.meta.url),
+  "utf8",
+);
+const symbolSvg = symbolSource.match(/<svg[\s\S]*<\/svg>/)[0];
 
 const ICO_SIZES = [16, 32, 48];
 const APPLE_SIZE = 180;
-// Leaves room for the glow and iOS's rounded corners.
-const APPLE_SVG_SIZE = 128;
-// The hero's resting glow (BinalisSymbol.astro) scaled down to the symbol's size in the 180 px tile.
+// The "b" ends up 82 px tall: room for the glow and iOS's rounded corners.
+const APPLE_SVG_HEIGHT = 96;
+// The hero's resting glow scaled down to the symbol's size in the 180 px tile.
 const APPLE_GLOW = "drop-shadow(0 0 3px rgb(0 240 255 / 35%))";
-// The app icon is the colored "b" on a dark tile, like the hero: no cyan disc.
-const APPLE_COLORS =
-  ".disc { display: none; } .bar { fill: #00f0ff; } .ring { stroke: url(#ring-gradient); }";
+// The brand tokens the symbol reads from global.css.
+const BRAND_COLORS =
+  ":root { --color-cyan: #00f0ff; --color-violet: #7b5cff; }";
 
 const browser = await chromium.launch();
 const page = await browser.newPage();
 
-async function render(size, css) {
+async function render(size, svg, css) {
   await page.setViewportSize({ width: size, height: size });
   await page.setContent(
     `<style>html, body { margin: 0; height: 100%; } svg { display: block; } ${css}</style>${svg}`,
@@ -53,6 +58,7 @@ try {
   for (const size of ICO_SIZES) {
     const png = await render(
       size,
+      faviconSvg,
       `svg { width: ${size}px; height: ${size}px; }`,
     );
     icoImages.push({ size, png });
@@ -62,9 +68,10 @@ try {
   // Opaque square: iOS paints transparency black and applies its own mask.
   const applePng = await render(
     APPLE_SIZE,
-    `body { display: grid; place-items: center; background: #0d1220; }
-     svg { width: ${APPLE_SVG_SIZE}px; height: ${APPLE_SVG_SIZE}px; filter: ${APPLE_GLOW}; }
-     ${APPLE_COLORS}`,
+    symbolSvg,
+    `${BRAND_COLORS}
+     body { display: grid; place-items: center; background: #0d1220; }
+     svg { height: ${APPLE_SVG_HEIGHT}px; filter: ${APPLE_GLOW}; }`,
   );
   await writeFile(new URL("apple-touch-icon.png", publicDir), applePng);
 } finally {

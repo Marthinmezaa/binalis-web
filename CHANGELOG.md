@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.23.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.22.0...binalis-web-v0.23.0) (2026-10-19)
+
+
+### Features
+
+* testimonios con la opinión de Cosmos Trak ([#67](https://github.com/Marthinmezaa/binalis-web/issues/67)) ([0f70eb2](https://github.com/Marthinmezaa/binalis-web/commit/0f70eb27632409f31173628ba61c6dfa464f0fe5))
+
 ## [0.22.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.21.0...binalis-web-v0.22.0) (2026-10-19)
 
 

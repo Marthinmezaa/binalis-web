@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.20.0...binalis-web-v0.21.0) (2026-10-19)
+
+
+### Features
+
+* rediseño con sello de marca ([#63](https://github.com/Marthinmezaa/binalis-web/issues/63)) ([56b6245](https://github.com/Marthinmezaa/binalis-web/commit/56b6245b1f6d651600dea8df9b6c2b3ea48ac202))
+
 ## [0.20.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.19.0...binalis-web-v0.20.0) (2026-10-19)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.23.0...binalis-web-v0.24.0) (2026-10-19)
+
+
+### Features
+
+* botones para cotizar con brillo y cajas más compactas ([#71](https://github.com/Marthinmezaa/binalis-web/issues/71)) ([e0bd54e](https://github.com/Marthinmezaa/binalis-web/commit/e0bd54eca6798f7c08fc769ee3a0d74374521811))
+
 ## [0.23.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.22.0...binalis-web-v0.23.0) (2026-10-19)
 
 

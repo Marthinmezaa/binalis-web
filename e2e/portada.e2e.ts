@@ -382,3 +382,19 @@ test("los testimonios muestran opiniones reales con nombre y calificación", asy
     await expect(testimonial).toContainText(/Calificación: \d de 5/);
   }
 });
+
+test("el botón de cotizar de la barra brilla al bajar, salvo con movimiento reducido", async ({
+  page,
+}) => {
+  const cta = page.getByRole("banner").getByRole("link", {
+    name: "Cotizá tu proyecto",
+  });
+  const animationCount = () =>
+    cta.evaluate((element) => element.getAnimations().length);
+
+  expect(await animationCount()).toBe(0);
+  await scrollToEnd(page);
+  await expect.poll(animationCount).toBe(1);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect.poll(animationCount).toBe(0);
+});

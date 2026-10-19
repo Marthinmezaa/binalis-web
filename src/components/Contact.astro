@@ -28,8 +28,10 @@ import { email, emailQuoteUrl, whatsappUrl } from "../contact";
 </section>
 
 <style>
+  /* Narrow on purpose: the content is a short centered block, a full-width box only added empty space. */
   .contact {
-    padding: clamp(2rem, 6vw, 3.5rem) var(--gutter);
+    width: min(100% - 2 * var(--gutter), 46rem);
+    padding: clamp(2rem, 5vw, 3rem) var(--gutter);
     border: 1px solid rgb(0 240 255 / 25%);
     border-radius: 1rem;
     background:

@@ -10,6 +10,12 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-14 — Proyectos (entrada 16)
+
+- RF-05 con los tres proyectos elegidos por el dueño, con Problema / Solución / Resultado en `<dl>`. Los repos son privados: sin enlace al código.
+- Nueva dependencia `sharp` para `astro:assets` (capturas de 473 KB a 22–50 KB en WebP).
+- `astro preview` envía la CSP de `public/_headers` para las e2e; inyectarla con `page.route` daba timeouts esporádicos.
+
 ### 2026-10-14 — Favicon sin fondo (entrada 15)
 
 - Favicon solo con la "b", agrandada para llenar el ícono, con trazos de 2 px exactos a 16 px. Después se reemplazó por la "b" oscura sobre disco cian (entrada 23), que se lee en pestañas claras.

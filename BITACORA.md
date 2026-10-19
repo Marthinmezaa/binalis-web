@@ -7,7 +7,7 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Diseño de la web aprobado en lienzo (4 láminas: logo, color y tipografía, aplicaciones, web).
 - Repo público en GitHub con `main` protegida (4 checks obligatorios: calidad, gitleaks, dependencias, CodeQL).
 - Dominio `binalis.com.py` habilitado y con DNS delegado a Cloudflare (`aurora` / `johnny.ns.cloudflare.com`).
-- Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04), Proyectos (RF-05), "siguiente proyecto cargando…" (RF-06), "Quién está detrás" (RF-10, resumen en portada + página `/quien-soy/`), Cotización por WhatsApp (RF-08) y pie (RF-09); captura real en los tres proyectos; el sitio entero sin placeholders (textos aprobados por el dueño); favicon e íconos de app; SEO básico (canonical, Open Graph con imagen, `sitemap.xml` y `robots.txt`).
+- Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04), Proyectos (RF-05), "siguiente proyecto cargando…" (RF-06), "Quién está detrás" (RF-10, resumen en portada + página `/quien-soy/`), Cotización por WhatsApp y correo (RF-08), pie con versión (RF-09), testimonios (RF-07) y 404 propia (RF-11); rediseño con sello (la "b" que se dibuja, etiquetas de código, aparición al bajar, barra fija); captura real en los tres proyectos; el sitio entero sin placeholders (textos aprobados por el dueño); favicon e íconos de app; SEO básico (canonical, Open Graph con imagen, `sitemap.xml` y `robots.txt`).
 - Pruebas e2e con Playwright + axe en el CI (escritorio y celular), bajo la misma CSP de producción.
 - release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. La versión actual está en `package.json`.
 - Repo con README, SECURITY.md (reporte privado de vulnerabilidades activado), descripción, topics y sitio web.
@@ -38,16 +38,27 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-**Siguiente tarea: revisar con el dueño las vistas previas de #62 y #63** (textos nuevos para aprobar: "Contame qué necesitás y te respondo con una propuesta y un presupuesto claro.", las etiquetas `// lo que hago`, `// cómo trabajo`, `// en producción, con clientes reales`, `// quién soy`, `// hablemos`, la línea de la "b" y la 404). Mergear #62 primero y después #63. Luego, el punto 1 (redes sociales).
+**Siguiente tarea: el punto 1 (redes sociales).** La v1 está completa salvo las redes, que dependen del dueño.
 
-Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **56/56** (con #63 mergeado). Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
+Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **58/58**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
 
 Pendientes, en orden:
 
 1. **Redes sociales** (Instagram, Facebook y LinkedIn), con `contacto@binalis.com.py`. Antes: renovación automática del dominio en NIC.PY y verificación en dos pasos en Zoho, Cloudflare, Google y GitHub (sin confirmar al 2026-10-19). Después, sumarlas al pie (RF-09).
-2. **Testimonios** (RF-07): cuando llegue la primera respuesta del formulario con autorización, armar "Lo que dicen mis clientes" con la frase de recomendación (aprobada por el cliente antes de publicarla).
+2. **Más testimonios** (RF-07, hasta 3): pedirlos con el mismo formulario. Se suman en el arreglo de `Testimonials.astro`, siempre con el texto exacto aprobado por el cliente.
+3. **Resultado de YERON** con los números reales al cierre de la campaña (15 de enero de 2027).
 
 ## Entradas
+
+### 2026-10-19 (31)
+
+- #62 y #63 mergeados por el dueño (0.20.0 y 0.21.0). Probado antes en Claude in Chrome (escritorio, Chrome 155) y con emulación de Pixel 7 e iPhone 15: el bug del salto quedó resuelto. La ventana maximizada no se achica con `resize_window`, así que el celular se probó con Playwright.
+- Portada al 85 % de la pantalla (antes al 100 %): sobraba un hueco al bajar y ahora asoma Servicios.
+- CodeQL marcó en #63 `js/incomplete-multi-character-sanitization` (alta) en `generate-icons.mjs`: quitar etiquetas del `<h1>` con regex. El dueño aplicó un Copilot Autofix (otra regex encima) y se reemplazó por no limpiar nada: el `<h1>` es markup propio y entra tal cual, como el SVG. La imagen para compartir sale idéntica.
+- #66 (0.22.0): versión en el pie (`v` + `package.json`, que release-please actualiza); aparición escalonada en escritorio (los hijos 2, 3 y 4 de una fila arrancan más tarde, como al apilarse en el celular); en "Quién soy", el cargo como etiqueta sobre el nombre, sin "Desarrollador full stack"; "servicio" en lugar de "jóvenes" en la tarjeta de código (la historia completa sigue nombrando a los jóvenes). Las e2e importan JSON con `with { type: "json" }` porque corren en Node.
+- #67 (0.23.0): primer testimonio, de Ederth Gledde (CEO de Cosmos Trak), leído en el formulario con Claude in Chrome, a pedido del dueño. Autorizó nombre y empresa y aprobó el texto exacto y la ortografía de su nombre. Se publica: «Es 100% confiable.», su antes y después, y su calificación 5/5. Su respuesta a "qué mejorar" es privada. El PR se abrió en borrador hasta tener la aprobación.
+- Un merge de Claude lo frenó el clasificador de permisos ("merge sin revisión"): el dueño mergea desde GitHub. Claude puede actualizar la rama con `gh pr update-branch` si el dueño lo pide.
+- E2E 58/58.
 
 ### 2026-10-19 (30)
 
@@ -163,11 +174,3 @@ Pendientes, en orden:
 - Dos trampas de esa animación: el minificador fusionaba `animation` + `animation-timeline` en un shorthand que Chrome descarta (se escriben longhands), y un `overflow: hidden` en la barra se volvía su contenedor de scroll y la dejaba congelada. Verificado midiendo el ancho a distintas alturas de scroll: 14% → 51% → 74% → 90%.
 - Gentle-AI no se instala: solo se sigue su filosofía (decisión del dueño). Actualizado `CLAUDE.md`.
 - El dueño quiere el sitio **funcional** sin tener que juntar ahora videos, fotos ni textos, y que represente su **identidad como programador**. Queda propuesta como cambio de spec, a la espera de aprobación.
-
-### 2026-10-14 (16)
-
-- RF-05 Proyectos con los tres elegidos por el dueño: Cosmos Trak · Sitio web, Cosmos Trak · Sistema administrativo y YERON · Promoción con sorteos. Cada uno con etiquetas, descripción, medio y Problema / Solución / Resultado (`<dl>`). En escritorio, imagen y texto alternan de lado.
-- El contenido sale de los README de cada repo y del sitio en vivo; lo que no figura ahí queda como placeholder (ver spec, sección 6). Los repos son privados: sin enlace al código.
-- Medio: captura de la portada pública de cosmostrak.com.py (`src/assets/proyectos/`). Al sistema administrativo no se le sacan capturas porque tiene datos reales de clientes; YERON no tiene URL pública.
-- Nueva dependencia `sharp`, que `astro:assets` necesita para optimizar imágenes: la captura pasa de 473 KB a 22 KB (640 px) o 50 KB (1280 px) en WebP.
-- Prueba inestable corregida: inyectar la CSP con `page.route` + `route.fetch` hacía un pedido extra que bajo carga daba `ETIMEDOUT` (1 de cada 450). Ahora `astro preview` envía la CSP de `public/_headers` (`server.headers`, solo en preview porque `astro dev` necesita scripts inline). Verificado: 450/450 con 8 workers.

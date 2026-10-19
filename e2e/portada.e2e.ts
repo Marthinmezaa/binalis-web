@@ -122,6 +122,8 @@ test("cada proyecto muestra etiquetas, medio y Problema / Solución / Resultado"
       "Solución",
       "Resultado",
     ]);
+    // Pending content is written as "[IN CAPS]" and must never be published.
+    await expect(project).not.toContainText(/\[[A-ZÁÉÍÓÚÑ]/);
   }
 });
 

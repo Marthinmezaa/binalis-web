@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- shortcut: written by hand for 2 pages; add each new page here, or switch to @astrojs/sitemap when there are many. The e2e tests fail if a page is missing. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://binalis.com.py/</loc></url>
+  <url><loc>https://binalis.com.py/quien-soy/</loc></url>
+</urlset>

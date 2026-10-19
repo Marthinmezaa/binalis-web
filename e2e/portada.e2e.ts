@@ -191,9 +191,11 @@ test("/quien-soy/ cuenta la historia completa y la barra marca la página", asyn
 test("los botones de cotizar llevan a WhatsApp con el número y un mensaje", async ({
   page,
 }) => {
-  for (const button of await page
-    .getByRole("link", { name: "Cotizá tu proyecto" })
-    .all()) {
+  const toQuote = page.getByRole("link", {
+    name: /^(Cotizá tu proyecto|Contame y lo vemos juntos\.)$/,
+  });
+  await expect(toQuote).toHaveCount(3);
+  for (const button of await toQuote.all()) {
     await expect(button).toHaveAttribute("href", "#cotizacion");
   }
 

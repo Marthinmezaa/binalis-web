@@ -2,15 +2,18 @@
 const services = [
   {
     title: "Páginas web",
-    description: "[DESCRIPCIÓN DEL SERVICIO: PÁGINAS WEB]",
+    description:
+      "Sitios rápidos, seguros y fáciles de encontrar en Google, pensados para que cada consulta llegue a tu WhatsApp o a tu correo.",
   },
   {
     title: "Sistemas y apps a medida",
-    description: "[DESCRIPCIÓN DEL SERVICIO: SISTEMAS Y APPS A MEDIDA]",
+    description:
+      "Desde CRM y sistemas de gestión hasta automatizaciones con inteligencia artificial: software hecho a la forma de trabajar de tu empresa.",
   },
   {
     title: "Landing pages y promociones",
-    description: "[DESCRIPCIÓN DEL SERVICIO: LANDING PAGES Y PROMOCIONES]",
+    description:
+      "Páginas para campañas y promociones con registro, carga de comprobantes y controles contra el fraude, listas para salir rápido.",
   },
 ];
 ---
@@ -28,6 +31,10 @@ const services = [
         </li>
       ))}
     </ul>
+    <p class="more">
+      ¿Tu idea no entra en ninguna?&nbsp;
+      <a href="#cotizacion">Contame y lo vemos juntos.</a>
+    </p>
   </div>
 </section>
 
@@ -66,5 +73,15 @@ const services = [
   p {
     margin: 0;
     color: var(--color-text-muted);
+  }
+
+  .more {
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  .more a {
+    color: var(--color-cyan);
+    font-weight: 600;
   }
 </style>

@@ -48,7 +48,7 @@ Ver `CLAUDE.md` (tokens) y el lienzo de diseño "Binalis — Identidad de marca"
 En el sitio publicado **no se ve ningún placeholder**: lo que falta se oculta o se reemplaza por diseño. Un proyecto sin capturas muestra una tarjeta de código con su stack; si falta Problema o Resultado, esa fila no aparece. Los textos de marca los aprueba el dueño antes de publicarse.
 
 - Proyectos: los tres tienen captura real (2026-10-19). Las capturas nunca muestran datos personales de clientes (nombres, teléfonos, montos); métricas agregadas sí, con aprobación del dueño. Resultado de YERON con números reales al cierre de la campaña (15 de enero de 2027).
-- Testimonios reales: se piden con el formulario de Google "Binalis — Opinión de clientes" (link en `BITACORA.md`). Primero: Ederth Gledde, CEO de Cosmos Trak (2026-10-19), pendiente de que apruebe el texto.
+- Testimonios reales: se piden con el formulario de Google "Binalis — Opinión de clientes" (link en `BITACORA.md`). Primero: Ederth Gledde, CEO de Cosmos Trak, que aprobó el texto y la ortografía de su nombre (2026-10-19).
 - Instagram, Facebook y LinkedIn (WhatsApp: +595 983 755 161; correo: `contacto@binalis.com.py`).
 
 ## 7. Fuera de alcance v1

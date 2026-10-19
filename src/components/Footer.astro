@@ -1,4 +1,5 @@
 ---
+import { version } from "../../package.json";
 import { email, whatsappUrl } from "../contact";
 
 // shortcut: the year is fixed at build time; the first deploy of each year updates it.
@@ -26,7 +27,9 @@ const year = new Date().getFullYear();
         <a href={`mailto:${email}`}>{email}</a>
       </li>
     </ul>
-    <p class="copyright">© {year} Binalis</p>
+    <p class="copyright">
+      © {year} Binalis · <span class="version">v{version}</span>
+    </p>
   </div>
 </footer>
 
@@ -92,6 +95,11 @@ const year = new Date().getFullYear();
 
   a:hover {
     color: var(--color-text);
+  }
+
+  /* release-please bumps package.json on every release, so the footer always shows what is deployed. */
+  .version {
+    font-family: var(--font-mono);
   }
 
   .copyright {

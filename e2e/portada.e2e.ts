@@ -1,5 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import packageJson from "../package.json" with { type: "json" };
 
 const WCAG_22_AA = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 
@@ -281,13 +282,16 @@ test("se cotiza por WhatsApp o por correo, sin el número escrito en la página"
   await expect(page.locator("body")).not.toContainText(/983\s?755\s?161/);
 });
 
-test("el pie muestra WhatsApp, el correo y el año actual", async ({ page }) => {
+test("el pie muestra WhatsApp, el correo, el año y la versión", async ({
+  page,
+}) => {
   const footer = page.getByRole("contentinfo");
   await expect(footer.getByRole("link", { name: "WhatsApp" })).toBeVisible();
   await expect(
     footer.getByRole("link", { name: "contacto@binalis.com.py" }),
   ).toHaveAttribute("href", "mailto:contacto@binalis.com.py");
   await expect(footer).toContainText(`© ${new Date().getFullYear()} Binalis`);
+  await expect(footer).toContainText(`v${packageJson.version}`);
   await expect(footer.locator("figcaption")).toHaveText("Mateo 11:28");
 });
 

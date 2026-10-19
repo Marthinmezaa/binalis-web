@@ -22,7 +22,7 @@ La web tiene que reflejar la **identidad del dueño como programador**: estétic
 | RF-04 | Proceso de trabajo en 4 pasos: Conversamos · Diseñamos · Construimos · Entregamos y acompañamos.                                                                                                  |
 | RF-05 | Proyectos: por cada uno, etiquetas, nombre, descripción, medio (video corto o capturas) y bloques Problema / Solución / Resultado.                                                                |
 | RF-06 | Bloque final de proyectos "siguiente proyecto cargando…" con el nombre del proyecto en curso (hoy: CRM con inteligencia artificial) y barra de progreso animada.                                  |
-| RF-07 | Testimonios: hasta 3, solo reales. La sección no se muestra hasta tener al menos uno.                                                                                                             |
+| RF-07 | Testimonios "Lo que dicen mis clientes": hasta 3, solo reales y con autorización del cliente. La sección no se muestra hasta tener al menos uno.                                                  |
 | RF-08 | Cotización (`#cotizacion`): botón que abre WhatsApp con un mensaje ya escrito. El formulario con envío serverless queda para v2 (ver sección 7).                                                  |
 | RF-09 | Pie con el versículo de Binalis (Mateo 11:28, RVR1960), WhatsApp, correo y redes (cada uno cuando exista) y © año.                                                                                |
 | RF-10 | "Quién está detrás": en la portada, un resumen (foto, tarjeta de código, dos líneas y "Conocé mi historia"); en `/quien-soy/`, la historia completa del Ing. Marthin Meza. Texto aprobado por él. |
@@ -44,7 +44,7 @@ Ver `CLAUDE.md` (tokens) y el lienzo de diseño "Binalis — Identidad de marca"
 En el sitio publicado **no se ve ningún placeholder**: lo que falta se oculta o se reemplaza por diseño. Un proyecto sin capturas muestra una tarjeta de código con su stack; si falta Problema o Resultado, esa fila no aparece. Los textos de marca los aprueba el dueño antes de publicarse.
 
 - Proyectos: los tres tienen captura real (2026-10-19). Las capturas nunca muestran datos personales de clientes (nombres, teléfonos, montos); métricas agregadas sí, con aprobación del dueño. Resultado de YERON con números reales al cierre de la campaña (15 de enero de 2027).
-- Testimonios reales (se van a pedir a clientes).
+- Testimonios reales: se piden con el formulario de Google "Binalis — Opinión de clientes" (link en `BITACORA.md`).
 - Correo con el dominio, Instagram y LinkedIn (WhatsApp: +595 983 755 161).
 
 ## 7. Fuera de alcance v1

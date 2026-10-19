@@ -398,3 +398,19 @@ test("el botón de cotizar de la barra brilla al bajar, salvo con movimiento red
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect.poll(animationCount).toBe(0);
 });
+
+test("los botones para cotizar brillan", async ({ page }) => {
+  const glow = (name: string) =>
+    page
+      .getByRole("main")
+      .getByRole("link", { name })
+      .first()
+      .evaluate((element) => getComputedStyle(element).boxShadow);
+
+  // The hero's, not the header's: the header one only pulses while scrolling.
+  expect(await glow("Cotizá tu proyecto")).not.toBe("none");
+  // The quote buttons switch on as their section comes into view.
+  await scrollToEnd(page);
+  expect(await glow("Hablemos por WhatsApp")).not.toBe("none");
+  expect(await glow("Escribime un correo")).not.toBe("none");
+});

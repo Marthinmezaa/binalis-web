@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.17.0...binalis-web-v0.18.0) (2026-10-19)
+
+
+### Features
+
+* sitemap.xml, robots.txt y Open Graph ([#57](https://github.com/Marthinmezaa/binalis-web/issues/57)) ([32438ff](https://github.com/Marthinmezaa/binalis-web/commit/32438ff2ba332f0c0a7a3aa10b2b0ef1a68e7edb))
+
 ## [0.17.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.16.0...binalis-web-v0.17.0) (2026-10-19)
 
 

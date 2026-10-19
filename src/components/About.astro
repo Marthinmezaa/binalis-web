@@ -40,11 +40,14 @@ const profile: CodeCardData = {
 >
   <div class="container">
     {!full && (
-      <h2 id="quien-title" class="section-title">
-        Quién está detrás
-      </h2>
+      <>
+        <p class="eyebrow reveal">// quién soy</p>
+        <h2 id="quien-title" class="section-title reveal">
+          Quién está detrás
+        </h2>
+      </>
     )}
-    <div class="about">
+    <div class="about reveal">
       <div class="story">
         {/* Small avatar on purpose: Binalis is the protagonist, not the person. */}
         <div class="byline">

@@ -10,6 +10,7 @@
     </linearGradient>
   </defs>
   <rect
+    class="bar"
     x="10"
     y="10"
     width="16"
@@ -18,12 +19,14 @@
     fill="var(--color-cyan)"
   ></rect>
   <circle
+    class="ring"
     cx="68"
     cy="88"
     r="34"
     fill="none"
     stroke="url(#symbol-ring-gradient)"
     stroke-width="16"
+    pathLength="1"
   ></circle>
 </svg>
 
@@ -38,6 +41,36 @@
   @media (prefers-reduced-motion: no-preference) {
     .symbol {
       animation: glow-pulse 2.4s ease-in-out infinite;
+    }
+  }
+
+  /* On load the "b" draws itself: the 1 rises, then the 0 closes around it. */
+  @media (prefers-reduced-motion: no-preference) {
+    .bar {
+      transform-box: fill-box;
+      transform-origin: bottom;
+      animation: draw-bar 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+
+    /* Backwards fill only: once drawn the ring drops the dash pattern, which would leave a seam where the dash closes. */
+    .ring {
+      animation: draw-ring 0.9s 0.45s cubic-bezier(0.6, 0, 0.2, 1) backwards;
+    }
+  }
+
+  @keyframes draw-bar {
+    from {
+      transform: scaleY(0);
+    }
+  }
+
+  @keyframes draw-ring {
+    from {
+      stroke-dasharray: 0 1;
+    }
+
+    to {
+      stroke-dasharray: 1 0;
     }
   }
 

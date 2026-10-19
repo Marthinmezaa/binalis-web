@@ -1,0 +1,56 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import BinalisSymbol from "../components/BinalisSymbol.astro";
+import Contact from "../components/Contact.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout
+  title="Página no encontrada — Binalis"
+  description="Esta página no existe. Volvé a la portada de Binalis o cotizá tu proyecto."
+>
+  <Header />
+  <main id="contenido">
+    <section class="section not-found" aria-labelledby="not-found-title">
+      <div class="container">
+        <div class="symbol-box">
+          <BinalisSymbol />
+        </div>
+        <p class="eyebrow">// error 404</p>
+        <h1 id="not-found-title">Esta página no existe.</h1>
+        <p class="lead">
+          Puede que el link esté mal escrito o que la página se haya movido.
+        </p>
+        <a class="button button-primary" href="/">
+          Volver al inicio
+        </a>
+      </div>
+    </section>
+    <Contact />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .not-found {
+    text-align: center;
+  }
+
+  .symbol-box {
+    width: 6rem;
+    margin: 0 auto 2rem;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    letter-spacing: -0.03em;
+  }
+
+  .lead {
+    margin: 1rem 0 2rem;
+    color: var(--color-text-muted);
+    font-size: 1.125rem;
+  }
+</style>

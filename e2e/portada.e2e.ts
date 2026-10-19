@@ -1,7 +1,15 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 const WCAG_22_AA = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
+
+// "instant": the site's smooth scrolling would otherwise still be moving when the test reads the page.
+const scrollToEnd = (page: Page) =>
+  page.evaluate(async () => {
+    scrollTo({ top: document.body.scrollHeight, behavior: "instant" });
+    // Scroll-driven animations catch up on the next frame.
+    await new Promise(requestAnimationFrame);
+  });
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/");
@@ -44,6 +52,8 @@ for (const path of PAGES) {
     page,
   }) => {
     await page.goto(path);
+    // Blocks fade in with the scroll: at the end of the page every one has finished, so contrast is measured on the final state.
+    await scrollToEnd(page);
     const { violations } = await new AxeBuilder({ page })
       .withTags(WCAG_22_AA)
       .analyze();
@@ -291,4 +301,62 @@ test("el brillo de la b pulsa, salvo con movimiento reducido", async ({
   expect(await animationCount()).toBe(1);
   await page.emulateMedia({ reducedMotion: "reduce" });
   expect(await animationCount()).toBe(0);
+});
+
+test("una URL que no existe muestra la 404 de Binalis con status 404", async ({
+  page,
+}) => {
+  const response = await page.goto("/esta-pagina-no-existe");
+  expect(response?.status()).toBe(404);
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Esta página no existe." }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Volver al inicio" }),
+  ).toHaveAttribute("href", "/");
+});
+
+test("los bloques aparecen al bajar, salvo con movimiento reducido", async ({
+  page,
+}) => {
+  const animatedBlocks = () =>
+    page
+      .locator(".reveal")
+      .evaluateAll(
+        (blocks) =>
+          blocks.filter((block) => block.getAnimations().length).length,
+      );
+
+  expect(await animatedBlocks()).toBeGreaterThan(0);
+
+  // Not even the last blocks may stay faded once the page can't scroll further.
+  await scrollToEnd(page);
+  const fadedBlocks = await page
+    .locator(".reveal")
+    .evaluateAll(
+      (blocks) =>
+        blocks.filter((block) => getComputedStyle(block).opacity !== "1")
+          .length,
+    );
+  expect(fadedBlocks).toBe(0);
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  expect(await animatedBlocks()).toBe(0);
+});
+
+test("la barra superior sigue a mano al bajar", async ({ page }) => {
+  await page.getByRole("region", { name: "Proceso" }).scrollIntoViewIfNeeded();
+  await expect(page.getByRole("banner")).toBeInViewport();
+});
+
+test("los proyectos públicos llevan a su sitio en vivo", async ({ page }) => {
+  const liveLinks = page
+    .getByRole("region", { name: "Proyectos" })
+    .getByRole("link", { name: /^Ver sitio en vivo/ });
+
+  await expect(liveLinks).toHaveCount(2);
+  for (const link of await liveLinks.all()) {
+    await expect(link).toHaveAttribute("href", /^https:\/\//);
+    await expect(link).toHaveAttribute("rel", "noopener");
+  }
 });

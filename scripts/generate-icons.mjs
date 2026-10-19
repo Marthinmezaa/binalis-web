@@ -17,7 +17,12 @@ const heroSource = await readFile(
   new URL("../src/components/Hero.astro", import.meta.url),
   "utf8",
 );
-const headline = heroSource.match(/<h1[^>]*>([^<]+)<\/h1>/)[1];
+// Plain text: the h1 may wrap words in styling tags.
+const headline = heroSource
+  .match(/<h1[^>]*>([\s\S]*?)<\/h1>/)[1]
+  .replace(/<[^>]+>/g, "")
+  .replace(/\s+/g, " ")
+  .trim();
 const fontsDir = new URL("../src/assets/fonts/", import.meta.url);
 // setContent pages have no origin to load font files from: they go in as data: URIs.
 const fontFace = async (family, file) =>

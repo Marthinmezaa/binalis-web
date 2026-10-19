@@ -20,18 +20,19 @@ const services = [
 
 <section id="servicios" class="section" aria-labelledby="servicios-title">
   <div class="container">
-    <h2 id="servicios-title" class="section-title">
+    <p class="eyebrow reveal">// lo que hago</p>
+    <h2 id="servicios-title" class="section-title reveal">
       Servicios
     </h2>
     <ul class="cards">
       {services.map(({ title, description }) => (
-        <li class="card">
+        <li class="card reveal">
           <h3>{title}</h3>
           <p>{description}</p>
         </li>
       ))}
     </ul>
-    <p class="more">
+    <p class="more reveal">
       ¿Tu idea no entra en ninguna?&nbsp;
       <a href="#cotizacion">Contame y lo vemos juntos.</a>
     </p>
@@ -55,6 +56,14 @@ const services = [
     border: 1px solid rgb(255 255 255 / 6%);
     border-radius: 1rem;
     background: var(--color-surface);
+    transition:
+      border-color 0.3s,
+      box-shadow 0.3s;
+  }
+
+  .card:hover {
+    border-color: rgb(0 240 255 / 35%);
+    box-shadow: 0 0 2rem rgb(0 240 255 / 12%);
   }
 
   .card::before {

@@ -10,11 +10,12 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
-### 2026-10-14 — Íconos y pruebas e2e (entradas 9 a 11)
+### 2026-10-14 — Íconos y pruebas e2e (entradas 9 a 12)
 
 - Playwright + axe en el job `calidad` del CI: WCAG 2.2 AA, foco inicial en "Saltar al contenido" y sin scroll horizontal, en escritorio y celular. En celular el scroll se compara contra `clientWidth`, porque el navegador aleja el zoom y `innerWidth` crece con el contenido.
 - PC de trabajo: `corepack enable` da EPERM (Node en `C:\Nodejs`); pnpm 11.20.0 instalado con `npm install -g`.
 - Favicon SVG (producción daba 404 en `/favicon.ico`), `favicon.ico` de 16/32/48 px y `apple-touch-icon.png`, generados con `pnpm icons` usando el Chromium de Playwright. Verificado en producción: CSP activa, consola limpia y foco visible.
+- Favicon redibujado sobre una grilla de 16 px (barra y aro de 2 px exactos) para que se vea nítido: es un corte para tamaños chicos, más grueso que la "b" de la portada.
 
 ### 2026-10-14 — Barra superior y portada
 

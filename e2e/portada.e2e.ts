@@ -38,6 +38,17 @@ for (const path of PAGES) {
     expect(violations).toEqual([]);
   });
 
+  test(`${path}: no publica ningún placeholder`, async ({ page }) => {
+    // Pending content is written as "[IN CAPS]" and must never be published.
+    const placeholder = /\[[A-ZÁÉÍÓÚÑ]/;
+    await page.goto(path);
+    await expect(page.locator("body")).not.toContainText(placeholder);
+    await expect(page.locator('meta[name="description"]')).not.toHaveAttribute(
+      "content",
+      placeholder,
+    );
+  });
+
   test(`${path}: no genera scroll horizontal`, async ({ page }) => {
     await page.goto(path);
     // Not window.innerWidth: mobile browsers zoom out to fit overflowing content, so it grows with it.
@@ -122,8 +133,6 @@ test("cada proyecto muestra etiquetas, medio y Problema / Solución / Resultado"
       "Solución",
       "Resultado",
     ]);
-    // Pending content is written as "[IN CAPS]" and must never be published.
-    await expect(project).not.toContainText(/\[[A-ZÁÉÍÓÚÑ]/);
   }
 });
 

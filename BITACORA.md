@@ -7,7 +7,7 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Diseño de la web aprobado en lienzo (4 láminas: logo, color y tipografía, aplicaciones, web).
 - Repo público en GitHub con `main` protegida (4 checks obligatorios: calidad, gitleaks, dependencias, CodeQL).
 - Dominio `binalis.com.py` habilitado y con DNS delegado a Cloudflare (`aurora` / `johnny.ns.cloudflare.com`).
-- Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04), Proyectos (RF-05), "siguiente proyecto cargando…" (RF-06), "Quién está detrás" (RF-10, resumen en portada + página `/quien-soy/`), Cotización por WhatsApp (RF-08) y pie (RF-09); Proyectos sin placeholders y con captura real en los tres; quedan los de portada, servicios y proceso; favicon e íconos de app.
+- Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04), Proyectos (RF-05), "siguiente proyecto cargando…" (RF-06), "Quién está detrás" (RF-10, resumen en portada + página `/quien-soy/`), Cotización por WhatsApp (RF-08) y pie (RF-09); captura real en los tres proyectos; el sitio entero sin placeholders (textos aprobados por el dueño); favicon e íconos de app.
 - Pruebas e2e con Playwright + axe en el CI (escritorio y celular), bajo la misma CSP de producción.
 - release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.15.0.
 - Repo con README, SECURITY.md (reporte privado de vulnerabilidades activado), descripción, topics y sitio web.
@@ -21,17 +21,26 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-**Siguiente tarea: el punto 1 (borradores de textos).** Mismo método que con Proyectos (entrada 24): una pregunta por vez al dueño, un borrador por texto y aprobación antes de aplicarlo. Empezar por el titular y el subtítulo de la portada (`Hero.astro`), y seguir con la meta description (`index.astro`), los servicios y el proceso. Al terminar, la e2e de placeholders puede pasar de Proyectos a la página entera.
+**Siguiente tarea: el punto 1 (correo).** El sitio ya no tiene placeholders: el siguiente paso es sumar correo y redes al pie.
 
-Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **36/36**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
+Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **40/40**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
 
 Pendientes, en orden:
 
-1. **Borradores de textos** para que el dueño apruebe: titular y subtítulo de la portada, meta description, descripciones de los 3 servicios y los 4 pasos del proceso. Tono: primera persona, apasionado, "amo lo que hago".
-2. **Correo** `contacto@binalis.com.py` en Zoho Mail (gratis). Antes de vincular Instagram, Facebook y LinkedIn: renovación automática del dominio en NIC.PY y verificación en dos pasos en todas las cuentas. Después, sumar correo y redes al pie (RF-09).
-3. SEO pendiente de la spec: Open Graph (con la foto o el símbolo), `sitemap.xml` y `robots.txt`.
+1. **Correo** `contacto@binalis.com.py` en Zoho Mail (gratis). Antes de vincular Instagram, Facebook y LinkedIn: renovación automática del dominio en NIC.PY y verificación en dos pasos en todas las cuentas. Después, sumar correo y redes al pie (RF-09).
+2. SEO pendiente de la spec: Open Graph (con la foto o el símbolo), `sitemap.xml` y `robots.txt`.
 
 ## Entradas
+
+### 2026-10-19 (27)
+
+- Textos aprobados por el dueño, uno por uno. Titular: "Desarrollo hecho con pasión y al detalle." Subtítulo: páginas web, landing pages, sistemas y promociones a medida para empresas, y "Escucho tu necesidad y la convierto en una herramienta que realmente funciona." En la portada no se nombra Paraguay, a pedido del dueño.
+- Meta description en primera persona y con "Paraguay", porque ayuda a la búsqueda local (129 caracteres).
+- Servicios: el dueño sentía que las 3 tarjetas lo limitaban (está por empezar un CRM con IA). No se suma una tarjeta de IA sin un proyecto para mostrar. En cambio, la de sistemas nombra CRM y automatizaciones con inteligencia artificial, y debajo de las tarjetas va "¿Tu idea no entra en ninguna? Contame y lo vemos juntos." con link a la cotización (RF-03).
+- "Siguiente proyecto cargando…" nombra el proyecto en curso: CRM con inteligencia artificial (RF-06). Cuando esté terminado, pasa a Proyectos.
+- Proceso: los 4 pasos con texto. Se le pidió al dueño que revisara que fueran promesas reales (presupuesto tras la primera charla, avances mientras construye, soporte después de entregar) y los aprobó.
+- E2E: la prueba de placeholders ahora revisa el cuerpo y la meta description de las dos páginas (verificado que falla con uno inyectado), y los links a la cotización incluyen el nuevo. 40/40.
+- Las capturas de Cosmos y YERON (#52) se revisaron en producción con Chrome: cargan las tres y la consola no muestra errores con la CSP real. La vista previa de Cloudflare pide sesión y no se revisó.
 
 ### 2026-10-19 (26)
 
@@ -137,8 +146,3 @@ Pendientes, en orden:
 - Números de paso en Space Grotesk: JetBrains Mono costaría decenas de KB por cuatro dígitos. Se suma cuando haya texto técnico real.
 - E2E: los títulos de tarjetas y pasos coinciden exactos con la spec, y los links de la barra apuntan al `id` de cada sección. Verificado que fallan si se cambia un título o un `id`.
 - Lección: `git checkout --` no revierte archivos sin trackear; al romper a propósito archivos nuevos, revertir a mano.
-
-### 2026-10-14 (12)
-
-- Favicon a 16 px nítido: la "b" se redibujó sobre una grilla de 16 px (10 unidades = 1 px), con barra y aro de 2 px exactos. Antes medían 1,6 px y caían entre píxeles. También queda alineada a 32 y 48 px.
-- Es un corte para tamaños chicos, más grueso que el de la portada (`BinalisSymbol.astro` no cambia), como los tamaños ópticos de una tipografía. Se corrigió el SVG porque es lo que muestran las pestañas; el `.ico` y el ícono de iOS se regeneraron con `pnpm icons`.

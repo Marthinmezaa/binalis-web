@@ -46,7 +46,6 @@ En el sitio publicado **no se ve ningún placeholder**: lo que falta se oculta o
 - Proyectos: los tres tienen captura real (2026-10-19). Las capturas nunca muestran datos personales de clientes (nombres, teléfonos, montos); métricas agregadas sí, con aprobación del dueño. Resultado de YERON con números reales al cierre de la campaña (15 de enero de 2027).
 - Testimonios reales (se van a pedir a clientes).
 - Correo con el dominio, Instagram y LinkedIn (WhatsApp: +595 983 755 161).
-- Texto final de los pasos del proceso (titular, subtítulo, meta description y servicios aprobados, 2026-10-19).
 
 ## 7. Fuera de alcance v1
 

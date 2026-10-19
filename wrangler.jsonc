@@ -3,6 +3,8 @@
   "compatibility_date": "2026-10-14",
   "assets": {
     "directory": "./dist",
+    // Serves dist/404.html (src/pages/404.astro) with a 404 status for unknown URLs.
+    "not_found_handling": "404-page",
   },
   // Required by `wrangler preview` (Workers Builds per-PR previews).
   "previews": {},

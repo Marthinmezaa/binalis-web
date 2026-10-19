@@ -25,12 +25,13 @@ const steps = [
 
 <section id="proceso" class="section" aria-labelledby="proceso-title">
   <div class="container">
-    <h2 id="proceso-title" class="section-title">
+    <p class="eyebrow reveal">// cómo trabajo</p>
+    <h2 id="proceso-title" class="section-title reveal">
       Proceso
     </h2>
     <ol class="steps">
       {steps.map(({ title, description }, index) => (
-        <li class="step">
+        <li class="step reveal">
           {/* The <ol> already announces the order; the visible number is decorative. */}
           <span class="step-number" aria-hidden="true">
             {String(index + 1).padStart(2, "0")}

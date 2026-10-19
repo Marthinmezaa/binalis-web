@@ -38,9 +38,9 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-**Siguiente tarea: el punto 1 (redes sociales).** El sitio está completo para la v1 salvo redes y testimonios, que dependen del dueño y de sus clientes.
+**Siguiente tarea: revisar con el dueño las vistas previas de #62 y #63** (textos nuevos para aprobar: "Contame qué necesitás y te respondo con una propuesta y un presupuesto claro.", las etiquetas `// lo que hago`, `// cómo trabajo`, `// en producción, con clientes reales`, `// quién soy`, `// hablemos`, la línea de la "b" y la 404). Mergear #62 primero y después #63. Luego, el punto 1 (redes sociales).
 
-Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **46/46**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
+Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **56/56** (con #63 mergeado). Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
 
 Pendientes, en orden:
 
@@ -48,6 +48,16 @@ Pendientes, en orden:
 2. **Testimonios** (RF-07): cuando llegue la primera respuesta del formulario con autorización, armar "Lo que dicen mis clientes" con la frase de recomendación (aprobada por el cliente antes de publicarla).
 
 ## Entradas
+
+### 2026-10-19 (30)
+
+- Correo configurado también en la PC de ocio. Doble cobro descartado: un solo cargo de US$12. El segundo aviso era el crédito de regalo de ZeptoMail/CPaaS (10.000 correos, vence el 17 de abril de 2027), útil para el formulario de la v2.
+- Bug: en el celular el sitio abría al final. Causa: tocar "Cotizá tu proyecto" dejaba `/#cotizacion` en la dirección y el navegador reabría ahí (reproducido con Playwright). Un listener de `hashchange` en `Layout.astro` limpia el ancla después del salto.
+- Rediseño "con sello", aprobado entero por el dueño (spec actualizada): cotización por correo (`mailto:` con plantilla) además de WhatsApp, número de WhatsApp sin mostrar, portada con brillo y grilla, la "b" que se dibuja al cargar con la línea "// la b de binalis es un 1 y un 0", etiquetas de código sobre cada sección, aparición al bajar, barra fija translúcida, capturas en marco de navegador con link al sitio en vivo y 404 propia (`not_found_handling: "404-page"` en `wrangler.jsonc`).
+- Scroll "como Cosmos Trak": Cosmos usa jQuery + AOS + `smoothscroll.js`. Se tomó solo la aparición al bajar, con CSS (`animation-timeline: view()`), sin librerías. La inercia de la rueda se descartó: toma el control del scroll y marea. Si el dueño la quiere igual, la opción es Lenis, justificada en un PR.
+- Trampas: axe mide el contraste de un bloque a mitad de su aparición, así que la prueba de accesibilidad baja hasta el final antes de medir (y otra prueba falla si algún bloque queda semitransparente ahí, verificado rompiendo el rango). El aro dibujado con `stroke-dashoffset` dejaba una línea en la unión del trazo: se anima `stroke-dasharray` con relleno `backwards`. `pnpm icons` leía el `<h1>` sin etiquetas internas: ahora las quita.
+- Python en Windows escribe CRLF: después de editar con un script, correr Prettier.
+- E2E 56/56. PRs #62 (correo, número y salto) y #63 (rediseño, encima de #62).
 
 ### 2026-10-19 (29)
 
@@ -161,9 +171,3 @@ Pendientes, en orden:
 - Medio: captura de la portada pública de cosmostrak.com.py (`src/assets/proyectos/`). Al sistema administrativo no se le sacan capturas porque tiene datos reales de clientes; YERON no tiene URL pública.
 - Nueva dependencia `sharp`, que `astro:assets` necesita para optimizar imágenes: la captura pasa de 473 KB a 22 KB (640 px) o 50 KB (1280 px) en WebP.
 - Prueba inestable corregida: inyectar la CSP con `page.route` + `route.fetch` hacía un pedido extra que bajo carga daba `ETIMEDOUT` (1 de cada 450). Ahora `astro preview` envía la CSP de `public/_headers` (`server.headers`, solo en preview porque `astro dev` necesita scripts inline). Verificado: 450/450 con 8 workers.
-
-### 2026-10-14 (15)
-
-- Favicon sin fondo, a pedido: solo la "b", agrandada para llenar el ícono (14 de 16 px de alto), con barra y aro de 2 px exactos a 16 px y medidas enteras a 32 y 48 px.
-- En pestañas claras el cian contrasta poco con el blanco: se lee gracias a la parte violeta. Si molesta, la opción es un SVG con `prefers-color-scheme` que use tonos más oscuros en modo claro.
-- `apple-touch-icon` sin cambios visibles: sigue sobre fondo oscuro porque iOS pinta de negro lo transparente.

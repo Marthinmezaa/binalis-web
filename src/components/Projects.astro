@@ -11,6 +11,8 @@ interface Project {
   tags: string[];
   description: string;
   media: { image: ImageMetadata; alt: string };
+  // Only for public sites: private systems have no link.
+  url?: string;
   problem: string;
   solution: string;
   result: string;
@@ -27,6 +29,7 @@ const projects: Project[] = [
       image: cosmosTrakWeb,
       alt: "Portada del sitio de Cosmos Trak, con el formulario para cotizar.",
     },
+    url: "https://cosmostrak.com.py",
     problem:
       "El programador anterior se había ido y la empresa se quedó sin el código de su sitio y sin acceso al hosting.",
     solution:
@@ -61,6 +64,7 @@ const projects: Project[] = [
       image: yeronPromo,
       alt: "Portada de la promoción de Yeron Max: «Puede ser en Río», un viaje para dos para recibir el 2027 en Copacabana, y el botón «Quiero participar».",
     },
+    url: "https://promoyeron.com.py",
     problem:
       "Una promoción sin códigos precargados: la única prueba de compra era la foto de la factura, y no había un equipo para revisarlas una por una mientras durara la campaña.",
     solution:
@@ -74,20 +78,43 @@ const projects: Project[] = [
 
 <section id="proyectos" class="section" aria-labelledby="proyectos-title">
   <div class="container">
-    <h2 id="proyectos-title" class="section-title">
+    <p class="eyebrow reveal">// en producción, con clientes reales</p>
+    <h2 id="proyectos-title" class="section-title reveal">
       Proyectos
     </h2>
     <div class="projects">
       {projects.map(
-        ({ id, name, tags, description, media, problem, solution, result }) => (
-          <article class="project" aria-labelledby={`${id}-title`}>
+        ({
+          id,
+          name,
+          tags,
+          description,
+          media,
+          url,
+          problem,
+          solution,
+          result,
+        }) => (
+          <article class="project reveal" aria-labelledby={`${id}-title`}>
             <div class="project-media">
-              <Image
-                src={media.image}
-                alt={media.alt}
-                widths={[640, 1280]}
-                sizes="(min-width: 48rem) 36rem, 100vw"
-              />
+              <div class="browser">
+                <div class="browser-bar" aria-hidden="true">
+                  <span class="dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </span>
+                  <span class="address">
+                    {url ? new URL(url).host : "acceso privado"}
+                  </span>
+                </div>
+                <Image
+                  src={media.image}
+                  alt={media.alt}
+                  widths={[640, 1280]}
+                  sizes="(min-width: 48rem) 36rem, 100vw"
+                />
+              </div>
             </div>
             <div>
               <ul class="tags" aria-label="Etiquetas">
@@ -111,12 +138,21 @@ const projects: Project[] = [
                   <dd>{result}</dd>
                 </div>
               </dl>
+              {url && (
+                <a class="live-link" href={url} target="_blank" rel="noopener">
+                  Ver sitio en vivo
+                  <span class="visually-hidden">
+                    de {name} (se abre en otra pestaña)
+                  </span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+              )}
             </div>
           </article>
         ),
       )}
     </div>
-    <div class="next-project">
+    <div class="next-project reveal">
       <p>Siguiente proyecto cargando…</p>
       <p class="next-name">CRM con inteligencia artificial</p>
       <div class="progress" aria-hidden="true">
@@ -148,13 +184,71 @@ const projects: Project[] = [
     }
   }
 
-  .project-media img {
+  .browser {
+    overflow: hidden;
+    border: 1px solid rgb(255 255 255 / 8%);
+    border-radius: 1rem;
+    background: var(--color-surface);
+    box-shadow: 0 1.5rem 3rem rgb(0 0 0 / 40%);
+    transition:
+      border-color 0.3s,
+      box-shadow 0.3s;
+  }
+
+  .project:hover .browser {
+    border-color: rgb(0 240 255 / 35%);
+    box-shadow:
+      0 1.5rem 3rem rgb(0 0 0 / 40%),
+      0 0 2.5rem rgb(0 240 255 / 15%);
+  }
+
+  .browser-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid rgb(255 255 255 / 6%);
+  }
+
+  .dots {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .dots span {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 15%);
+  }
+
+  .address {
+    flex: 1;
+    overflow: hidden;
+    padding: 0.15rem 0.75rem;
+    border-radius: 999px;
+    background: var(--color-bg);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .browser img {
     display: block;
     width: 100%;
     height: auto;
     aspect-ratio: 16 / 9;
-    border: 1px solid rgb(255 255 255 / 6%);
-    border-radius: 1rem;
+  }
+
+  .live-link {
+    display: inline-flex;
+    gap: 0.4rem;
+    margin-top: 1.5rem;
+    padding-block: 0.5rem;
+    color: var(--color-cyan);
+    font-weight: 700;
   }
 
   .tags {

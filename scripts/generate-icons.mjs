@@ -17,7 +17,8 @@ const heroSource = await readFile(
   new URL("../src/components/Hero.astro", import.meta.url),
   "utf8",
 );
-const headline = heroSource.match(/<h1[^>]*>([^<]+)<\/h1>/)[1];
+// Our own markup, inserted as is like the symbol's SVG: the h1's styling spans render unstyled here.
+const headlineHtml = heroSource.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)[1];
 const fontsDir = new URL("../src/assets/fonts/", import.meta.url);
 // setContent pages have no origin to load font files from: they go in as data: URIs.
 const fontFace = async (family, file) =>
@@ -97,7 +98,7 @@ try {
     `${symbolSvg}
      <div>
        <p class="wordmark">bin<span>alis</span></p>
-       <p class="headline">${headline}</p>
+       <p class="headline">${headlineHtml}</p>
        <p class="domain">binalis.com.py</p>
      </div>`,
     `${BRAND_COLORS}

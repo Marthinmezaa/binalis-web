@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.15.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.14.0...binalis-web-v0.15.0) (2026-10-19)
+
+
+### Features
+
+* proyectos sin placeholders, con textos aprobados y tarjeta de stack ([#48](https://github.com/Marthinmezaa/binalis-web/issues/48)) ([bfd325a](https://github.com/Marthinmezaa/binalis-web/commit/bfd325ab5720844544ce1891913cacf675ffa83d))
+
 ## [0.14.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.13.0...binalis-web-v0.14.0) (2026-10-16)
 
 

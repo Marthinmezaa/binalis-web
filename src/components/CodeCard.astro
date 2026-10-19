@@ -1,0 +1,56 @@
+---
+// Rendered as a JS object literal: strings, numbers or lists of strings.
+export type CodeCardData = Record<string, string | number | string[]>;
+
+interface Props {
+  name: string;
+  data: CodeCardData;
+}
+
+const { name, data } = Astro.props;
+---
+
+<pre class="code"><code><span class="keyword">const</span> {name} = {"{"}{Object.entries(data).map(([key, value]) => (
+  <span class="property">{key}: {Array.isArray(value) ? (
+    <>[{value.map((item, index) => (
+      <><span class="string">{JSON.stringify(item)}</span>{index < value.length - 1 && ", "}</>
+    ))}]</>
+  ) : (
+    <span class={typeof value === "number" ? "number" : "string"}>{JSON.stringify(value)}</span>
+  )},</span>
+))}{"};"}</code></pre>
+
+<style>
+  /* pre-wrap instead of a scrollable box: no horizontal scroll on phones. */
+  .code {
+    margin: 0;
+    padding: 1.25rem;
+    border: 1px solid rgb(255 255 255 / 6%);
+    border-radius: 1rem;
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+  }
+
+  /* Hanging indent: a property that wraps keeps its continuation lines indented, like an editor. */
+  .property {
+    display: block;
+    padding-left: 4ch;
+    text-indent: -2ch;
+  }
+
+  .keyword {
+    color: var(--color-magenta);
+  }
+
+  .string {
+    color: var(--color-cyan);
+  }
+
+  .number {
+    color: var(--color-text);
+  }
+</style>

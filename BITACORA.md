@@ -7,9 +7,9 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Diseño de la web aprobado en lienzo (4 láminas: logo, color y tipografía, aplicaciones, web).
 - Repo público en GitHub con `main` protegida (4 checks obligatorios: calidad, gitleaks, dependencias, CodeQL).
 - Dominio `binalis.com.py` habilitado y con DNS delegado a Cloudflare (`aurora` / `johnny.ns.cloudflare.com`).
-- Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04), Proyectos (RF-05), "siguiente proyecto cargando…" (RF-06), "Quién está detrás" (RF-10, resumen en portada + página `/quien-soy/`), Cotización por WhatsApp (RF-08) y pie (RF-09); quedan textos placeholder; favicon e íconos de app.
+- Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04), Proyectos (RF-05), "siguiente proyecto cargando…" (RF-06), "Quién está detrás" (RF-10, resumen en portada + página `/quien-soy/`), Cotización por WhatsApp (RF-08) y pie (RF-09); Proyectos sin placeholders; quedan los de portada, servicios y proceso; favicon e íconos de app.
 - Pruebas e2e con Playwright + axe en el CI (escritorio y celular), bajo la misma CSP de producción.
-- release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.8.0.
+- release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.14.0.
 - Repo con README, SECURITY.md (reporte privado de vulnerabilidades activado), descripción, topics y sitio web.
 
 ## Configuración fuera del repo (panel de Cloudflare)
@@ -21,17 +21,25 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-**Se sigue en la otra PC.** Al empezar: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **36/36**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
+Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **36/36**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
 
 Pendientes, en orden:
 
-1. **Sacar los placeholders visibles de Proyectos** (no depende del dueño): tarjeta tipo editor de código con el stack donde falta captura, y ocultar Problema/Resultado si falta. Ver spec, sección 6.
-2. **Borradores de textos** para que el dueño apruebe: titular y subtítulo de la portada, meta description, descripciones de los 3 servicios y los 4 pasos del proceso. Tono: primera persona, apasionado, "amo lo que hago".
-3. **Correo** `contacto@binalis.com.py` en Zoho Mail (gratis). Antes de vincular Instagram, Facebook y LinkedIn: renovación automática del dominio en NIC.PY y verificación en dos pasos en todas las cuentas. Después, sumar correo y redes al pie (RF-09).
-4. **Capturas de proyectos** con datos de prueba, nunca reales. Los repos de Cosmos Trak y YERON no están en la PC Cardinallis-LAPTOP: ver si están en la otra, o si hay URL pública o usuario de prueba.
-5. SEO pendiente de la spec: Open Graph (con la foto o el símbolo), `sitemap.xml` y `robots.txt`.
+1. **Borradores de textos** para que el dueño apruebe: titular y subtítulo de la portada, meta description, descripciones de los 3 servicios y los 4 pasos del proceso. Tono: primera persona, apasionado, "amo lo que hago".
+2. **Correo** `contacto@binalis.com.py` en Zoho Mail (gratis). Antes de vincular Instagram, Facebook y LinkedIn: renovación automática del dominio en NIC.PY y verificación en dos pasos en todas las cuentas. Después, sumar correo y redes al pie (RF-09).
+3. **Capturas de proyectos** (opcional: la tarjeta de stack ya cubre el hueco) con datos de prueba, nunca reales. Los repos de Cosmos Trak y YERON no están en la PC Cardinallis-LAPTOP: ver si están en la otra, o si hay URL pública o usuario de prueba.
+4. SEO pendiente de la spec: Open Graph (con la foto o el símbolo), `sitemap.xml` y `robots.txt`.
 
 ## Entradas
+
+### 2026-10-19 (24)
+
+- Proyectos sin placeholders visibles, con textos dados y aprobados por el dueño. Cosmos Trak · Sitio web cuenta el rescate: el programador anterior se fue sin dejar código ni acceso al hosting; se recuperó desde el sitio publicado, se migró de hosting y se cambió el DNS en NIC.PY. Resultado: las consultas, que antes no llegaban, ahora entran y se cuentan, más métricas de Meta. Bancard queda afuera hasta que esté habilitado.
+- Sistema administrativo y YERON muestran una tarjeta de código con su stack en lugar de captura. `CodeCard.astro` sale de la tarjeta de "Quién soy" y la usan los dos lugares. En el sistema se corrigieron los roles (vendedor e instalador ahora son uno) y el resultado ("en producción las 24 horas").
+- YERON: Problema (sin códigos precargados, la única prueba es la foto de la factura) y Resultado "en línea desde el 15 de octubre de 2026". `shortcut:` cambiarlo por los números reales al cierre (15 de enero de 2027).
+- No se publica nada sensible de los CLAUDE.md de los proyectos: ni correos internos, ni precios, ni contactos, ni detalles del antifraude.
+- E2E: cada proyecto falla si muestra un texto `[EN MAYÚSCULAS]` (verificado inyectando uno). 36/36.
+- La regla de la spec "ocultar Problema/Resultado si falta" no se implementó porque hoy no falta ninguno. Se hace cuando aparezca un proyecto sin esos datos.
 
 ### 2026-10-16 (23)
 

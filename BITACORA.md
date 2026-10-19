@@ -12,12 +12,21 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.15.0.
 - Repo con README, SECURITY.md (reporte privado de vulnerabilidades activado), descripción, topics y sitio web.
 
-## Configuración fuera del repo (panel de Cloudflare)
+## Configuración fuera del repo
+
+### Panel de Cloudflare
 
 - DNS: `binalis.com.py` → Worker `binalis-web` (custom domain); `www` → `AAAA 100::` con proxy (solo existe para redirigir).
 - Redirect Rule "Redirect www to root": `http.host eq "www.binalis.com.py"` → `concat("https://binalis.com.py", http.request.uri.path)`, 301, conserva query string.
 - SSL/TLS: modo Full, **Always Use HTTPS** activado, TLS mínimo 1.2.
 - Workers Builds: build `pnpm run build`, deploy `npx wrangler deploy`, preview `npx wrangler preview`, variable `PNPM_VERSION=11.20.0`, token de build propio del proyecto.
+
+### Formulario de testimonios (Google Forms, en el Drive del dueño)
+
+- "Binalis — Opinión de clientes", publicado el 2026-10-19 para cualquiera con el link, sin inicio de sesión.
+- Link para clientes: https://docs.google.com/forms/d/e/1FAIpQLSdrY-mdzdKZEjlA-XlcJsM4sG-V7yzBccfnn8GrghRsRzAULA/viewform
+- Edición y respuestas (solo con la cuenta del dueño): https://docs.google.com/forms/d/1Ricb0nlJrzb0tSC4c6rfS0i9_53Rr34HFqrY26zP4os/edit
+- 10 preguntas: nombre, empresa y cargo, tipo de proyecto, antes, después, qué destaca, recomendación en una o dos frases (la base del testimonio), conformidad del 1 al 5, qué mejorar (privada) y autorización para publicar (con nombre y empresa / solo nombre / sin nombre / no).
 
 ## Próximo paso
 
@@ -28,7 +37,8 @@ Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no t
 Pendientes, en orden:
 
 1. **Correo** `contacto@binalis.com.py` en Zoho Mail (gratis). Antes de vincular Instagram, Facebook y LinkedIn: renovación automática del dominio en NIC.PY y verificación en dos pasos en todas las cuentas. Después, sumar correo y redes al pie (RF-09).
-2. SEO pendiente de la spec: Open Graph (con la foto o el símbolo), `sitemap.xml` y `robots.txt`.
+2. **Testimonios** (RF-07): cuando llegue la primera respuesta del formulario con autorización, armar "Lo que dicen mis clientes" con la frase de recomendación (aprobada por el cliente antes de publicarla).
+3. SEO pendiente de la spec: Open Graph (con la foto o el símbolo), `sitemap.xml` y `robots.txt`.
 
 ## Entradas
 
@@ -41,6 +51,8 @@ Pendientes, en orden:
 - Proceso: los 4 pasos con texto. Se le pidió al dueño que revisara que fueran promesas reales (presupuesto tras la primera charla, avances mientras construye, soporte después de entregar) y los aprobó.
 - E2E: la prueba de placeholders ahora revisa el cuerpo y la meta description de las dos páginas (verificado que falla con uno inyectado), y los links a la cotización incluyen el nuevo. 40/40.
 - Las capturas de Cosmos y YERON (#52) se revisaron en producción con Chrome: cargan las tres y la consola no muestra errores con la CSP real. La vista previa de Cloudflare pide sesión y no se revisó.
+- El release 0.17.0 (#55) tenía en rojo el build de vista previa de Workers. El log mostraba un error de la API de Cloudflare al subir los archivos (`assets-upload-session`, "unknown error"), no del código. Con "Retry build" en el panel pasó. Ese check no es obligatorio para el merge.
+- Testimonios (RF-07): la sección se va a llamar "Lo que dicen mis clientes", en primera persona como el resto del sitio. Se piden con un formulario de Google creado con Claude in Chrome (ver "Configuración fuera del repo"). La sección se arma cuando llegue la primera respuesta con autorización.
 
 ### 2026-10-19 (26)
 

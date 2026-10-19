@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.19.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.18.0...binalis-web-v0.19.0) (2026-10-19)
+
+
+### Features
+
+* correo de contacto en el pie ([#60](https://github.com/Marthinmezaa/binalis-web/issues/60)) ([396204d](https://github.com/Marthinmezaa/binalis-web/commit/396204d849dda4dcab56d6b4488daae388f83f14))
+
 ## [0.18.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.17.0...binalis-web-v0.18.0) (2026-10-19)
 
 

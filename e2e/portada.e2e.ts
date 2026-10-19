@@ -38,6 +38,17 @@ for (const path of PAGES) {
     expect(violations).toEqual([]);
   });
 
+  test(`${path}: no publica ningún placeholder`, async ({ page }) => {
+    // Pending content is written as "[IN CAPS]" and must never be published.
+    const placeholder = /\[[A-ZÁÉÍÓÚÑ]/;
+    await page.goto(path);
+    await expect(page.locator("body")).not.toContainText(placeholder);
+    await expect(page.locator('meta[name="description"]')).not.toHaveAttribute(
+      "content",
+      placeholder,
+    );
+  });
+
   test(`${path}: no genera scroll horizontal`, async ({ page }) => {
     await page.goto(path);
     // Not window.innerWidth: mobile browsers zoom out to fit overflowing content, so it grows with it.
@@ -122,8 +133,6 @@ test("cada proyecto muestra etiquetas, medio y Problema / Solución / Resultado"
       "Solución",
       "Resultado",
     ]);
-    // Pending content is written as "[IN CAPS]" and must never be published.
-    await expect(project).not.toContainText(/\[[A-ZÁÉÍÓÚÑ]/);
   }
 });
 
@@ -191,9 +200,11 @@ test("/quien-soy/ cuenta la historia completa y la barra marca la página", asyn
 test("los botones de cotizar llevan a WhatsApp con el número y un mensaje", async ({
   page,
 }) => {
-  for (const button of await page
-    .getByRole("link", { name: "Cotizá tu proyecto" })
-    .all()) {
+  const toQuote = page.getByRole("link", {
+    name: /^(Cotizá tu proyecto|Contame y lo vemos juntos\.)$/,
+  });
+  await expect(toQuote).toHaveCount(3);
+  for (const button of await toQuote.all()) {
     await expect(button).toHaveAttribute("href", "#cotizacion");
   }
 

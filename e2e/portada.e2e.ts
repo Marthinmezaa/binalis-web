@@ -104,8 +104,18 @@ test("el primer foco es 'Saltar al contenido' y lleva al contenido", async ({
   const skipLink = page.getByRole("link", { name: "Saltar al contenido" });
   await expect(skipLink).toBeFocused();
 
-  await page.keyboard.press("Enter");
-  await expect(page).toHaveURL(/#contenido$/);
+  await expect(skipLink).toHaveAttribute("href", "#contenido");
+});
+
+test("un link interno lleva a su sección sin dejar el ancla en la dirección", async ({
+  page,
+}) => {
+  // Otherwise phones reopen the tab at "/#cotizacion", at the bottom of the page.
+  await page.getByRole("link", { name: "Cotizá tu proyecto" }).first().click();
+  await expect(
+    page.getByRole("region", { name: "Cotizá tu proyecto" }),
+  ).toBeInViewport();
+  await expect(page).toHaveURL(/\/$/);
 });
 
 test("los íconos declarados en el head existen", async ({ page, request }) => {
@@ -232,7 +242,7 @@ test("/quien-soy/ cuenta la historia completa y la barra marca la página", asyn
   ).toBeVisible();
 });
 
-test("los botones de cotizar llevan a WhatsApp con el número y un mensaje", async ({
+test("se cotiza por WhatsApp o por correo, sin el número escrito en la página", async ({
   page,
 }) => {
   const toQuote = page.getByRole("link", {
@@ -243,13 +253,22 @@ test("los botones de cotizar llevan a WhatsApp con el número y un mensaje", asy
     await expect(button).toHaveAttribute("href", "#cotizacion");
   }
 
-  const whatsapp = page
-    .getByRole("region", { name: "Cotizá tu proyecto" })
-    .getByRole("link", { name: "Hablemos por WhatsApp" });
-  await expect(whatsapp).toHaveAttribute(
+  const contact = page.getByRole("region", { name: "Cotizá tu proyecto" });
+  await expect(
+    contact.getByRole("link", { name: "Hablemos por WhatsApp" }),
+  ).toHaveAttribute("href", /^https:\/\/wa\.me\/595983755161\?text=.+/);
+  await expect(
+    contact.getByRole("link", { name: "Escribime un correo" }),
+  ).toHaveAttribute(
     "href",
-    /^https:\/\/wa\.me\/595983755161\?text=.+/,
+    /^mailto:contacto@binalis\.com\.py\?subject=.+&body=.+/,
   );
+  await expect(
+    contact.getByRole("link", { name: "contacto@binalis.com.py" }),
+  ).toBeVisible();
+
+  // The number only lives inside the wa.me link, never as visible text.
+  await expect(page.locator("body")).not.toContainText(/983\s?755\s?161/);
 });
 
 test("el pie muestra WhatsApp, el correo y el año actual", async ({ page }) => {

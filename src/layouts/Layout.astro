@@ -42,5 +42,11 @@ const ogImageUrl = new URL("/og-image.png", Astro.site);
       Saltar al contenido
     </a>
     <slot />
+    <script>
+      // Phones reopen a tab at its last URL: an in-page "#cotizacion" left there made the site open at the bottom.
+      addEventListener("hashchange", () =>
+        history.replaceState(null, "", location.pathname + location.search),
+      );
+    </script>
   </body>
 </html>

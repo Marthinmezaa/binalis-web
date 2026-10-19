@@ -8,6 +8,19 @@ test.beforeEach(async ({ page }) => {
 });
 
 const PAGES = ["/", "/quien-soy/"];
+const SITE = "https://binalis.com.py";
+
+test("robots.txt apunta al sitemap y el sitemap lista cada página", async ({
+  request,
+}) => {
+  const robots = await (await request.get("/robots.txt")).text();
+  expect(robots).toContain(`Sitemap: ${SITE}/sitemap.xml`);
+
+  const sitemap = await (await request.get("/sitemap.xml")).text();
+  for (const path of PAGES) {
+    expect(sitemap).toContain(`<loc>${SITE}${path}</loc>`);
+  }
+});
 
 for (const path of PAGES) {
   // The preview server sends production's CSP (see astro.config.mjs).
@@ -47,6 +60,28 @@ for (const path of PAGES) {
       "content",
       placeholder,
     );
+  });
+
+  test(`${path}: declara su URL pública y la imagen para compartir`, async ({
+    page,
+    request,
+  }) => {
+    await page.goto(path);
+    const publicUrl = `${SITE}${path}`;
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      "href",
+      publicUrl,
+    );
+    await expect(page.locator('meta[property="og:url"]')).toHaveAttribute(
+      "content",
+      publicUrl,
+    );
+
+    const image = await page
+      .locator('meta[property="og:image"]')
+      .getAttribute("content");
+    expect(image).toMatch(new RegExp(`^${SITE}/`));
+    expect((await request.get(new URL(image ?? "").pathname)).ok()).toBe(true);
   });
 
   test(`${path}: no genera scroll horizontal`, async ({ page }) => {

@@ -21,6 +21,8 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
+**Siguiente tarea: el punto 1 (borradores de textos).** Mismo método que con Proyectos (entrada 24): una pregunta por vez al dueño, un borrador por texto y aprobación antes de aplicarlo. Empezar por el titular y el subtítulo de la portada (`Hero.astro`), y seguir con la meta description (`index.astro`), los servicios y el proceso. Al terminar, la e2e de placeholders puede pasar de Proyectos a la página entera.
+
 Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **36/36**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
 
 Pendientes, en orden:

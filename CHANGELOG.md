@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.20.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.19.0...binalis-web-v0.20.0) (2026-10-19)
+
+
+### Features
+
+* cotización por correo, número oculto y sitio que abre desde arriba ([#62](https://github.com/Marthinmezaa/binalis-web/issues/62)) ([c99e527](https://github.com/Marthinmezaa/binalis-web/commit/c99e5270b8e31693c0063501672f6e225c098b76))
+
 ## [0.19.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.18.0...binalis-web-v0.19.0) (2026-10-19)
 
 

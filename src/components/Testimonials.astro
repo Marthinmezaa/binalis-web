@@ -1,0 +1,141 @@
+---
+interface Testimonial {
+  // The client's one-line recommendation, shown large.
+  highlight: string;
+  body: string;
+  name: string;
+  role: string;
+  rating: number;
+}
+
+// Only real testimonials, each published with the client's approval (RF-07, up to 3).
+const testimonials: Testimonial[] = [
+  {
+    highlight: "Es 100% confiable.",
+    body: "La administración y el control general dependían de unas planillas de Excel. Hoy el control es más dinámico: la carga de datos y la administración dejaron de ser un problema, el sistema es súper intuitivo y agilizó varios procesos.",
+    name: "Ederth Gledde",
+    role: "CEO de Cosmos Trak",
+    rating: 5,
+  },
+];
+const MAX_RATING = 5;
+---
+
+<section id="testimonios" class="section" aria-labelledby="testimonios-title">
+  <div class="container">
+    <p class="eyebrow reveal">// en palabras de mis clientes</p>
+    <h2 id="testimonios-title" class="section-title reveal">
+      Lo que dicen mis clientes
+    </h2>
+    <div class="testimonials">
+      {testimonials.map(({ highlight, body, name, role, rating }) => (
+        <figure class="testimonial reveal">
+          <p class="rating">
+            <span aria-hidden="true">
+              {"★".repeat(rating)}
+              <span class="rating-empty">
+                {"★".repeat(MAX_RATING - rating)}
+              </span>
+            </span>
+            <span class="visually-hidden">
+              Calificación: {rating} de {MAX_RATING}
+            </span>
+          </p>
+          <blockquote>
+            <p class="highlight">«{highlight}»</p>
+            <p class="body">{body}</p>
+          </blockquote>
+          <figcaption>
+            <span class="name">{name}</span>
+            <span class="role">{role}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: 1.5rem;
+  }
+
+  .testimonial {
+    position: relative;
+    margin: 0;
+    padding: clamp(1.5rem, 5vw, 2.5rem);
+    overflow: hidden;
+    border: 1px solid rgb(255 255 255 / 6%);
+    border-radius: 1rem;
+    background:
+      radial-gradient(
+        circle at top left,
+        rgb(123 92 255 / 12%),
+        transparent 60%
+      ),
+      var(--color-surface);
+  }
+
+  /* A large faded quote mark as the card's backdrop. */
+  .testimonial::before {
+    content: "”";
+    position: absolute;
+    top: 0;
+    right: 2rem;
+    color: rgb(0 240 255 / 8%);
+    font-family: var(--font-heading);
+    font-size: 12rem;
+    line-height: 1;
+  }
+
+  .rating {
+    margin: 0 0 1rem;
+    color: var(--color-cyan);
+    letter-spacing: 0.2em;
+  }
+
+  .rating-empty {
+    color: rgb(255 255 255 / 15%);
+  }
+
+  blockquote {
+    margin: 0;
+  }
+
+  .highlight {
+    margin: 0 0 1rem;
+    background: linear-gradient(90deg, var(--color-cyan), var(--color-violet));
+    background-clip: text;
+    color: transparent;
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .body {
+    max-width: 48rem;
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 1.0625rem;
+  }
+
+  figcaption {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.5rem;
+  }
+
+  .name {
+    font-family: var(--font-heading);
+    font-weight: 700;
+  }
+
+  .role {
+    color: var(--color-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+  }
+</style>

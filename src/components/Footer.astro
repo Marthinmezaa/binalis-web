@@ -1,5 +1,5 @@
 ---
-import { whatsappUrl } from "../contact";
+import { email, whatsappUrl } from "../contact";
 
 // shortcut: the year is fixed at build time; the first deploy of each year updates it.
 const year = new Date().getFullYear();
@@ -21,6 +21,9 @@ const year = new Date().getFullYear();
     <ul class="links">
       <li>
         <a href={whatsappUrl}>WhatsApp</a>
+      </li>
+      <li>
+        <a href={`mailto:${email}`}>{email}</a>
       </li>
     </ul>
     <p class="copyright">© {year} Binalis</p>

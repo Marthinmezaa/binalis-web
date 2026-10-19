@@ -7,7 +7,7 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Diseño de la web aprobado en lienzo (4 láminas: logo, color y tipografía, aplicaciones, web).
 - Repo público en GitHub con `main` protegida (4 checks obligatorios: calidad, gitleaks, dependencias, CodeQL).
 - Dominio `binalis.com.py` habilitado y con DNS delegado a Cloudflare (`aurora` / `johnny.ns.cloudflare.com`).
-- Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04), Proyectos (RF-05), "siguiente proyecto cargando…" (RF-06), "Quién está detrás" (RF-10, resumen en portada + página `/quien-soy/`), Cotización por WhatsApp (RF-08) y pie (RF-09); Proyectos sin placeholders (el sistema administrativo con captura real); quedan los de portada, servicios y proceso; favicon e íconos de app.
+- Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04), Proyectos (RF-05), "siguiente proyecto cargando…" (RF-06), "Quién está detrás" (RF-10, resumen en portada + página `/quien-soy/`), Cotización por WhatsApp (RF-08) y pie (RF-09); Proyectos sin placeholders y con captura real en los tres; quedan los de portada, servicios y proceso; favicon e íconos de app.
 - Pruebas e2e con Playwright + axe en el CI (escritorio y celular), bajo la misma CSP de producción.
 - release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.15.0.
 - Repo con README, SECURITY.md (reporte privado de vulnerabilidades activado), descripción, topics y sitio web.
@@ -29,8 +29,7 @@ Pendientes, en orden:
 
 1. **Borradores de textos** para que el dueño apruebe: titular y subtítulo de la portada, meta description, descripciones de los 3 servicios y los 4 pasos del proceso. Tono: primera persona, apasionado, "amo lo que hago".
 2. **Correo** `contacto@binalis.com.py` en Zoho Mail (gratis). Antes de vincular Instagram, Facebook y LinkedIn: renovación automática del dominio en NIC.PY y verificación en dos pasos en todas las cuentas. Después, sumar correo y redes al pie (RF-09).
-3. **Captura de YERON** (opcional: la tarjeta de stack ya cubre el hueco), sin datos personales de participantes. Se puede usar el mismo método que con Cosmos (entrada 26).
-4. SEO pendiente de la spec: Open Graph (con la foto o el símbolo), `sitemap.xml` y `robots.txt`.
+3. SEO pendiente de la spec: Open Graph (con la foto o el símbolo), `sitemap.xml` y `robots.txt`.
 
 ## Entradas
 
@@ -39,7 +38,9 @@ Pendientes, en orden:
 - Sistema administrativo de Cosmos Trak con captura real en lugar de la tarjeta de stack: % de atraso, meta de ventas y el gráfico de avance anual de instalaciones (2024–2026). El dueño aprobó publicar esas métricas reales. Los montos salen ocultos por el modo privado de la app y no aparece ningún cliente.
 - Cambio de spec aprobado por el dueño: las capturas nunca muestran datos personales de clientes, pero sí métricas agregadas con su aprobación (antes: "datos de prueba, nunca reales").
 - Método: Chromium de Playwright visible con `--remote-debugging-port`. El dueño inició sesión en esa ventana, Claude capturó conectándose por CDP y recortó por los bordes de las tarjetas. El ancho de la ventana se ajustó a 2140 px para que el recorte quede en 16:9, como la otra captura. La sesión se borró al terminar y no hubo contraseñas en juego.
-- Captura de 1416 × 793 px (50 KB): `astro:assets` sirve WebP de 8 a 24 KB. 36/36.
+- Captura de 1416 × 793 px (50 KB): `astro:assets` sirve WebP de 8 a 24 KB.
+- YERON: primera pantalla de la landing pública promoyeron.com.py (banner "Puede ser en Río" y botón "Quiero participar"), 1440 × 810 con Playwright headless, sin sesión. El formulario solo tiene textos de ejemplo. Se guarda en JPG (171 KB contra 1,26 MB en PNG) porque el banner es casi una foto.
+- Con los tres proyectos con captura, la tarjeta de stack sale de Proyectos (`CodeCard` sigue en "Quién soy"). La regla de la spec "proyecto sin capturas → tarjeta de stack" se vuelve a implementar cuando aparezca uno; está en el historial de git.
 
 ### 2026-10-19 (25)
 

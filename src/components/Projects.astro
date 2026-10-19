@@ -3,17 +3,14 @@ import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
 import cosmosTrakSistema from "../assets/proyectos/cosmos-trak-sistema.png";
 import cosmosTrakWeb from "../assets/proyectos/cosmos-trak-web.png";
-import CodeCard, { type CodeCardData } from "./CodeCard.astro";
+import yeronPromo from "../assets/proyectos/yeron-promo.jpg";
 
 interface Project {
   id: string;
   name: string;
   tags: string[];
   description: string;
-  // A real capture, or a code card with the stack when there is none to show.
-  media:
-    | { image: ImageMetadata; alt: string }
-    | { variable: string; stack: CodeCardData };
+  media: { image: ImageMetadata; alt: string };
   problem: string;
   solution: string;
   result: string;
@@ -61,15 +58,8 @@ const projects: Project[] = [
     description:
       "Plataforma para una promoción de la marca YERON, en la que los consumidores participan cargando la foto de su factura.",
     media: {
-      variable: "promocion",
-      stack: {
-        web: ["Next.js", "TypeScript"],
-        baseDeDatos: ["PostgreSQL", "Prisma"],
-        facturas: "Cloudflare R2, privado",
-        antiRobot: "Cloudflare Turnstile",
-        sorteo: "Electron, sin conexión",
-        hosting: "Railway",
-      },
+      image: yeronPromo,
+      alt: "Portada de la promoción de Yeron Max: «Puede ser en Río», un viaje para dos para recibir el 2027 en Copacabana, y el botón «Quiero participar».",
     },
     problem:
       "Una promoción sin códigos precargados: la única prueba de compra era la foto de la factura, y no había un equipo para revisarlas una por una mientras durara la campaña.",
@@ -92,16 +82,12 @@ const projects: Project[] = [
         ({ id, name, tags, description, media, problem, solution, result }) => (
           <article class="project" aria-labelledby={`${id}-title`}>
             <div class="project-media">
-              {"image" in media ? (
-                <Image
-                  src={media.image}
-                  alt={media.alt}
-                  widths={[640, 1280]}
-                  sizes="(min-width: 48rem) 36rem, 100vw"
-                />
-              ) : (
-                <CodeCard name={media.variable} data={media.stack} />
-              )}
+              <Image
+                src={media.image}
+                alt={media.alt}
+                widths={[640, 1280]}
+                sizes="(min-width: 48rem) 36rem, 100vw"
+              />
             </div>
             <div>
               <ul class="tags" aria-label="Etiquetas">

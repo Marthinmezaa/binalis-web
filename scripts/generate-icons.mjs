@@ -21,6 +21,7 @@ const heroSource = await readFile(
 const headline = heroSource
   .match(/<h1[^>]*>([\s\S]*?)<\/h1>/)[1]
   .replace(/<[^>]+>/g, "")
+  .replace(/[<>]/g, "")
   .replace(/\s+/g, " ")
   .trim();
 const fontsDir = new URL("../src/assets/fonts/", import.meta.url);

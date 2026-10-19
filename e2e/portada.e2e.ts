@@ -382,3 +382,35 @@ test("los testimonios muestran opiniones reales con nombre y calificación", asy
     await expect(testimonial).toContainText(/Calificación: \d de 5/);
   }
 });
+
+test("el botón de cotizar de la barra brilla al bajar, salvo con movimiento reducido", async ({
+  page,
+}) => {
+  const cta = page.getByRole("banner").getByRole("link", {
+    name: "Cotizá tu proyecto",
+  });
+  const animationCount = () =>
+    cta.evaluate((element) => element.getAnimations().length);
+
+  expect(await animationCount()).toBe(0);
+  await scrollToEnd(page);
+  await expect.poll(animationCount).toBe(1);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect.poll(animationCount).toBe(0);
+});
+
+test("los botones para cotizar brillan", async ({ page }) => {
+  const glow = (name: string) =>
+    page
+      .getByRole("main")
+      .getByRole("link", { name })
+      .first()
+      .evaluate((element) => getComputedStyle(element).boxShadow);
+
+  // The hero's, not the header's: the header one only pulses while scrolling.
+  expect(await glow("Cotizá tu proyecto")).not.toBe("none");
+  // The quote buttons switch on as their section comes into view.
+  await scrollToEnd(page);
+  expect(await glow("Hablemos por WhatsApp")).not.toBe("none");
+  expect(await glow("Escribime un correo")).not.toBe("none");
+});

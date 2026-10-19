@@ -43,6 +43,8 @@ const links = [
     border-bottom: 1px solid rgb(255 255 255 / 6%);
     background: rgb(6 8 15 / 80%);
     backdrop-filter: blur(12px);
+    /* Lets the CTA know when the header is stuck, i.e. once the visitor scrolls. */
+    container-type: scroll-state;
   }
 
   .header-inner {
@@ -75,6 +77,22 @@ const links = [
 
   .cta {
     grid-area: cta;
+  }
+
+  /* While scrolling, the CTA breathes like the hero's "b": same rhythm, only the glow changes.
+     Browsers without scroll-state queries simply keep it still. */
+  @media (prefers-reduced-motion: no-preference) {
+    @container scroll-state(stuck: top) {
+      .cta {
+        animation: cta-glow 2.4s ease-in-out infinite;
+      }
+    }
+  }
+
+  @keyframes cta-glow {
+    50% {
+      box-shadow: 0 0 1rem rgb(0 240 255 / 40%);
+    }
   }
 
   .wordmark {

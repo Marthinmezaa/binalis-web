@@ -28,8 +28,10 @@ import { email, emailQuoteUrl, whatsappUrl } from "../contact";
 </section>
 
 <style>
+  /* Narrow on purpose: the content is a short centered block, a full-width box only added empty space. */
   .contact {
-    padding: clamp(2rem, 6vw, 3.5rem) var(--gutter);
+    width: min(100% - 2 * var(--gutter), 46rem);
+    padding: clamp(2rem, 5vw, 3rem) var(--gutter);
     border: 1px solid rgb(0 240 255 / 25%);
     border-radius: 1rem;
     background:
@@ -54,6 +56,35 @@ import { email, emailQuoteUrl, whatsappUrl } from "../contact";
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
+  }
+
+  /* Both ways to quote glow, WhatsApp brighter as the main one, both below the "b". This is the resting state:
+     without scroll-driven animations or with reduced motion they are simply lit. */
+  .actions .button-primary {
+    box-shadow: 0 0 1.25rem rgb(0 240 255 / 40%);
+  }
+
+  .actions .button-secondary {
+    box-shadow: 0 0 1rem rgb(0 240 255 / 20%);
+  }
+
+  /* They switch on as the section comes into view, then stay lit. Longhands: see .reveal in global.css. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .actions .button {
+        animation-name: switch-on;
+        animation-timing-function: ease-in;
+        animation-fill-mode: backwards;
+        animation-timeline: view();
+        animation-range: entry 60% cover 45%;
+      }
+    }
+  }
+
+  @keyframes switch-on {
+    from {
+      box-shadow: none;
+    }
   }
 
   .email {

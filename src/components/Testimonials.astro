@@ -56,8 +56,15 @@ const MAX_RATING = 5;
 </section>
 
 <style>
+  /* Centered and narrow: read as a pull quote, a pause between the projects and the person. */
+  #testimonios {
+    text-align: center;
+  }
+
   .testimonials {
     display: grid;
+    max-width: 50rem;
+    margin-inline: auto;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
     gap: 1.5rem;
   }
@@ -116,7 +123,6 @@ const MAX_RATING = 5;
   }
 
   .body {
-    max-width: 48rem;
     margin: 0;
     color: var(--color-text-muted);
     font-size: 1.0625rem;

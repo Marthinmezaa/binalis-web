@@ -45,7 +45,7 @@ En el sitio publicado **no se ve ningún placeholder**: lo que falta se oculta o
 
 - Proyectos: los tres tienen captura real (2026-10-19). Las capturas nunca muestran datos personales de clientes (nombres, teléfonos, montos); métricas agregadas sí, con aprobación del dueño. Resultado de YERON con números reales al cierre de la campaña (15 de enero de 2027).
 - Testimonios reales: se piden con el formulario de Google "Binalis — Opinión de clientes" (link en `BITACORA.md`).
-- Correo con el dominio, Instagram y LinkedIn (WhatsApp: +595 983 755 161).
+- Instagram, Facebook y LinkedIn (WhatsApp: +595 983 755 161; correo: `contacto@binalis.com.py`).
 
 ## 7. Fuera de alcance v1
 
@@ -61,10 +61,11 @@ Blog, versión en otros idiomas, panel de administración, pagos. Para v2: formu
 - Hosting: **Cloudflare Workers** (static assets), con DNS en Cloudflare. Se descartó Pages porque Cloudflare lo marca como flujo _legacy_ (2026-10-14).
 - Repositorio **público** en GitHub (`Marthinmezaa/binalis-web`), `main` protegida, cambios solo por PR. CodeQL activo.
 - Proyectos a mostrar (RF-05), elegidos por el dueño (2026-10-14): Cosmos Trak · Sitio web, Cosmos Trak · Sistema administrativo y YERON · Promoción con sorteos. El contenido sale de sus repositorios (privados, sin enlace al código).
+- Correo: `contacto@binalis.com.py` en Zoho Mail Lite (2026-10-19). El plan gratis no estaba disponible. Configuración en `BITACORA.md`.
 
 ## 9. Preguntas abiertas
 
-- ¿Qué correo con el dominio propio se va a usar? Recomendado: `contacto@binalis.com.py` con Zoho Mail (gratis) o Cloudflare Email Routing (solo reenvío).
+Ninguna por ahora.
 
 ## 10. Criterios de aceptación globales
 

@@ -21,6 +21,14 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - SSL/TLS: modo Full, **Always Use HTTPS** activado, TLS mínimo 1.2.
 - Workers Builds: build `pnpm run build`, deploy `npx wrangler deploy`, preview `npx wrangler preview`, variable `PNPM_VERSION=11.20.0`, token de build propio del proyecto.
 
+### Correo (Zoho Mail)
+
+- `contacto@binalis.com.py`, superadministrador de la organización "Binalis" en Zoho (centro de datos de EE. UU.). Plan **Mail Lite 5 GB, 1 usuario, US$12 al año**, contratado el 2026-10-19: el plan gratis no aparecía para la cuenta.
+- Registros DNS en Cloudflare (todos "DNS only"): TXT `@` `zoho-verification=zb81964450.zmverify.zoho.com`; MX `@` `mx.zoho.com` 10, `mx2.zoho.com` 20, `mx3.zoho.com` 50; TXT `@` `v=spf1 include:zohomail.com ~all`; TXT `zmail._domainkey` (DKIM RSA 1024 de Zoho); TXT `_dmarc` `v=DMARC1; p=none; rua=mailto:contacto@binalis.com.py`.
+- No se cargaron los registros de ZeptoMail (CNAME `bounce-zem` y DKIM `1914745._domainkey`): son para correos automáticos de una aplicación. Se suman si la v2 manda correos desde el formulario.
+- Clientes de correo: IMAP `imappro.zoho.com:993` y SMTP `smtppro.zoho.com:465`, SSL. Llevan "pro" por ser una organización paga; Outlook propone los servidores sin "pro" y hay que corregirlos.
+- `marthinmeza@binalis.com.py` se puede sumar gratis como alias del mismo usuario.
+
 ### Formulario de testimonios (Google Forms, en el Drive del dueño)
 
 - "Binalis — Opinión de clientes", publicado el 2026-10-19 para cualquiera con el link, sin inicio de sesión.
@@ -30,16 +38,26 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-**Siguiente tarea: el punto 1 (correo).** El sitio está completo para la v1 salvo correo, redes y testimonios, que dependen del dueño y de sus clientes.
+**Siguiente tarea: el punto 1 (redes sociales).** El sitio está completo para la v1 salvo redes y testimonios, que dependen del dueño y de sus clientes.
 
 Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **46/46**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
 
 Pendientes, en orden:
 
-1. **Correo** `contacto@binalis.com.py` en Zoho Mail (gratis). Antes de vincular Instagram, Facebook y LinkedIn: renovación automática del dominio en NIC.PY y verificación en dos pasos en todas las cuentas. Después, sumar correo y redes al pie (RF-09).
+1. **Redes sociales** (Instagram, Facebook y LinkedIn), con `contacto@binalis.com.py`. Antes: renovación automática del dominio en NIC.PY y verificación en dos pasos en Zoho, Cloudflare, Google y GitHub (sin confirmar al 2026-10-19). Después, sumarlas al pie (RF-09).
 2. **Testimonios** (RF-07): cuando llegue la primera respuesta del formulario con autorización, armar "Lo que dicen mis clientes" con la frase de recomendación (aprobada por el cliente antes de publicarla).
 
 ## Entradas
+
+### 2026-10-19 (29)
+
+- Correo `contacto@binalis.com.py` funcionando en Zoho Mail (ver "Configuración fuera del repo"). El dueño creó la cuenta y pagó; Claude cargó los registros DNS en Cloudflare con Claude in Chrome, con permiso del dueño.
+- Las opciones "Iniciar sesión en mi DNS" y "Configurar automáticamente" de Zoho no se usaron, porque le daban a Zoho permiso para editar el DNS de Cloudflare.
+- Antes de cargar el DKIM se validó que la clave fuera una clave RSA válida. Después se comparó carácter por carácter con lo publicado en 1.1.1.1 y 8.8.8.8. Zoho marcó en verde MX, SPF y DKIM.
+- La casilla es la cuenta `contacto` y no `marthinmeza`, porque es la dirección pública de la marca y no depende de una persona.
+- El dueño la conectó a Outlook para Windows por IMAP.
+- Pie (RF-09): se suma `contacto@binalis.com.py` con `mailto:`, definido en `src/contact.ts` junto al WhatsApp. La e2e del pie revisa el link. 46/46.
+- Pendiente del dueño: en la bandeja llegaron dos correos "Credits purchase confirmation" a la misma hora. Hay que confirmar si uno es el crédito de regalo del plan anual o si hubo un doble cobro.
 
 ### 2026-10-19 (28)
 
@@ -149,11 +167,3 @@ Pendientes, en orden:
 - Favicon sin fondo, a pedido: solo la "b", agrandada para llenar el ícono (14 de 16 px de alto), con barra y aro de 2 px exactos a 16 px y medidas enteras a 32 y 48 px.
 - En pestañas claras el cian contrasta poco con el blanco: se lee gracias a la parte violeta. Si molesta, la opción es un SVG con `prefers-color-scheme` que use tonos más oscuros en modo claro.
 - `apple-touch-icon` sin cambios visibles: sigue sobre fondo oscuro porque iOS pinta de negro lo transparente.
-
-### 2026-10-14 (14)
-
-- JetBrains Mono en los números del proceso: recortada a los dígitos 0–9 y fijada en peso 700 con fonttools (1,2 KB contra 40 KB), con licencia OFL al lado. Marcada con `shortcut:`: cuando haya texto técnico con letras, usar el subset latin completo de Fontsource.
-- Símbolo "b" en celular: 8rem (antes ocupaba casi una pantalla). Servicios ahora aparece en la primera pantalla de un Pixel 7. En escritorio sigue en 16rem.
-- Bug evitado: Vite incrusta como `data:` los assets de menos de 4 KB, y la CSP (`font-src 'self'`) los bloquea en producción. Se desactivó con `assetsInlineLimit: 0`.
-- Las e2e ahora corren con la CSP de producción, leída de `public/_headers` e inyectada en el HTML, y fallan si la consola muestra errores. Así detectaron el bug anterior; se cierra el hueco "la CSP no se prueba en e2e" de la entrada (9).
-- Para recortar fuentes: `pip install fonttools brotli` en un venv, `fontTools.varLib.instancer` para fijar el peso y `pyftsubset --unicodes=... --flavor=woff2`.

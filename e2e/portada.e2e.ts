@@ -252,9 +252,12 @@ test("los botones de cotizar llevan a WhatsApp con el número y un mensaje", asy
   );
 });
 
-test("el pie muestra WhatsApp y el año actual", async ({ page }) => {
+test("el pie muestra WhatsApp, el correo y el año actual", async ({ page }) => {
   const footer = page.getByRole("contentinfo");
   await expect(footer.getByRole("link", { name: "WhatsApp" })).toBeVisible();
+  await expect(
+    footer.getByRole("link", { name: "contacto@binalis.com.py" }),
+  ).toHaveAttribute("href", "mailto:contacto@binalis.com.py");
   await expect(footer).toContainText(`© ${new Date().getFullYear()} Binalis`);
   await expect(footer.locator("figcaption")).toHaveText("Mateo 11:28");
 });

@@ -10,6 +10,12 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-14 — Fuentes y CSP en e2e (entrada 14)
+
+- Las e2e corren con la CSP de producción y fallan si hay errores en consola. Así se detectó que Vite incrustaba como `data:` los assets de menos de 4 KB y la CSP los bloqueaba; se arregló con `assetsInlineLimit: 0`.
+- Símbolo "b" de 8rem en celular, para que Servicios entre en la primera pantalla.
+- Para recortar fuentes: fonttools en un venv (`varLib.instancer` y `pyftsubset --flavor=woff2`). El recorte de JetBrains Mono a dígitos se reemplazó después por el subset latin completo (entrada 20).
+
 ### 2026-10-14 — Servicios y proceso (entrada 13)
 
 - RF-03 Servicios (3 tarjetas en `<ul>`) y RF-04 Proceso (4 pasos en `<ol>`, con el número visible `aria-hidden` porque la lista ya anuncia el orden). `.section` y `.section-title` en `global.css` para reusar.

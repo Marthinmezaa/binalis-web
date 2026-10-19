@@ -14,22 +14,26 @@ La web tiene que reflejar la **identidad del dueño como programador**: estétic
 
 ## 3. Alcance v1
 
-| ID    | Requisito                                                                                                                                                                                         |
-| ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| RF-01 | Barra superior con wordmark, anclas a Servicios, Proceso y Proyectos, link a "Quién soy" (`/quien-soy/`) y botón "Cotizá tu proyecto".                                                            |
-| RF-02 | Portada con titular, subtítulo, botones "Cotizá tu proyecto" y "Ver proyectos", y el símbolo "b" con glow neón que pulsa (salvo con movimiento reducido).                                         |
-| RF-03 | Servicios (3 tarjetas): Páginas web · Sistemas y apps a medida · Landing pages y promociones. Debajo, "¿Tu idea no entra en ninguna? Contame y lo vemos juntos." con link a la cotización.        |
-| RF-04 | Proceso de trabajo en 4 pasos: Conversamos · Diseñamos · Construimos · Entregamos y acompañamos.                                                                                                  |
-| RF-05 | Proyectos: por cada uno, etiquetas, nombre, descripción, medio (video corto o capturas) y bloques Problema / Solución / Resultado.                                                                |
-| RF-06 | Bloque final de proyectos "siguiente proyecto cargando…" con el nombre del proyecto en curso (hoy: CRM con inteligencia artificial) y barra de progreso animada.                                  |
-| RF-07 | Testimonios "Lo que dicen mis clientes": hasta 3, solo reales y con autorización del cliente. La sección no se muestra hasta tener al menos uno.                                                  |
-| RF-08 | Cotización (`#cotizacion`): botón que abre WhatsApp con un mensaje ya escrito. El formulario con envío serverless queda para v2 (ver sección 7).                                                  |
-| RF-09 | Pie con el versículo de Binalis (Mateo 11:28, RVR1960), WhatsApp, correo y redes (cada uno cuando exista) y © año.                                                                                |
-| RF-10 | "Quién está detrás": en la portada, un resumen (foto, tarjeta de código, dos líneas y "Conocé mi historia"); en `/quien-soy/`, la historia completa del Ing. Marthin Meza. Texto aprobado por él. |
+| ID    | Requisito                                                                                                                                                                                                                                                                                                                   |
+| ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| RF-01 | Barra superior fija al bajar, con wordmark, anclas a Servicios, Proceso y Proyectos, link a "Quién soy" (`/quien-soy/`) y botón "Cotizá tu proyecto". En celular, compacta.                                                                                                                                                 |
+| RF-02 | Portada con titular, subtítulo, botones "Cotizá tu proyecto" y "Ver proyectos", y el símbolo "b" con glow neón que pulsa (salvo con movimiento reducido). Fondo con brillo de marca y grilla tenue. Al cargar, la "b" se dibuja (la barra es un 1 y el aro un 0) y una línea en estilo código cuenta ese origen del nombre. |
+| RF-03 | Servicios (3 tarjetas): Páginas web · Sistemas y apps a medida · Landing pages y promociones. Debajo, "¿Tu idea no entra en ninguna? Contame y lo vemos juntos." con link a la cotización.                                                                                                                                  |
+| RF-04 | Proceso de trabajo en 4 pasos: Conversamos · Diseñamos · Construimos · Entregamos y acompañamos.                                                                                                                                                                                                                            |
+| RF-05 | Proyectos: por cada uno, etiquetas, nombre, descripción, medio (video corto o capturas) y bloques Problema / Solución / Resultado. Las capturas van en un marco de navegador; si el proyecto es público, link "Ver sitio en vivo".                                                                                          |
+| RF-06 | Bloque final de proyectos "siguiente proyecto cargando…" con el nombre del proyecto en curso (hoy: CRM con inteligencia artificial) y barra de progreso animada.                                                                                                                                                            |
+| RF-07 | Testimonios "Lo que dicen mis clientes": hasta 3, solo reales y con autorización del cliente. La sección no se muestra hasta tener al menos uno.                                                                                                                                                                            |
+| RF-08 | Cotización (`#cotizacion`): qué pasa después de escribir y dos botones, WhatsApp (mensaje ya escrito) y correo (`mailto:` con asunto y plantilla), más la dirección de correo visible. El número de WhatsApp no aparece escrito en el sitio. El formulario con envío serverless queda para v2 (ver sección 7).              |
+| RF-09 | Pie con el versículo de Binalis (Mateo 11:28, RVR1960), WhatsApp, correo y redes (cada uno cuando exista) y © año.                                                                                                                                                                                                          |
+| RF-11 | Página 404 propia con la marca y links a la portada y a la cotización.                                                                                                                                                                                                                                                      |
+| RF-10 | "Quién está detrás": en la portada, un resumen (foto, tarjeta de código, dos líneas y "Conocé mi historia"); en `/quien-soy/`, la historia completa del Ing. Marthin Meza. Texto aprobado por él.                                                                                                                           |
 
 ## 4. Requisitos no funcionales
 
 - Responsive: de celular a escritorio, sin scroll horizontal.
+- Movimiento: los bloques aparecen al bajar, con CSS (animaciones ligadas al scroll), sin librerías. Con movimiento reducido o en navegadores sin soporte, el contenido se ve quieto, nunca oculto. El scroll es el nativo del navegador (sin inercia).
+- Firma visual: cada sección lleva una etiqueta en estilo código (ej. `// 01 servicios`) sobre su título.
+- Al volver a abrir el sitio arranca desde arriba: los links internos no dejan el ancla (`#cotizacion`) en la dirección.
 - Accesibilidad objetivo WCAG 2.2 AA.
 - Rendimiento: objetivo propuesto de Lighthouse ≥ 90 en móvil (a confirmar).
 - SEO básico: `title`, `meta description`, Open Graph, `sitemap.xml`, `robots.txt`, favicon con el símbolo "b".
@@ -53,6 +57,7 @@ Blog, versión en otros idiomas, panel de administración, pagos. Para v2: formu
 
 ## 8. Decisiones tomadas
 
+- Rediseño "con sello" (2026-10-19, aprobado por el dueño): contar el logo (1 y 0), portada con atmósfera, etiquetas de código, proyectos verificables, cotización por correo, barra fija, aparición al bajar y 404 propia. Sin inercia de scroll (marea y pelea con touchpads), sin carruseles, contadores inventados, partículas 3D ni cursor personalizado.
 - La empresa es la protagonista, no la persona (2026-10-15, pedido del dueño): en RF-10 la foto es un avatar chico junto al nombre. El versículo que el dueño recibió para Binalis va en el pie de todas las páginas.
 - "Quién soy" en página propia (2026-10-15): la portada queda corta y enfocada en cotizar, y la historia tiene su URL para Google y para compartir. "Quién soy" y no "Quiénes somos": hoy Binalis es una persona.
 - Sitio funcional antes que completo (2026-10-15): contacto por WhatsApp en lugar del formulario serverless, sin placeholders visibles e identidad de programador. Aprobado por el dueño.

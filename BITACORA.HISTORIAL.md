@@ -10,6 +10,12 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-14 — Servicios y proceso (entrada 13)
+
+- RF-03 Servicios (3 tarjetas en `<ul>`) y RF-04 Proceso (4 pasos en `<ol>`, con el número visible `aria-hidden` porque la lista ya anuncia el orden). `.section` y `.section-title` en `global.css` para reusar.
+- E2E: los títulos de tarjetas y pasos coinciden exactos con la spec, y los links de la barra apuntan al `id` de cada sección.
+- Lección: `git checkout --` no revierte archivos sin trackear; al romper a propósito archivos nuevos, revertir a mano.
+
 ### 2026-10-14 — Íconos y pruebas e2e (entradas 9 a 12)
 
 - Playwright + axe en el job `calidad` del CI: WCAG 2.2 AA, foco inicial en "Saltar al contenido" y sin scroll horizontal, en escritorio y celular. En celular el scroll se compara contra `clientWidth`, porque el navegador aleja el zoom y `innerWidth` crece con el contenido.

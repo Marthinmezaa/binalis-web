@@ -74,10 +74,12 @@ import BinalisSymbol from "./BinalisSymbol.astro";
   }
 
   @media (min-width: 48rem) {
+    /* Most of the screen, centered, with little padding of its own: the next section peeks in to invite scrolling. */
     .hero {
       display: grid;
       align-items: center;
-      min-height: min(calc(100svh - var(--header-height)), 56rem);
+      min-height: min(calc(85svh - var(--header-height)), 48rem);
+      padding-block: 2rem;
     }
 
     .hero-inner {

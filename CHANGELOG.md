@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.16.0...binalis-web-v0.17.0) (2026-10-19)
+
+
+### Features
+
+* textos de la portada, servicios y proceso ([#54](https://github.com/Marthinmezaa/binalis-web/issues/54)) ([f701a17](https://github.com/Marthinmezaa/binalis-web/commit/f701a17fb92ea4a8b4df43970446179a394418eb))
+
 ## [0.16.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.15.0...binalis-web-v0.16.0) (2026-10-19)
 
 

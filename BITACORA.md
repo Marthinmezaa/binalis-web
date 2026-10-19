@@ -7,9 +7,9 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Diseño de la web aprobado en lienzo (4 láminas: logo, color y tipografía, aplicaciones, web).
 - Repo público en GitHub con `main` protegida (4 checks obligatorios: calidad, gitleaks, dependencias, CodeQL).
 - Dominio `binalis.com.py` habilitado y con DNS delegado a Cloudflare (`aurora` / `johnny.ns.cloudflare.com`).
-- Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04), Proyectos (RF-05), "siguiente proyecto cargando…" (RF-06), "Quién está detrás" (RF-10, resumen en portada + página `/quien-soy/`), Cotización por WhatsApp (RF-08) y pie (RF-09); Proyectos sin placeholders; quedan los de portada, servicios y proceso; favicon e íconos de app.
+- Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04), Proyectos (RF-05), "siguiente proyecto cargando…" (RF-06), "Quién está detrás" (RF-10, resumen en portada + página `/quien-soy/`), Cotización por WhatsApp (RF-08) y pie (RF-09); Proyectos sin placeholders (el sistema administrativo con captura real); quedan los de portada, servicios y proceso; favicon e íconos de app.
 - Pruebas e2e con Playwright + axe en el CI (escritorio y celular), bajo la misma CSP de producción.
-- release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.14.0.
+- release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. Versión actual: 0.15.0.
 - Repo con README, SECURITY.md (reporte privado de vulnerabilidades activado), descripción, topics y sitio web.
 
 ## Configuración fuera del repo (panel de Cloudflare)
@@ -29,10 +29,17 @@ Pendientes, en orden:
 
 1. **Borradores de textos** para que el dueño apruebe: titular y subtítulo de la portada, meta description, descripciones de los 3 servicios y los 4 pasos del proceso. Tono: primera persona, apasionado, "amo lo que hago".
 2. **Correo** `contacto@binalis.com.py` en Zoho Mail (gratis). Antes de vincular Instagram, Facebook y LinkedIn: renovación automática del dominio en NIC.PY y verificación en dos pasos en todas las cuentas. Después, sumar correo y redes al pie (RF-09).
-3. **Capturas de proyectos** (opcional: la tarjeta de stack ya cubre el hueco) con datos de prueba, nunca reales. Los repos de Cosmos Trak y YERON no están en la PC Cardinallis-LAPTOP: ver si están en la otra, o si hay URL pública o usuario de prueba.
+3. **Captura de YERON** (opcional: la tarjeta de stack ya cubre el hueco), sin datos personales de participantes. Se puede usar el mismo método que con Cosmos (entrada 26).
 4. SEO pendiente de la spec: Open Graph (con la foto o el símbolo), `sitemap.xml` y `robots.txt`.
 
 ## Entradas
+
+### 2026-10-19 (26)
+
+- Sistema administrativo de Cosmos Trak con captura real en lugar de la tarjeta de stack: % de atraso, meta de ventas y el gráfico de avance anual de instalaciones (2024–2026). El dueño aprobó publicar esas métricas reales. Los montos salen ocultos por el modo privado de la app y no aparece ningún cliente.
+- Cambio de spec aprobado por el dueño: las capturas nunca muestran datos personales de clientes, pero sí métricas agregadas con su aprobación (antes: "datos de prueba, nunca reales").
+- Método: Chromium de Playwright visible con `--remote-debugging-port`. El dueño inició sesión en esa ventana, Claude capturó conectándose por CDP y recortó por los bordes de las tarjetas. El ancho de la ventana se ajustó a 2140 px para que el recorte quede en 16:9, como la otra captura. La sesión se borró al terminar y no hubo contraseñas en juego.
+- Captura de 1416 × 793 px (50 KB): `astro:assets` sirve WebP de 8 a 24 KB. 36/36.
 
 ### 2026-10-19 (25)
 
@@ -134,25 +141,3 @@ Pendientes, en orden:
 
 - Favicon a 16 px nítido: la "b" se redibujó sobre una grilla de 16 px (10 unidades = 1 px), con barra y aro de 2 px exactos. Antes medían 1,6 px y caían entre píxeles. También queda alineada a 32 y 48 px.
 - Es un corte para tamaños chicos, más grueso que el de la portada (`BinalisSymbol.astro` no cambia), como los tamaños ópticos de una tipografía. Se corrigió el SVG porque es lo que muestran las pestañas; el `.ico` y el ícono de iOS se regeneraron con `pnpm icons`.
-
-### 2026-10-14 (11)
-
-- Íconos completos: `favicon.ico` (16, 32 y 48 px, PNG embebidos) y `apple-touch-icon.png` (180 px, cuadrado opaco con el glow de la portada). Se generan desde `public/favicon.svg`, la única fuente, con `pnpm icons` (usa el Chromium de Playwright, sin dependencias nuevas).
-- Puede que no haya SVG definitivo del lienzo de marca: el símbolo actual queda como oficial. Si cambia, editar `BinalisSymbol.astro` y `favicon.svg` y correr `pnpm icons`.
-- Nueva prueba e2e: los 3 íconos del `<head>` responden 200.
-- Restaurada la entrada (9), que se había perdido al resolver el conflicto entre los PR #18 y #19.
-
-### 2026-10-14 (10)
-
-- Favicon `public/favicon.svg`: símbolo "b" sobre fondo de marca redondeado (se lee en pestañas claras y oscuras), sin glow porque a 16 px no se distingue. Producción daba 404 en `/favicon.ico`.
-- Misma geometría que `BinalisSymbol.astro`, copiada a mano: al reemplazar el símbolo por el SVG del lienzo de marca, actualizar los dos.
-- Verificado en Chrome (compu de trabajo): CSP activa en producción (bloquea script y estilo inline), consola limpia, foco visible, portada sin scroll horizontal a 390 px.
-
-### 2026-10-14 (9)
-
-- PC de trabajo preparada: `corepack enable` falla con EPERM (Node está en `C:\Nodejs`, requiere admin); se instaló pnpm 11.20.0 con `npm install -g`, que usa el perfil del usuario.
-- Playwright + axe: `e2e/*.e2e.ts` (sufijo propio para que Vitest no los tome) sobre `astro preview`, en Chromium de escritorio y celular (Pixel 7). Prueban WCAG 2.2 AA con axe, que el primer foco sea "Saltar al contenido" y que no haya scroll horizontal.
-- En el CI corren dentro del job `calidad` (check obligatorio), después del build.
-- `astro preview` no aplica `public/_headers`: la CSP no se prueba en e2e.
-- Verificado rompiendo la página a propósito (sin `lang`, skip-link a `#nada`, `main` de 200vw): fallan las 6 pruebas.
-- Lección: en celular la prueba de scroll pasaba con la página rota, porque el navegador aleja el zoom y `window.innerWidth` crece con el contenido. Se compara contra `clientWidth`.

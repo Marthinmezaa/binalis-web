@@ -43,7 +43,7 @@ Ver `CLAUDE.md` (tokens) y el lienzo de diseño "Binalis — Identidad de marca"
 
 En el sitio publicado **no se ve ningún placeholder**: lo que falta se oculta o se reemplaza por diseño. Un proyecto sin capturas muestra una tarjeta de código con su stack; si falta Problema o Resultado, esa fila no aparece. Los textos de marca los aprueba el dueño antes de publicarse.
 
-- Proyectos (opcional, hoy cubierto por la tarjeta de stack): capturas del sistema administrativo (con datos de prueba, nunca reales) y video o capturas de la promoción YERON. Resultado de YERON con números reales al cierre de la campaña (15 de enero de 2027).
+- Proyectos (opcional, hoy cubierto por la tarjeta de stack): video o capturas de la promoción YERON. Las capturas nunca muestran datos personales de clientes (nombres, teléfonos, montos); métricas agregadas sí, con aprobación del dueño (así se hizo la del sistema administrativo, 2026-10-19). Resultado de YERON con números reales al cierre de la campaña (15 de enero de 2027).
 - Testimonios reales (se van a pedir a clientes).
 - Correo con el dominio, Instagram y LinkedIn (WhatsApp: +595 983 755 161).
 - Texto final del titular, de los servicios y de los pasos del proceso.

@@ -10,6 +10,10 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-14 — Favicon sin fondo (entrada 15)
+
+- Favicon solo con la "b", agrandada para llenar el ícono, con trazos de 2 px exactos a 16 px. Después se reemplazó por la "b" oscura sobre disco cian (entrada 23), que se lee en pestañas claras.
+
 ### 2026-10-14 — Fuentes y CSP en e2e (entrada 14)
 
 - Las e2e corren con la CSP de producción y fallan si hay errores en consola. Así se detectó que Vite incrustaba como `data:` los assets de menos de 4 KB y la CSP los bloqueaba; se arregló con `assetsInlineLimit: 0`.

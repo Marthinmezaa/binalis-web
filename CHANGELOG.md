@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.15.0...binalis-web-v0.16.0) (2026-10-19)
+
+
+### Features
+
+* capturas reales de Cosmos Trak y YERON ([#52](https://github.com/Marthinmezaa/binalis-web/issues/52)) ([7ea6a38](https://github.com/Marthinmezaa/binalis-web/commit/7ea6a38573ae0180680fce1108d76f9706e6b52f))
+
 ## [0.15.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.14.0...binalis-web-v0.15.0) (2026-10-19)
 
 

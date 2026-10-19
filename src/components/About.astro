@@ -28,7 +28,7 @@ const profile: CodeCardData = {
     "Python",
   ],
   aprendiendo: "Machine learning",
-  fueraDelCodigo: ["alabanza", "jóvenes", "CrossFit"],
+  fueraDelCodigo: ["alabanza", "servicio", "CrossFit"],
   motor: "Amar lo que hago",
 };
 ---
@@ -58,13 +58,12 @@ const profile: CodeCardData = {
             widths={[96, 192]}
             sizes="6rem"
           />
+          {/* Role as a label above, name as the headline: the title gives context, the name is what's remembered. */}
           <div>
+            <p class="role">Fundador y CEO de Binalis</p>
             <Name id="quien-nombre" class="name">
               Ing. Marthin Meza
             </Name>
-            <p class="role">
-              Fundador y CEO de Binalis · Desarrollador full stack
-            </p>
           </div>
         </div>
         {!full && (
@@ -161,11 +160,12 @@ const profile: CodeCardData = {
 
   .name {
     margin: 0;
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-size: clamp(2rem, 5vw, 3rem);
+    letter-spacing: -0.02em;
   }
 
   .role {
-    margin: 0.5rem 0 0;
+    margin: 0 0 0.35rem;
     color: var(--color-cyan);
     font-family: var(--font-mono);
     font-size: 0.875rem;

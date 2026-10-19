@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.22.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.21.0...binalis-web-v0.22.0) (2026-10-19)
+
+
+### Features
+
+* versión en el pie, aparición escalonada y ajustes en quién soy ([#66](https://github.com/Marthinmezaa/binalis-web/issues/66)) ([fa9a072](https://github.com/Marthinmezaa/binalis-web/commit/fa9a072e4ccb96dba3d7c0a7cbc9c94dd0f3a527))
+
 ## [0.21.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.20.0...binalis-web-v0.21.0) (2026-10-19)
 
 

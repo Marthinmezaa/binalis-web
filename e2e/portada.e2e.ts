@@ -360,3 +360,21 @@ test("los proyectos públicos llevan a su sitio en vivo", async ({ page }) => {
     await expect(link).toHaveAttribute("rel", "noopener");
   }
 });
+
+test("los testimonios muestran opiniones reales con nombre y calificación", async ({
+  page,
+}) => {
+  const testimonials = page
+    .getByRole("region", { name: "Lo que dicen mis clientes" })
+    .getByRole("figure");
+  const count = await testimonials.count();
+  // RF-07: at least one real testimonial, never more than 3.
+  expect(count).toBeGreaterThan(0);
+  expect(count).toBeLessThanOrEqual(3);
+
+  for (const testimonial of await testimonials.all()) {
+    await expect(testimonial.locator("blockquote")).not.toBeEmpty();
+    await expect(testimonial.locator(".name")).not.toBeEmpty();
+    await expect(testimonial).toContainText(/Calificación: \d de 5/);
+  }
+});

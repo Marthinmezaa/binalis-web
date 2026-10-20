@@ -55,8 +55,8 @@ const profile: CodeCardData = {
             class="photo"
             src={photo}
             alt="Marthin Meza, de saco azul y camisa blanca, sonriendo al aire libre."
-            widths={[96, 192]}
-            sizes="6rem"
+            widths={[96, 144, 192, 288]}
+            sizes={full ? "6rem" : "9rem"}
           />
           {/* Role as a label above, name as the headline: the title gives context, the name is what's remembered. */}
           <div>
@@ -143,8 +143,10 @@ const profile: CodeCardData = {
       var(--color-surface);
   }
 
+  /* On wide screens the card gets a wider code column, so its larger text (below) keeps the same line breaks. */
   @media (min-width: 48rem) {
     .about-card {
+      grid-template-columns: 1fr 28rem;
       align-items: center;
     }
   }
@@ -160,14 +162,31 @@ const profile: CodeCardData = {
     flex-direction: column;
   }
 
-  /* On the home page Binalis is the protagonist: the name stays a label, not a headline. */
+  /* Larger than the /quien-soy/ avatar: here the card stands alone, without the story to fill it. */
+  .about-card .photo {
+    width: 9rem;
+    height: 9rem;
+  }
+
+  .about-card .role {
+    font-size: 1rem;
+  }
+
+  /* On the home page Binalis is the protagonist: the name is clear but not a headline. */
   .about-card .name {
-    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
   }
 
   /* Inside the box the code card reads as an inset terminal. */
   .about-card :global(.code) {
     background: var(--color-bg);
+  }
+
+  /* Larger code only on wide screens: on phones it would break almost every line. */
+  @media (min-width: 48rem) {
+    .about-card :global(.code) {
+      font-size: 0.9375rem;
+    }
   }
 
   .byline {

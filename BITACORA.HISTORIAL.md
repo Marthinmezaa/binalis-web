@@ -10,6 +10,12 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-15 — Datos de "Quién soy" (entrada 19)
+
+- Datos de RF-10 dados por el dueño: Ing. electromecánico y técnico automotriz, programa desde 2023 (autodidacta, Full Stack en junio de 2026), estudia machine learning; la fe es central para él.
+- El correo depende del dominio, no de Zoho: si cambia el plan se migran los MX. El riesgo real es que venza el dominio.
+- Capturas: nunca de datos reales de clientes.
+
 ### 2026-10-15 — Cotización por WhatsApp y pie (entrada 18)
 
 - Cambio de spec aprobado por el dueño: sitio funcional antes que completo (cotización por WhatsApp, formulario serverless a v2, sin placeholders visibles, testimonios ocultos hasta tener uno real, nueva RF-10 "Quién está detrás").

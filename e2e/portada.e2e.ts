@@ -233,7 +233,7 @@ test("Quién está detrás resume a Marthin y lleva a su historia", async ({
   await expect(page).toHaveURL(/\/quien-soy\/$/);
 });
 
-test("/quien-soy/ cuenta la historia completa y la barra marca la página", async ({
+test("/quien-soy/ cuenta la historia completa y la barra lleva a Quién está detrás", async ({
   page,
 }) => {
   await page.goto("/quien-soy/");
@@ -245,7 +245,7 @@ test("/quien-soy/ cuenta la historia completa y la barra marca la página", asyn
     page
       .getByRole("navigation", { name: "Principal" })
       .getByRole("link", { name: "Quién soy" }),
-  ).toHaveAttribute("aria-current", "page");
+  ).toHaveAttribute("href", "/#quien");
   await expect(
     page
       .getByRole("region", { name: "Cotizá tu proyecto" })

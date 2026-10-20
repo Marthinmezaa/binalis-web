@@ -4,7 +4,7 @@ const links = [
   { href: "/#servicios", label: "Servicios" },
   { href: "/#proceso", label: "Proceso" },
   { href: "/#proyectos", label: "Proyectos" },
-  { href: "/quien-soy/", label: "Quién soy" },
+  { href: "/#quien", label: "Quién soy" },
 ];
 ---
 
@@ -17,11 +17,7 @@ const links = [
       <ul class="nav-list">
         {links.map(({ href, label }) => (
           <li>
-            <a
-              class="nav-link"
-              href={href}
-              aria-current={href === Astro.url.pathname ? "page" : undefined}
-            >
+            <a class="nav-link" href={href}>
               {label}
             </a>
           </li>
@@ -121,8 +117,7 @@ const links = [
     text-decoration: none;
   }
 
-  .nav-link:hover,
-  .nav-link[aria-current="page"] {
+  .nav-link:hover {
     color: var(--color-text);
   }
 </style>

@@ -12,6 +12,13 @@ const scrollToEnd = (page: Page) =>
     await new Promise(requestAnimationFrame);
   });
 
+// On phones the links live in a popover menu: open it first, as a visitor would.
+const mainNav = async (page: Page) => {
+  const menuButton = page.getByRole("button", { name: "Menú" });
+  if (await menuButton.isVisible()) await menuButton.click();
+  return page.getByRole("navigation", { name: "Principal" });
+};
+
 test.beforeEach(async ({ page }) => {
   await page.goto("/");
 });
@@ -207,9 +214,7 @@ for (const { name, items } of SECTIONS) {
     const section = page.getByRole("region", { name });
     await expect(section.getByRole("heading", { level: 3 })).toHaveText(items);
 
-    const navLink = page
-      .getByRole("navigation", { name: "Principal" })
-      .getByRole("link", { name });
+    const navLink = (await mainNav(page)).getByRole("link", { name });
     await expect(navLink).toHaveAttribute(
       "href",
       `/#${await section.getAttribute("id")}`,
@@ -233,7 +238,7 @@ test("Quién está detrás resume a Marthin y lleva a su historia", async ({
   await expect(page).toHaveURL(/\/quien-soy\/$/);
 });
 
-test("/quien-soy/ cuenta la historia completa y la barra marca la página", async ({
+test("/quien-soy/ cuenta la historia completa y la barra lleva a Quién está detrás", async ({
   page,
 }) => {
   await page.goto("/quien-soy/");
@@ -242,10 +247,8 @@ test("/quien-soy/ cuenta la historia completa y la barra marca la página", asyn
   ).toBeVisible();
   await expect(page.getByRole("main")).toContainText("Porque amo lo que hago");
   await expect(
-    page
-      .getByRole("navigation", { name: "Principal" })
-      .getByRole("link", { name: "Quién soy" }),
-  ).toHaveAttribute("aria-current", "page");
+    (await mainNav(page)).getByRole("link", { name: "Quién soy" }),
+  ).toHaveAttribute("href", "/#quien");
   await expect(
     page
       .getByRole("region", { name: "Cotizá tu proyecto" })
@@ -347,6 +350,19 @@ test("los bloques aparecen al bajar, salvo con movimiento reducido", async ({
 
   await page.emulateMedia({ reducedMotion: "reduce" });
   expect(await animatedBlocks()).toBe(0);
+});
+
+test("el menú lleva a la sección y se cierra solo", async ({ page }) => {
+  const isPhone = await page.getByRole("button", { name: "Menú" }).isVisible();
+  const nav = await mainNav(page);
+  await nav.getByRole("link", { name: "Quién soy" }).click();
+  await expect(
+    page.getByRole("heading", { name: "Quién está detrás" }),
+  ).toBeInViewport();
+  // On phones the menu closes itself; on wide screens the links never hide.
+  await expect(nav.getByRole("link", { name: "Servicios" })).toBeVisible({
+    visible: !isPhone,
+  });
 });
 
 test("la barra superior sigue a mano al bajar", async ({ page }) => {

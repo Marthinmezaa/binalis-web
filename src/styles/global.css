@@ -40,7 +40,7 @@
   --content-width: 72rem;
   --gutter: clamp(1rem, 4vw, 2rem);
   /* The sticky header's height, so anchored sections don't land under it. */
-  --header-height: 6.5rem;
+  --header-height: 4rem;
 
   color-scheme: dark;
 }
@@ -59,6 +59,13 @@ html {
 @media (min-width: 48rem) {
   :root {
     --header-height: 4.5rem;
+  }
+}
+
+/* Large monitors: a wider page, so it doesn't look small with half the screen empty. */
+@media (min-width: 100rem) {
+  :root {
+    --content-width: 80rem;
   }
 }
 
@@ -155,7 +162,7 @@ a {
 }
 
 .section {
-  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  padding-block: clamp(2rem, 5vw, 3.5rem);
 }
 
 .section-title {

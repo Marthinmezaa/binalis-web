@@ -10,6 +10,12 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-15 — Siguiente proyecto cargando (entrada 17)
+
+- RF-06 con una barra ligada al scroll en CSS puro (`animation-timeline`), quieta al 70 % sin soporte o con movimiento reducido.
+- Trampas: el minificador fusiona `animation` + `animation-timeline` en un shorthand que Chrome descarta (se escriben longhands), y un `overflow: hidden` en la barra la congelaba.
+- Gentle-AI no se instala, solo se sigue su filosofía.
+
 ### 2026-10-14 — Proyectos (entrada 16)
 
 - RF-05 con los tres proyectos elegidos por el dueño, con Problema / Solución / Resultado en `<dl>`. Los repos son privados: sin enlace al código.

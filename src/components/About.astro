@@ -47,7 +47,7 @@ const profile: CodeCardData = {
         </h2>
       </>
     )}
-    <div class="about reveal">
+    <div class:list={["about", "reveal", { "about-card": !full }]}>
       <div class="story">
         {/* Small avatar on purpose: Binalis is the protagonist, not the person. */}
         <div class="byline">
@@ -138,6 +138,28 @@ const profile: CodeCardData = {
       grid-template-columns: 1fr 22rem;
       align-items: start;
     }
+  }
+
+  /* The home summary is short: boxed like its neighbours (testimonial above, quote below) and vertically centered,
+     so the text doesn't float beside a taller code card with an empty gap underneath. */
+  .about-card {
+    padding: clamp(1.5rem, 5vw, 3rem);
+    border: 1px solid rgb(255 255 255 / 6%);
+    border-radius: 1rem;
+    background:
+      radial-gradient(circle at top left, rgb(0 240 255 / 8%), transparent 60%),
+      var(--color-surface);
+  }
+
+  @media (min-width: 48rem) {
+    .about-card {
+      align-items: center;
+    }
+  }
+
+  /* Inside the box the code card reads as an inset terminal. */
+  .about-card :global(.code) {
+    background: var(--color-bg);
   }
 
   .byline {

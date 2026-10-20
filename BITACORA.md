@@ -55,6 +55,10 @@ Pendientes, en orden:
 - Pedidos del dueño: en el celular las capturas de Proyectos se veían cortadas a la mitad. Se quitó el recorte a 4:3 de la entrada 34 (mejora 4) y se ven enteras en 16:9, como en escritorio.
 - El menú hamburguesa abierto usa el mismo vidrio translúcido que la barra (fondo al 80 % con desenfoque), en lugar del fondo sólido.
 - Revisado con capturas de Playwright (iPhone 15). E2E 64/64.
+- `/ponytail-review`: el vidrio estaba repetido en la barra y en el menú; ahora es una sola regla (`.header, nav:popover-open`).
+- Mergeado como #80 (0.27.1) y verificado en producción con Claude in Chrome a 390 px: las tres capturas enteras en 16:9, el menú translúcido con desenfoque, sin scroll horizontal y consola sin errores.
+- Las vistas previas de los PR **no tienen URL**: el log de Workers Builds dice "This Preview deployment has no active URLs" porque `wrangler.jsonc` no activa `preview_urls`. Por eso "la vista previa pide sesión" en entradas anteriores: no había nada para abrir. Se revisa en local y en producción después del merge. Activarlas dejaría una URL pública en `workers.dev` (se podría cerrar con Cloudflare Access); queda a decisión del dueño.
+- Claude in Chrome: `resize_window` no se sostiene (la ventana vuelve a 1920 px) y el clic en ☰ se colgó. El menú se abre con `showPopover()` desde un script y la captura se toma enseguida, porque el popover se cierra solo al perder el foco.
 - Lección: si queda un `astro preview` abierto, las e2e no arrancan ("Another astro preview server is already running"). Cerrarlo con `pnpm exec astro preview stop`.
 
 ### 2026-10-20 (34)

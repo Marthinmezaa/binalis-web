@@ -50,6 +50,13 @@ Pendientes, en orden:
 
 ## Entradas
 
+### 2026-10-20 (35)
+
+- Pedidos del dueño: en el celular las capturas de Proyectos se veían cortadas a la mitad. Se quitó el recorte a 4:3 de la entrada 34 (mejora 4) y se ven enteras en 16:9, como en escritorio.
+- El menú hamburguesa abierto usa el mismo vidrio translúcido que la barra (fondo al 80 % con desenfoque), en lugar del fondo sólido.
+- Revisado con capturas de Playwright (iPhone 15). E2E 64/64.
+- Lección: si queda un `astro preview` abierto, las e2e no arrancan ("Another astro preview server is already running"). Cerrarlo con `pnpm exec astro preview stop`.
+
 ### 2026-10-20 (34)
 
 - Pedidos del dueño: "Quién soy" en la barra baja a `/#quien` (ya no va a `/quien-soy/`); solo "Conocé mi historia" lleva a la página. Sin páginas como destino en la barra, `aria-current` ya no aplicaba y se quitó. Spec RF-01 actualizada.
@@ -175,11 +182,3 @@ Pendientes, en orden:
 - Barra: links a `/#servicios`, `/#proceso` y `/#proyectos` (absolutos, para que funcionen desde otra página) y "Quién soy", con `aria-current="page"` en su página.
 - Los links van a `/quien-soy/` con barra final: Astro genera `quien-soy/index.html` y Cloudflare redirige la URL sin barra.
 - E2E: consola sin errores bajo la CSP, axe WCAG 2.2 AA y sin scroll horizontal ahora corren en las dos páginas. 34/34.
-
-### 2026-10-15 (20)
-
-- RF-10 "Quién está detrás", con la versión A elegida por el dueño y sus correcciones: nombra a su papá como "Dr. Juan Meza, PhD", el curso Full Stack en la UCSA, San Lorenzo, 31 años y su fe en Jesús (alabanza, jóvenes en una organización, CrossFit). Foto propia y tarjeta de código con sus datos. Va después de Proyectos y antes de Cotización.
-- Foto: llegó por WhatsApp sin EXIF ni GPS; se guardó a 1200 px (142 KB) en `src/assets/` y `astro:assets` sirve WebP de 15 KB (escritorio) a 41 KB (celular).
-- JetBrains Mono completa (subset latin, variable, 40 KB) en lugar del recorte de solo números: se usa en la tarjeta de código y en el cargo. Se cerró el `shortcut:` de `global.css`.
-- La edad está fija en la tarjeta (`shortcut:`): actualizarla en cada cumpleaños.
-- Lección: Astro descarta el espacio entre un texto y un `<strong>` que Prettier pasó a la línea siguiente ("respondió:«Porque…»"). Se usa `&nbsp;`.

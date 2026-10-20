@@ -112,7 +112,7 @@ const projects: Project[] = [
                   src={media.image}
                   alt={media.alt}
                   widths={[640, 1280]}
-                  sizes="(min-width: 48rem) 40rem, 134vw"
+                  sizes="(min-width: 48rem) 40rem, 100vw"
                 />
               </div>
             </div>
@@ -248,20 +248,11 @@ const projects: Project[] = [
     white-space: nowrap;
   }
 
-  /* Phones crop the screenshot to its top-left corner, where each site's headline is, so it isn't too small to read. */
   .browser img {
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    object-position: left top;
-  }
-
-  @media (min-width: 48rem) {
-    .browser img {
-      aspect-ratio: 16 / 9;
-    }
+    aspect-ratio: 16 / 9;
   }
 
   .live-link {

@@ -10,6 +10,13 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-15 — "Quién está detrás" (entrada 20)
+
+- RF-10 con la versión A elegida por el dueño, entre Proyectos y Cotización: foto propia y tarjeta de código con sus datos.
+- Foto llegada por WhatsApp sin EXIF ni GPS, guardada a 1200 px en `src/assets/`; `astro:assets` sirve WebP de 15 a 41 KB.
+- JetBrains Mono completa (subset latin, 40 KB) en lugar del recorte de números. La edad de la tarjeta es fija (`shortcut:`).
+- Lección: Astro descarta el espacio entre un texto y un `<strong>` que Prettier pasa a otra línea; se usa `&nbsp;`.
+
 ### 2026-10-15 — Datos de "Quién soy" (entrada 19)
 
 - Datos de RF-10 dados por el dueño: Ing. electromecánico y técnico automotriz, programa desde 2023 (autodidacta, Full Stack en junio de 2026), estudia machine learning; la fe es central para él.

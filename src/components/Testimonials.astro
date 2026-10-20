@@ -56,21 +56,16 @@ const MAX_RATING = 5;
 </section>
 
 <style>
-  /* Centered and narrow: read as a pull quote, a pause between the projects and the person. */
-  #testimonios {
-    text-align: center;
-  }
-
   .testimonials {
     display: grid;
-    max-width: 50rem;
-    margin-inline: auto;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
     gap: 1.5rem;
   }
 
+  /* Sized by its own width, not the screen's: up to 3 cards can share a row. */
   .testimonial {
     position: relative;
+    container-type: inline-size;
     margin: 0;
     padding: clamp(1.5rem, 5vw, 2.5rem);
     overflow: hidden;
@@ -109,6 +104,21 @@ const MAX_RATING = 5;
 
   blockquote {
     margin: 0;
+  }
+
+  /* A wide card uses its width: the recommendation large on the left, the rest of the opinion beside it. */
+  @container (min-width: 40rem) {
+    blockquote {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    blockquote .highlight {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
   }
 
   .highlight {

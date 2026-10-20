@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.25.0...binalis-web-v0.26.0) (2026-10-20)
+
+
+### Features
+
+* testimonio con cargo arriba y quién está detrás sin resumen ([#76](https://github.com/Marthinmezaa/binalis-web/issues/76)) ([9ff934e](https://github.com/Marthinmezaa/binalis-web/commit/9ff934e2b6c60c696641aecd4b9869d08d96a577))
+
 ## [0.25.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.24.0...binalis-web-v0.25.0) (2026-10-20)
 
 

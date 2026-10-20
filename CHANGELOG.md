@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.27.1](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.27.0...binalis-web-v0.27.1) (2026-10-20)
+
+
+### Bug Fixes
+
+* capturas enteras en el celular y menú translúcido como la barra ([#80](https://github.com/Marthinmezaa/binalis-web/issues/80)) ([ebe21df](https://github.com/Marthinmezaa/binalis-web/commit/ebe21df38072ac5ce3d1cb404e90fd22e422c374))
+
 ## [0.27.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.26.0...binalis-web-v0.27.0) (2026-10-20)
 
 

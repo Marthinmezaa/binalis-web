@@ -60,10 +60,15 @@ const links = [
     top: 0;
     z-index: 5;
     border-bottom: 1px solid rgb(255 255 255 / 6%);
-    background: rgb(6 8 15 / 80%);
-    backdrop-filter: blur(12px);
     /* Lets the CTA know when the header is stuck, i.e. once the visitor scrolls. */
     container-type: scroll-state;
+  }
+
+  /* The open phone menu shares the header's glass. */
+  .header,
+  nav:popover-open {
+    background: rgb(6 8 15 / 80%);
+    backdrop-filter: blur(12px);
   }
 
   .header-inner {
@@ -97,7 +102,7 @@ const links = [
     stroke-width: 2;
   }
 
-  /* The open menu drops below the header, across the screen, with the same translucent glass. */
+  /* The open menu drops below the header, across the screen. */
   nav:popover-open {
     inset: var(--header-height) 0 auto;
     width: auto;
@@ -105,8 +110,6 @@ const links = [
     padding: 0.5rem var(--gutter) 1rem;
     border: 0;
     border-bottom: 1px solid rgb(255 255 255 / 6%);
-    background: rgb(6 8 15 / 80%);
-    backdrop-filter: blur(12px);
     color: inherit;
   }
 

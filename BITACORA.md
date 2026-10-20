@@ -55,6 +55,7 @@ Pendientes, en orden:
 - Pedidos del dueño: en el testimonio, el cargo arriba y el nombre abajo, igual que en "Quién está detrás". En la portada, "Quién está detrás" sin el resumen de dos líneas: foto, cargo, nombre y "Conocé mi historia" apilados y centrados junto a la tarjeta de código (sin huecos), con el nombre más chico (Binalis es el protagonista). `/quien-soy/` conserva el nombre grande como título de página. Spec RF-10 actualizada.
 - Historia: "mi padrastro, el Ing. Fernando Rojas". Tarjeta de código: `motor: "Jesús"`.
 - Probado con capturas de Playwright (1440 px y 390 px). E2E 62/62.
+- Lección: la rama de #73 ya estaba mergeada (0.25.0) y borrada en GitHub, y el primer PR (#75) arrastró sus commits. Se cerró y se rehízo desde `main` actualizado. Al empezar: `git fetch` y revisar si la rama ya se mergeó (`gh pr list --head <rama> --state all`).
 
 ### 2026-10-19 (32)
 

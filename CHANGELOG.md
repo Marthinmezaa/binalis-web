@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.27.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.26.0...binalis-web-v0.27.0) (2026-10-20)
+
+
+### Features
+
+* menú de una fila en el celular, quién soy como ancla y página más ancha ([#78](https://github.com/Marthinmezaa/binalis-web/issues/78)) ([6ef4d58](https://github.com/Marthinmezaa/binalis-web/commit/6ef4d584d42b38d587ee7bda87d958249479c364))
+
 ## [0.26.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.25.0...binalis-web-v0.26.0) (2026-10-20)
 
 

@@ -97,7 +97,7 @@ const links = [
     stroke-width: 2;
   }
 
-  /* The open menu drops below the header, across the screen. */
+  /* The open menu drops below the header, across the screen, with the same translucent glass. */
   nav:popover-open {
     inset: var(--header-height) 0 auto;
     width: auto;
@@ -105,7 +105,8 @@ const links = [
     padding: 0.5rem var(--gutter) 1rem;
     border: 0;
     border-bottom: 1px solid rgb(255 255 255 / 6%);
-    background: var(--color-bg);
+    background: rgb(6 8 15 / 80%);
+    backdrop-filter: blur(12px);
     color: inherit;
   }
 

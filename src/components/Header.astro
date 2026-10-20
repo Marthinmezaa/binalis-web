@@ -13,7 +13,18 @@ const links = [
     <a class="wordmark" href="/" aria-label="Binalis, inicio">
       bin<span class="wordmark-accent">alis</span>
     </a>
-    <nav aria-label="Principal">
+    {/* Phones: a native popover menu, so the header fits in one row. Wide screens: always shown inline. */}
+    <button
+      class="menu-button"
+      type="button"
+      popovertarget="menu"
+      aria-label="Menú"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16"></path>
+      </svg>
+    </button>
+    <nav id="menu" aria-label="Principal" popover>
       <ul class="nav-list">
         {links.map(({ href, label }) => (
           <li>
@@ -30,6 +41,18 @@ const links = [
   </div>
 </header>
 
+<script>
+  // The links jump within the page, which doesn't close a popover: the menu closes itself.
+  const menu = document.getElementById("menu");
+  if (menu) {
+    menu.addEventListener("click", (event) => {
+      const isLink =
+        event.target instanceof Element && event.target.closest("a");
+      if (isLink && menu.matches(":popover-open")) menu.hidePopover();
+    });
+  }
+</script>
+
 <style>
   /* Sticky so "Cotizá tu proyecto" is always at hand; translucent so the page shows through. */
   .header {
@@ -45,13 +68,57 @@ const links = [
 
   .header-inner {
     display: grid;
-    grid-template-areas:
-      "logo cta"
-      "nav nav";
+    grid-template-areas: "logo cta menu";
+    grid-template-columns: 1fr auto auto;
     align-items: center;
-    justify-content: space-between;
-    gap: 0 1rem;
-    padding-block: 0.5rem 0;
+    gap: 0.5rem;
+    padding-block: 0.5rem;
+  }
+
+  .menu-button {
+    grid-area: menu;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    border: 1px solid rgb(255 255 255 / 15%);
+    border-radius: 0.75rem;
+    background: none;
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .menu-button svg {
+    width: 1.5rem;
+    fill: none;
+    stroke: currentcolor;
+    stroke-linecap: round;
+    stroke-width: 2;
+  }
+
+  /* The open menu drops below the header, across the screen. */
+  nav:popover-open {
+    inset: var(--header-height) 0 auto;
+    width: auto;
+    margin: 0;
+    padding: 0.5rem var(--gutter) 1rem;
+    border: 0;
+    border-bottom: 1px solid rgb(255 255 255 / 6%);
+    background: var(--color-bg);
+    color: inherit;
+  }
+
+  nav:popover-open .nav-list {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  nav:popover-open .nav-link {
+    display: block;
+    padding-block: 0.75rem;
+    font-size: 1.125rem;
   }
 
   @media (min-width: 48rem) {
@@ -62,8 +129,23 @@ const links = [
       padding-block: 0.75rem;
     }
 
-    nav {
+    .menu-button {
+      display: none;
+    }
+
+    /* Undoes the browser's popover styles: here the nav is part of the header. */
+    nav[popover] {
+      display: block;
+      position: static;
       justify-self: end;
+      width: auto;
+      height: auto;
+      margin: 0;
+      padding: 0;
+      overflow: visible;
+      border: 0;
+      background: none;
+      color: inherit;
     }
   }
 
@@ -71,8 +153,19 @@ const links = [
     grid-area: nav;
   }
 
+  /* A bit smaller on phones, so it stays on one line next to the logo and the menu down to 360px. */
   .cta {
     grid-area: cta;
+    padding-inline: 1rem;
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 48rem) {
+    .cta {
+      padding-inline: 1.25rem;
+      font-size: 1rem;
+    }
   }
 
   /* While scrolling, the CTA breathes like the hero's "b": same rhythm, only the glow changes.

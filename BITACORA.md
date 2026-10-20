@@ -54,8 +54,13 @@ Pendientes, en orden:
 
 - Pedidos del dueño: "Quién soy" en la barra baja a `/#quien` (ya no va a `/quien-soy/`); solo "Conocé mi historia" lleva a la página. Sin páginas como destino en la barra, `aria-current` ya no aplicaba y se quitó. Spec RF-01 actualizada.
 - "Quién está detrás" se veía chico a 1920 px: en la tarjeta de la portada, avatar de 9rem, cargo a 1rem, nombre hasta 2.25rem y columna de código de 28rem con letra de 15px (solo en escritorio: en el celular partía casi todas las líneas).
-- Recorrido completo en Claude in Chrome (1920 px) y con Playwright (iPhone 15) para proponer mejoras; sin desborde horizontal en el celular.
-- E2E 62/62.
+- Recorrido completo en Claude in Chrome (1920 px) y con Playwright (iPhone 15). El dueño aprobó las cinco mejoras propuestas:
+  1. Contenido de hasta 80rem (1280 px) desde pantallas de 100rem: a 1920 px quedaba casi la mitad vacía.
+  2. Barra del celular en una fila (wordmark, "Cotizá tu proyecto" y ☰). El menú es un `popover` nativo; un script de unas líneas lo cierra al tocar un link, porque saltar a un ancla no lo cierra. En escritorio se anulan los estilos del popover y la nav queda en línea. `--header-height` del celular bajó de 6.5 a 4rem. El botón de la barra es más chico en el celular para no partirse a 360 px.
+  3. Pie del celular apilado y centrado.
+  4. Capturas de Proyectos en el celular recortadas a 4:3 desde arriba a la izquierda (`object-fit`), sin imágenes nuevas.
+  5. Espacio entre secciones de 4.5 a 3.5rem.
+- E2E: helper `mainNav` que abre el menú en el celular y prueba nueva "el menú lleva a la sección y se cierra solo". 64/64.
 
 ### 2026-10-20 (33)
 

@@ -1,9 +1,51 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
-import BinalisSymbol from "../components/BinalisSymbol.astro";
 import Contact from "../components/Contact.astro";
 import Footer from "../components/Footer.astro";
+
+// 8-bit art drawn as text rows, one character per pixel: B = the bar (the 1), R = the ring (the 0), D = the digits.
+const SYMBOL = [
+  "BB........",
+  "BB........",
+  "BB........",
+  "BB........",
+  "BB........",
+  "BB..RRRR..",
+  "BB.R....R.",
+  "BBR......R",
+  "BBR......R",
+  "BBR......R",
+  "BBR......R",
+  "BB.R....R.",
+  "BB..RRRR..",
+];
+const DIGITS = {
+  "4": ["...D.", "..DD.", ".D.D.", "D..D.", "DDDDD", "...D.", "...D."],
+  "0": [".DDD.", "D...D", "D..DD", "D.D.D", "DD..D", "D...D", ".DDD."],
+};
+const CODE = ["4", "0", "4"] as const;
+const DIGIT_HEIGHT = 7;
+const GAP = ".".repeat(3);
+
+// The digits sit on the symbol's baseline.
+const codeRows = Array.from({ length: DIGIT_HEIGHT }, (_, row) =>
+  CODE.map((digit) => DIGITS[digit][row]).join("."),
+);
+const firstCodeRow = SYMBOL.length - DIGIT_HEIGHT;
+const art = SYMBOL.map((row, y) => {
+  const code = codeRows[y - firstCodeRow];
+  return row + GAP + (code ?? "");
+});
+const width = Math.max(...art.map((row) => row.length));
+const pixels = art.flatMap((row, y) =>
+  [...row].flatMap((kind, x) => (kind === "." ? [] : [{ x, y, kind }])),
+);
+const FILL: Record<string, string> = {
+  B: "var(--color-cyan)",
+  R: "url(#pixel-ring)",
+  D: "var(--color-magenta)",
+};
 ---
 
 <Layout
@@ -14,10 +56,30 @@ import Footer from "../components/Footer.astro";
   <main id="contenido">
     <section class="section not-found" aria-labelledby="not-found-title">
       <div class="container">
-        <div class="symbol-box">
-          <BinalisSymbol />
-        </div>
-        <p class="eyebrow">// error 404</p>
+        <svg
+          class="pixel-art"
+          viewBox={`0 0 ${width} ${art.length}`}
+          role="img"
+          aria-label="Error 404"
+          shape-rendering="crispEdges"
+        >
+          <defs>
+            {/* Across the ring's columns, like the hero's violet-to-cyan ring. */}
+            <linearGradient
+              id="pixel-ring"
+              gradientUnits="userSpaceOnUse"
+              x1="2"
+              x2="10"
+            >
+              <stop offset="0%" stop-color="var(--color-violet)"></stop>
+              <stop offset="100%" stop-color="var(--color-cyan)"></stop>
+            </linearGradient>
+          </defs>
+          {/* Slightly smaller than the cell, so the pixel grid shows. */}
+          {pixels.map(({ x, y, kind }) => (
+            <rect x={x} y={y} width="0.9" height="0.9" fill={FILL[kind]} />
+          ))}
+        </svg>
         <h1 id="not-found-title">Esta página no existe.</h1>
         <p class="lead">
           Puede que el link esté mal escrito o que la página se haya movido.
@@ -37,9 +99,29 @@ import Footer from "../components/Footer.astro";
     text-align: center;
   }
 
-  .symbol-box {
-    width: 6rem;
-    margin: 0 auto 2rem;
+  .pixel-art {
+    display: block;
+    width: min(100%, 22rem);
+    height: auto;
+    margin: 0 auto 2.5rem;
+    filter: drop-shadow(0 0 0.5rem rgb(0 240 255 / 35%));
+  }
+
+  /* An 8-bit "loading": the art appears row by row (13 steps = its 13 rows), instead of a smooth fade. */
+  @media (prefers-reduced-motion: no-preference) {
+    .pixel-art {
+      animation: pixel-load 1.2s steps(13, end) both;
+    }
+  }
+
+  @keyframes pixel-load {
+    from {
+      clip-path: inset(0 0 100% 0);
+    }
+
+    to {
+      clip-path: inset(0);
+    }
   }
 
   h1 {

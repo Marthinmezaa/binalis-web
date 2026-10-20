@@ -40,7 +40,7 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 **Siguiente tarea: el punto 1 (redes sociales).** La v1 está completa salvo las redes, que dependen del dueño.
 
-Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **58/58**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
+Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **62/62**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
 
 Pendientes, en orden:
 
@@ -49,6 +49,17 @@ Pendientes, en orden:
 3. **Resultado de YERON** con los números reales al cierre de la campaña (15 de enero de 2027).
 
 ## Entradas
+
+### 2026-10-19 (32)
+
+- #71 (0.24.0): los botones para cotizar brillan con jerarquía, a pedido del dueño ("la b es lo más importante"). La "b" es la más brillante y la única que late en la portada; el CTA de la barra late suave al bajar (`@container scroll-state(stuck: top)`); el de la portada brilla fijo; WhatsApp y correo se encienden al entrar en pantalla. Nunca más de un latido por pantalla.
+- Lección de diseño: achicar las cajas del testimonio y la cotización (800 y 736 px contra 1152 del resto) rompió la grilla y se veía en escalera. El problema era el vacío adentro, no el tamaño: todos los bloques comparten bordes y las cajas anchas usan dos columnas. El testimonio decide con una container query (sirve si un día hay 3 en fila).
+- "Quién está detrás" en la portada: caja como sus vecinas, columnas centradas en vertical y la tarjeta de código con fondo `--color-bg` (terminal incrustada). `/quien-soy/` sin cambios.
+- #73: "Siguiente proyecto" con el stack del CRM (el del sistema de Cosmos Trak: React y PostgreSQL, según el dueño), un porcentaje que avanza con la barra (un solo `@property --progress` entero mueve los dos) y "¿Querés uno para tu empresa? Hablemos". En Proceso, la línea de cada paso se llena al bajar, en secuencia en escritorio. 404 en 8 bits: la "b" y el "404" en magenta dibujados píxel a píxel en SVG a partir de filas de texto, armados fila por fila con `steps(13)`.
+- 8 bits solo en la 404, a propósito: en el resto chocaría con la estética futurista de la marca.
+- Probado en Claude in Chrome (1920 px) y con emulación de Pixel 7 e iPhone 15. El único error de consola en la 404 es su propio status 404, que es lo esperado.
+- La config estricta prohíbe `!` (non-null assertion): en la 404 se tipó `CODE` con `as const` para no necesitarlo.
+- E2E 62/62.
 
 ### 2026-10-19 (31)
 
@@ -167,10 +178,3 @@ Pendientes, en orden:
 - RF-09: pie con wordmark, WhatsApp y © año. El año se fija al compilar (`shortcut:`): se actualiza con el primer deploy de cada año. El correo y las redes se suman cuando existan.
 - Número en un solo lugar: `src/contact.ts`. `.wordmark-accent` pasó a `global.css` (lo usan barra y pie).
 - Recomendación de correo: `contacto@binalis.com.py`, con Zoho gratis si se responde por correo o Cloudflare Email Routing si todo va por WhatsApp; Google Workspace (~US$7/mes) cuando se justifique.
-
-### 2026-10-15 (17)
-
-- RF-06: al final de Proyectos, el bloque "Siguiente proyecto cargando…" con una barra de progreso de degradé de marca. Es solo CSS: se llena con el scroll (`animation-timeline`) mientras el bloque entra en pantalla, así nunca se mueve sola en bucle (WCAG 2.2.2). Si el navegador no lo soporta o el usuario pide menos movimiento, la barra queda quieta al 70%.
-- Dos trampas de esa animación: el minificador fusionaba `animation` + `animation-timeline` en un shorthand que Chrome descarta (se escriben longhands), y un `overflow: hidden` en la barra se volvía su contenedor de scroll y la dejaba congelada. Verificado midiendo el ancho a distintas alturas de scroll: 14% → 51% → 74% → 90%.
-- Gentle-AI no se instala: solo se sigue su filosofía (decisión del dueño). Actualizado `CLAUDE.md`.
-- El dueño quiere el sitio **funcional** sin tener que juntar ahora videos, fotos ni textos, y que represente su **identidad como programador**. Queda propuesta como cambio de spec, a la espera de aprobación.

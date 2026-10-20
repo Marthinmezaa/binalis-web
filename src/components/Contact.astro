@@ -4,34 +4,41 @@ import { email, emailQuoteUrl, whatsappUrl } from "../contact";
 
 <section id="cotizacion" class="section" aria-labelledby="cotizacion-title">
   <div class="container contact reveal">
-    <p class="eyebrow">// hablemos</p>
-    <h2 id="cotizacion-title" class="section-title">
-      Cotizá tu proyecto
-    </h2>
-    <p class="lead">
-      Contame qué necesitás y te respondo con una propuesta y un presupuesto
-      claro.
-    </p>
-    <div class="actions">
-      <a class="button button-primary" href={whatsappUrl}>
-        Hablemos por WhatsApp
-      </a>
-      <a class="button button-secondary" href={emailQuoteUrl}>
-        Escribime un correo
-      </a>
+    <div>
+      <p class="eyebrow">// hablemos</p>
+      <h2 id="cotizacion-title" class="section-title">
+        Cotizá tu proyecto
+      </h2>
+      <p class="lead">
+        Contame qué necesitás y te respondo con una propuesta y un presupuesto
+        claro.
+      </p>
     </div>
-    {/* Visible too: the mailto button does nothing on computers without a mail app. */}
-    <p class="email">
-      <a href={`mailto:${email}`}>{email}</a>
-    </p>
+    <div class="ways">
+      <div class="actions">
+        <a class="button button-primary" href={whatsappUrl}>
+          Hablemos por WhatsApp
+        </a>
+        <a class="button button-secondary" href={emailQuoteUrl}>
+          Escribime un correo
+        </a>
+      </div>
+      {/* Visible too: the mailto button does nothing on computers without a mail app. */}
+      <p class="email">
+        <a href={`mailto:${email}`}>{email}</a>
+      </p>
+    </div>
   </div>
 </section>
 
 <style>
-  /* Narrow on purpose: the content is a short centered block, a full-width box only added empty space. */
+  /* Same edges as every other block. On wide screens the text and the ways to write fill the width in two columns
+     instead of leaving it empty; on phones they stack, centered. */
   .contact {
-    width: min(100% - 2 * var(--gutter), 46rem);
-    padding: clamp(2rem, 5vw, 3rem) var(--gutter);
+    display: grid;
+    align-items: center;
+    gap: 2rem 4rem;
+    padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 5vw, 3.5rem);
     border: 1px solid rgb(0 240 255 / 25%);
     border-radius: 1rem;
     background:
@@ -40,15 +47,32 @@ import { email, emailQuoteUrl, whatsappUrl } from "../contact";
     text-align: center;
   }
 
+  @media (min-width: 56rem) {
+    .contact {
+      grid-template-columns: 1fr auto;
+      text-align: left;
+    }
+  }
+
   .section-title {
     margin-bottom: 1rem;
   }
 
   .lead {
     max-width: 32rem;
-    margin: 0 auto 2rem;
+    margin: 0 auto;
     color: var(--color-text-muted);
     font-size: 1.125rem;
+  }
+
+  @media (min-width: 56rem) {
+    .lead {
+      margin: 0;
+    }
+  }
+
+  .ways {
+    text-align: center;
   }
 
   .actions {

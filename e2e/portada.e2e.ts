@@ -257,9 +257,9 @@ test("se cotiza por WhatsApp o por correo, sin el número escrito en la página"
   page,
 }) => {
   const toQuote = page.getByRole("link", {
-    name: /^(Cotizá tu proyecto|Contame y lo vemos juntos\.)$/,
+    name: /^(Cotizá tu proyecto|Contame y lo vemos juntos\.|Hablemos)$/,
   });
-  await expect(toQuote).toHaveCount(3);
+  await expect(toQuote).toHaveCount(4);
   for (const button of await toQuote.all()) {
     await expect(button).toHaveAttribute("href", "#cotizacion");
   }
@@ -318,6 +318,7 @@ test("una URL que no existe muestra la 404 de Binalis con status 404", async ({
   await expect(
     page.getByRole("link", { name: "Volver al inicio" }),
   ).toHaveAttribute("href", "/");
+  await expect(page.getByRole("img", { name: "Error 404" })).toBeVisible();
 });
 
 test("los bloques aparecen al bajar, salvo con movimiento reducido", async ({

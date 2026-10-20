@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.25.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.24.0...binalis-web-v0.25.0) (2026-10-20)
+
+
+### Features
+
+* proyecto en curso vivo, línea del proceso y 404 en 8 bits ([#73](https://github.com/Marthinmezaa/binalis-web/issues/73)) ([74e3c02](https://github.com/Marthinmezaa/binalis-web/commit/74e3c02c3253e454b89966beb23ec0e6706d01d9))
+
 ## [0.24.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.23.0...binalis-web-v0.24.0) (2026-10-19)
 
 

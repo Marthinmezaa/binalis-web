@@ -153,11 +153,24 @@ const projects: Project[] = [
       )}
     </div>
     <div class="next-project reveal">
-      <p>Siguiente proyecto cargando…</p>
+      <p class="next-title">Siguiente proyecto cargando…</p>
       <p class="next-name">CRM con inteligencia artificial</p>
-      <div class="progress" aria-hidden="true">
-        <span></span>
+      {/* Same stack as the Cosmos Trak system, per the owner. */}
+      <ul class="tags next-tags" aria-label="Etiquetas">
+        <li>Sistema a medida</li>
+        <li>React</li>
+        <li>PostgreSQL</li>
+      </ul>
+      <div class="progress-row" aria-hidden="true">
+        <div class="progress">
+          <span></span>
+        </div>
+        <span class="percent"></span>
       </div>
+      <p class="next-cta">
+        ¿Querés uno para tu empresa?&nbsp;
+        <a href="#cotizacion">Hablemos</a>
+      </p>
     </div>
   </div>
 </section>
@@ -307,36 +320,77 @@ const projects: Project[] = [
     text-align: center;
   }
 
-  .next-project p {
+  .next-title {
     margin: 0 0 0.5rem;
     font-family: var(--font-heading);
     font-size: clamp(1.25rem, 3vw, 1.5rem);
     font-weight: 700;
   }
 
-  .next-project .next-name {
-    margin-bottom: 1.25rem;
+  .next-name {
+    margin: 0 0 1rem;
     color: var(--color-cyan);
     font-family: var(--font-mono);
     font-size: 0.9375rem;
-    font-weight: 400;
+  }
+
+  .next-tags {
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+
+  /* One value drives both the bar and the number, so they never disagree.
+     Without scroll-driven animations (or with reduced motion) it stays still at 70%. */
+  @property --progress {
+    syntax: "<integer>";
+    inherits: true;
+    initial-value: 70;
+  }
+
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 32rem;
+    margin-inline: auto;
   }
 
   .progress {
-    max-width: 32rem;
+    flex: 1;
     height: 0.5rem;
-    margin-inline: auto;
     border-radius: 999px;
     background: rgb(255 255 255 / 8%);
   }
 
-  /* Without scroll-driven animations (or with reduced motion) the bar stays still, partly filled. */
   .progress span {
     display: block;
-    width: 70%;
+    width: calc(var(--progress) * 1%);
     height: 100%;
     border-radius: inherit;
     background: linear-gradient(90deg, var(--color-cyan), var(--color-violet));
+  }
+
+  .percent {
+    min-width: 3.5ch;
+    color: var(--color-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    text-align: right;
+    counter-reset: progress var(--progress);
+  }
+
+  .percent::after {
+    content: counter(progress) "%";
+  }
+
+  .next-cta {
+    margin: 1.5rem 0 0;
+    color: var(--color-text-muted);
+  }
+
+  .next-cta a {
+    color: var(--color-cyan);
+    font-weight: 700;
   }
 
   /* Tied to scroll instead of a timer: it only moves while the user scrolls, so it never loops on its own (WCAG 2.2.2).
@@ -348,7 +402,7 @@ const projects: Project[] = [
         view-timeline-name: --next-project;
       }
 
-      .progress span {
+      .progress-row {
         animation-name: next-project-load;
         animation-timing-function: linear;
         animation-fill-mode: both;
@@ -360,11 +414,11 @@ const projects: Project[] = [
 
   @keyframes next-project-load {
     from {
-      width: 5%;
+      --progress: 5;
     }
 
     to {
-      width: 90%;
+      --progress: 90;
     }
   }
 </style>

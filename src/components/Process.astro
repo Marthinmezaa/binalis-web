@@ -55,8 +55,61 @@ const steps = [
   }
 
   .step {
+    position: relative;
     padding-top: 1.25rem;
     border-top: 1px solid rgb(255 255 255 / 10%);
+  }
+
+  /* The brand line over each step. Without scroll-driven animations (or with reduced motion) it is simply drawn. */
+  .step::before {
+    content: "";
+    position: absolute;
+    inset: -1px 0 auto;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-cyan), var(--color-violet));
+    transform-origin: left;
+  }
+
+  /* It fills as the step crosses the screen, like the "next project" bar. Longhands: see .reveal in global.css. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .step {
+        view-timeline-name: --step;
+      }
+
+      .step::before {
+        animation-name: step-line;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: --step;
+        animation-range: cover 10% cover 35%;
+      }
+
+      /* In a row they share one position on screen: staggered ranges make the four lines fill one after another, 01 → 04. */
+      @media (min-width: 48rem) {
+        .step:nth-child(1)::before {
+          animation-range: cover 15% cover 25%;
+        }
+
+        .step:nth-child(2)::before {
+          animation-range: cover 25% cover 35%;
+        }
+
+        .step:nth-child(3)::before {
+          animation-range: cover 35% cover 45%;
+        }
+
+        .step:nth-child(4)::before {
+          animation-range: cover 45% cover 55%;
+        }
+      }
+    }
+  }
+
+  @keyframes step-line {
+    from {
+      transform: scaleX(0);
+    }
   }
 
   .step-number {

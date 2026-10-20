@@ -4,7 +4,7 @@ import photo from "../assets/marthin-meza.jpg";
 import CodeCard, { type CodeCardData } from "./CodeCard.astro";
 
 interface Props {
-  // Home shows a summary that links to /quien-soy; that page shows the full story.
+  // Home shows a short card that links to /quien-soy; that page shows the full story.
   full?: boolean;
 }
 
@@ -29,7 +29,7 @@ const profile: CodeCardData = {
   ],
   aprendiendo: "Machine learning",
   fueraDelCodigo: ["alabanza", "servicio", "CrossFit"],
-  motor: "Amar lo que hago",
+  motor: "Jesús",
 };
 ---
 
@@ -67,17 +67,9 @@ const profile: CodeCardData = {
           </div>
         </div>
         {!full && (
-          <>
-            <p>
-              Ingeniero electromecánico que programa desde 2023 y encontró en el
-              código aquello que ama hacer. Mis clientes me definen con una
-              frase:&nbsp;
-              <strong>«Realmente amás lo que hacés»</strong>.
-            </p>
-            <a class="button button-secondary" href="/quien-soy/">
-              Conocé mi historia
-            </a>
-          </>
+          <a class="button button-secondary" href="/quien-soy/">
+            Conocé mi historia
+          </a>
         )}
         {full && (
           <Fragment>
@@ -89,11 +81,11 @@ const profile: CodeCardData = {
               propósito: encontrar aquello que ame hacer.
             </p>
             <p>
-              Años después, cuando mi papá ya había partido, mi padrastro me
-              mostró los programas que él mismo había creado para su empresa y
-              me dijo que un ingeniero siempre tiene que saber programar. Ahí se
-              encendió un fuego en mí: quería hacer programas que le hicieran la
-              vida más fácil a la gente.
+              Años después, cuando mi papá ya había partido, mi padrastro, el
+              Ing. Fernando Rojas, me mostró los programas que él mismo había
+              creado para su empresa y me dijo que un ingeniero siempre tiene
+              que saber programar. Ahí se encendió un fuego en mí: quería hacer
+              programas que le hicieran la vida más fácil a la gente.
             </p>
             <p>
               En 2023 empecé a aprender por mi cuenta. Arranqué con HTML y CSS;
@@ -140,8 +132,8 @@ const profile: CodeCardData = {
     }
   }
 
-  /* The home summary is short: boxed like its neighbours (testimonial above, quote below) and vertically centered,
-     so the text doesn't float beside a taller code card with an empty gap underneath. */
+  /* The home card is short: boxed like its neighbours (testimonial above, quote below), with the profile
+     stacked and centered beside the taller code card so neither column leaves an empty gap. */
   .about-card {
     padding: clamp(1.5rem, 5vw, 3rem);
     border: 1px solid rgb(255 255 255 / 6%);
@@ -155,6 +147,22 @@ const profile: CodeCardData = {
     .about-card {
       align-items: center;
     }
+  }
+
+  .about-card .story {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .about-card .byline {
+    flex-direction: column;
+  }
+
+  /* On the home page Binalis is the protagonist: the name stays a label, not a headline. */
+  .about-card .name {
+    font-size: clamp(1.5rem, 4vw, 2rem);
   }
 
   /* Inside the box the code card reads as an inset terminal. */

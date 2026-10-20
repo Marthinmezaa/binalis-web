@@ -26,7 +26,7 @@ La web tiene que reflejar la **identidad del dueño como programador**: estétic
 | RF-08 | Cotización (`#cotizacion`): qué pasa después de escribir y dos botones, WhatsApp (mensaje ya escrito) y correo (`mailto:` con asunto y plantilla), más la dirección de correo visible. El número de WhatsApp no aparece escrito en el sitio. El formulario con envío serverless queda para v2 (ver sección 7).              |
 | RF-09 | Pie con el versículo de Binalis (Mateo 11:28, RVR1960), WhatsApp, correo y redes (cada uno cuando exista), © año y versión del sitio.                                                                                                                                                                                       |
 | RF-11 | Página 404 propia con la marca en 8 bits (la "b" y el "404" pixelados) y links a la portada y a la cotización.                                                                                                                                                                                                              |
-| RF-10 | "Quién está detrás": en la portada, un resumen (foto, tarjeta de código, dos líneas y "Conocé mi historia"); en `/quien-soy/`, la historia completa del Ing. Marthin Meza. Texto aprobado por él.                                                                                                                           |
+| RF-10 | "Quién está detrás": en la portada, una tarjeta (foto, cargo, nombre, tarjeta de código y "Conocé mi historia"); en `/quien-soy/`, la historia completa del Ing. Marthin Meza. Texto aprobado por él.                                                                                                                       |
 
 ## 4. Requisitos no funcionales
 

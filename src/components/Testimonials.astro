@@ -46,8 +46,9 @@ const MAX_RATING = 5;
             <p class="body">{body}</p>
           </blockquote>
           <figcaption>
-            <span class="name">{name}</span>
+            {/* Role above the name, as in "Quién está detrás". */}
             <span class="role">{role}</span>
+            <span class="name">{name}</span>
           </figcaption>
         </figure>
       ))}
@@ -141,6 +142,7 @@ const MAX_RATING = 5;
   figcaption {
     display: flex;
     flex-direction: column;
+    gap: 0.25rem;
     margin-top: 1.5rem;
   }
 

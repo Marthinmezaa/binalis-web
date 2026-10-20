@@ -10,6 +10,11 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-15 — Cotización por WhatsApp y pie (entrada 18)
+
+- Cambio de spec aprobado por el dueño: sitio funcional antes que completo (cotización por WhatsApp, formulario serverless a v2, sin placeholders visibles, testimonios ocultos hasta tener uno real, nueva RF-10 "Quién está detrás").
+- RF-08 con `wa.me` y mensaje ya escrito; RF-09 pie con wordmark, WhatsApp y © año fijado al compilar (`shortcut:`). Número en un solo lugar: `src/contact.ts`.
+
 ### 2026-10-15 — Siguiente proyecto cargando (entrada 17)
 
 - RF-06 con una barra ligada al scroll en CSS puro (`animation-timeline`), quieta al 70 % sin soporte o con movimiento reducido.

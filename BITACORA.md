@@ -50,6 +50,12 @@ Pendientes, en orden:
 
 ## Entradas
 
+### 2026-10-20 (33)
+
+- Pedidos del dueño: en el testimonio, el cargo arriba y el nombre abajo, igual que en "Quién está detrás". En la portada, "Quién está detrás" sin el resumen de dos líneas: foto, cargo, nombre y "Conocé mi historia" apilados y centrados junto a la tarjeta de código (sin huecos), con el nombre más chico (Binalis es el protagonista). `/quien-soy/` conserva el nombre grande como título de página. Spec RF-10 actualizada.
+- Historia: "mi padrastro, el Ing. Fernando Rojas". Tarjeta de código: `motor: "Jesús"`.
+- Probado con capturas de Playwright (1440 px y 390 px). E2E 62/62.
+
 ### 2026-10-19 (32)
 
 - #71 (0.24.0): los botones para cotizar brillan con jerarquía, a pedido del dueño ("la b es lo más importante"). La "b" es la más brillante y la única que late en la portada; el CTA de la barra late suave al bajar (`@container scroll-state(stuck: top)`); el de la portada brilla fijo; WhatsApp y correo se encienden al entrar en pantalla. Nunca más de un latido por pantalla.
@@ -170,11 +176,3 @@ Pendientes, en orden:
 - Datos para RF-10, dados por el dueño: "Ing. Marthin Meza", 31 años, ingeniero electromecánico y técnico mecánico automotriz. Programa desde 2023, de forma autodidacta (HTML/CSS → Python → JavaScript); curso Full Stack terminado en junio de 2026, el mismo mes de su primer contrato. Hoy estudia machine learning. Lo que lo diferencia: la pasión ("realmente amás lo que hacés"). Fuera del código: baterista y bajista, sirve en alabanza y con jóvenes; la fe es central para él. Quiere su foto.
 - Zoho: el correo depende del dominio, no de Zoho. Si el plan gratis cambia, se migra cambiando los MX y la dirección sigue igual. El riesgo real es que venza el dominio.
 - Capturas: nunca de datos reales de clientes, aunque haya acceso.
-
-### 2026-10-15 (18)
-
-- Cambio de spec aprobado por el dueño: sitio funcional antes que completo. Cotización por WhatsApp (el formulario serverless pasa a v2), ningún placeholder visible, testimonios ocultos hasta tener uno real, identidad de programador y nueva RF-10 "Quién está detrás".
-- RF-08: sección `#cotizacion` con "Hablemos por WhatsApp" (`wa.me` con mensaje ya escrito) y el número visible. Los botones "Cotizá tu proyecto" ya no apuntan a la nada.
-- RF-09: pie con wordmark, WhatsApp y © año. El año se fija al compilar (`shortcut:`): se actualiza con el primer deploy de cada año. El correo y las redes se suman cuando existan.
-- Número en un solo lugar: `src/contact.ts`. `.wordmark-accent` pasó a `global.css` (lo usan barra y pie).
-- Recomendación de correo: `contacto@binalis.com.py`, con Zoho gratis si se responde por correo o Cloudflare Email Routing si todo va por WhatsApp; Google Workspace (~US$7/mes) cuando se justifique.

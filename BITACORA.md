@@ -54,6 +54,7 @@ Pendientes, en orden:
 
 - Dependabot abría un PR por paquete (5 abiertos el 2026-10-21: #83 a #87). Ahora agrupa: en npm, las menores y parches llegan en un solo PR semanal (`npm-minor-patch`); las mayores siguen sueltas porque son las que rompen. En GitHub Actions, un solo grupo (`actions`).
 - Los 5 PR sueltos quedan abiertos: Dependabot los cierra solo cuando abre el agrupado.
+- El check "Dependencias" empezó a fallar por GHSA-xjj6-f33q-929c (undici, alta). Arreglado en #89: unifont pasa a undici 8.12.3 por lockfile, y miniflare se fuerza a 7.30.1 con `overrides` (`shortcut:`). No se subió wrangler a 4.153.0, la única con el arreglo, porque había salido hacía 1,5 h y pnpm pedía saltear `minimumReleaseAge`. Quitar el override cuando wrangler traiga undici >= 7.30.1.
 
 ### 2026-10-20 (35)
 

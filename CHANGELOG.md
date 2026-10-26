@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.27.2](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.27.1...binalis-web-v0.27.2) (2026-10-26)
+
+
+### Bug Fixes
+
+* forzar undici 7.30.1 en miniflare por GHSA-xjj6-f33q-929c ([#89](https://github.com/Marthinmezaa/binalis-web/issues/89)) ([294aaef](https://github.com/Marthinmezaa/binalis-web/commit/294aaef48883291341eecc9ad2e8b8959e97189c))
+
 ## [0.27.1](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.27.0...binalis-web-v0.27.1) (2026-10-20)
 
 

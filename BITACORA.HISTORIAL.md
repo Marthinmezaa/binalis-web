@@ -10,6 +10,12 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-15 — "Quién soy" en página propia (entrada 21)
+
+- La portada muestra un resumen y `/quien-soy/` la historia completa, con un solo componente `About.astro` y la prop `full`.
+- Links absolutos (`/#servicios`…) y con barra final (`/quien-soy/`) para que funcionen desde cualquier página; `aria-current="page"` en la barra.
+- E2E de consola, axe y scroll horizontal en las dos páginas. 34/34.
+
 ### 2026-10-15 — "Quién está detrás" (entrada 20)
 
 - RF-10 con la versión A elegida por el dueño, entre Proyectos y Cotización: foto propia y tarjeta de código con sus datos.

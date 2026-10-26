@@ -50,6 +50,11 @@ Pendientes, en orden:
 
 ## Entradas
 
+### 2026-10-26 (36)
+
+- Dependabot abría un PR por paquete (5 abiertos el 2026-10-21: #83 a #87). Ahora agrupa: en npm, las menores y parches llegan en un solo PR semanal (`npm-minor-patch`); las mayores siguen sueltas porque son las que rompen. En GitHub Actions, un solo grupo (`actions`).
+- Los 5 PR sueltos quedan abiertos: Dependabot los cierra solo cuando abre el agrupado.
+
 ### 2026-10-20 (35)
 
 - Pedidos del dueño: en el celular las capturas de Proyectos se veían cortadas a la mitad. Se quitó el recorte a 4:3 de la entrada 34 (mejora 4) y se ven enteras en 16:9, como en escritorio.
@@ -179,10 +184,3 @@ Pendientes, en orden:
 - Versículo de Binalis en el pie de todas las páginas: Mateo 11:28 en RVR1960, en `<figure>` con `<blockquote>` y la cita en `figcaption`. Prueba e2e de la cita.
 - Nueva e2e: la "b" tiene una animación y ninguna con `reducedMotion: "reduce"` (verificado que falla si se quita la media query). Revisado en Chrome: pulso de 55% a 90% de intensidad, avatar de 96 px en WebP, orden de lectura foto → `h1` → código, consola limpia bajo la CSP. La vista previa de Workers no se revisó: el Chrome de la PC no tiene sesión en Cloudflare.
 - Esta PC necesitó `pnpm exec playwright install chromium` (el headless shell 1248 no estaba). 36/36.
-
-### 2026-10-15 (21)
-
-- "Quién soy" en página propia, a propuesta del dueño: la portada muestra un resumen (foto, tarjeta de código, dos líneas y "Conocé mi historia") y `/quien-soy/` la historia completa con `h1`, más Cotización y pie. Un solo componente `About.astro` con la prop `full`.
-- Barra: links a `/#servicios`, `/#proceso` y `/#proyectos` (absolutos, para que funcionen desde otra página) y "Quién soy", con `aria-current="page"` en su página.
-- Los links van a `/quien-soy/` con barra final: Astro genera `quien-soy/index.html` y Cloudflare redirige la URL sin barra.
-- E2E: consola sin errores bajo la CSP, axe WCAG 2.2 AA y sin scroll horizontal ahora corren en las dos páginas. 34/34.

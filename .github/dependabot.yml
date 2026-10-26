@@ -6,9 +6,16 @@ updates:
       interval: weekly
     commit-message:
       prefix: "chore(deps)"
+    # Las versiones mayores quedan fuera del grupo: son las que rompen y, solas, no frenan al resto.
+    groups:
+      npm-minor-patch:
+        update-types: [minor, patch]
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
     commit-message:
       prefix: "chore(ci)"
+    groups:
+      actions:
+        patterns: ["*"]

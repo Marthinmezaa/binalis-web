@@ -50,6 +50,13 @@ Pendientes, en orden:
 
 ## Entradas
 
+### 2026-10-26 (37)
+
+- Minutos de Actions: el repo es público (no consume la cuota del plan), así que el cambio es liviano. Se sacó el `push` a `main` del workflow DevSecOps: repetía los 4 jobs que ya corrieron en el PR. Queda el `schedule` semanal, que corre sobre `main` y mantiene al día CodeQL y el audit.
+- Se mantuvieron los 4 jobs con sus nombres: el ruleset y la protección de `main` los exigen por nombre, y CodeQL necesita sus propios permisos.
+- Cache de los navegadores de Playwright (`~/.cache/ms-playwright`, clave por versión de Playwright). Con cache solo se instalan las librerías del sistema (`install-deps`). Con cache el paso tarda lo mismo (35 s contra 23 s): `apt` domina, no la descarga de Chromium. En el PR #92 `install --with-deps` tardó 9 min 20 s por el mirror de `apt` de Azure, y el cache no evita eso. Un cache creado en un PR solo lo reutiliza ese PR; los demás leen el de `main`, que ahora lo crea el `schedule` del lunes.
+- `timeout-minutes`: 15 en calidad (por ese apt lento), 10 en CodeQL y 5 en gitleaks y dependencias.
+
 ### 2026-10-26 (36)
 
 - Dependabot abría un PR por paquete (5 abiertos el 2026-10-21: #83 a #87). Ahora agrupa: en npm, las menores y parches llegan en un solo PR semanal (`npm-minor-patch`); las mayores siguen sueltas porque son las que rompen. En GitHub Actions, un solo grupo (`actions`).

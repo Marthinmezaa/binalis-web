@@ -1,9 +1,9 @@
 name: DevSecOps
 
 on:
+  # Sin push a main: repetiría lo que ya corrió en el PR. El schedule (sobre main)
+  # mantiene al día CodeQL y el audit de la rama principal.
   pull_request:
-    branches: [main]
-  push:
     branches: [main]
   schedule:
     - cron: "0 9 * * 1"
@@ -19,6 +19,8 @@ jobs:
   calidad:
     name: Lint, tipos y pruebas
     runs-on: ubuntu-latest
+    # 15 y no 10: la descarga de Chromium sin cache llegó a tardar 9 min (2026-10-26).
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6
@@ -31,12 +33,24 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm build
-      - run: pnpm exec playwright install --with-deps chromium
+      - id: playwright
+        run: echo "version=$(pnpm exec playwright --version | cut -d' ' -f2)" >> "$GITHUB_OUTPUT"
+      - id: playwright-cache
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
+      - if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm exec playwright install --with-deps chromium
+      # El cache guarda el navegador, no las librerías del sistema que necesita.
+      - if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: pnpm exec playwright install-deps chromium
       - run: pnpm test:e2e
 
   secretos:
     name: Secretos (gitleaks)
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v7
         with:
@@ -48,6 +62,7 @@ jobs:
   dependencias:
     name: Dependencias
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6
@@ -63,6 +78,7 @@ jobs:
     # CodeQL es gratis en repos públicos; en privados requiere GitHub Advanced Security.
     if: ${{ !github.event.repository.private }}
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       contents: read
       actions: read

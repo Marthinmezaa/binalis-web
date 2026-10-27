@@ -19,7 +19,7 @@ jobs:
   calidad:
     name: Lint, tipos y pruebas
     runs-on: ubuntu-latest
-    # 15 y no 10: la descarga de Chromium sin cache llegó a tardar 9 min (2026-10-26).
+    # 15 y no 10: el mirror de apt hizo tardar 9 min a playwright install (2026-10-26).
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7

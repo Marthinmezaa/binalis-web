@@ -54,7 +54,7 @@ Pendientes, en orden:
 
 - Minutos de Actions: el repo es público (no consume la cuota del plan), así que el cambio es liviano. Se sacó el `push` a `main` del workflow DevSecOps: repetía los 4 jobs que ya corrieron en el PR. Queda el `schedule` semanal, que corre sobre `main` y mantiene al día CodeQL y el audit.
 - Se mantuvieron los 4 jobs con sus nombres: el ruleset y la protección de `main` los exigen por nombre, y CodeQL necesita sus propios permisos.
-- Cache de los navegadores de Playwright (`~/.cache/ms-playwright`, clave por versión de Playwright). Con cache solo se instalan las librerías del sistema (`install-deps`). Motivo: en el PR #92 la descarga de Chromium tardó 9 min 20 s (lo normal es 23 s).
+- Cache de los navegadores de Playwright (`~/.cache/ms-playwright`, clave por versión de Playwright). Con cache solo se instalan las librerías del sistema (`install-deps`). Motivo: en el PR #92 la descarga de Chromium tardó 9 min 20 s (lo normal es 23 s). Un cache creado en un PR solo lo reutiliza ese PR; los demás leen el de `main`, que ahora lo crea el `schedule` del lunes.
 - `timeout-minutes`: 15 en calidad (por esa descarga lenta), 10 en CodeQL y 5 en gitleaks y dependencias.
 
 ### 2026-10-26 (36)

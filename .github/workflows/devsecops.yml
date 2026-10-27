@@ -19,8 +19,7 @@ jobs:
   calidad:
     name: Lint, tipos y pruebas
     runs-on: ubuntu-latest
-    # 15 y no 10: el mirror de apt hizo tardar 9 min a playwright install (2026-10-26).
-    timeout-minutes: 15
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6
@@ -33,18 +32,7 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm build
-      - id: playwright
-        run: echo "version=$(pnpm exec playwright --version | cut -d' ' -f2)" >> "$GITHUB_OUTPUT"
-      - id: playwright-cache
-        uses: actions/cache@v6
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
-      - if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: pnpm exec playwright install --with-deps chromium
-      # El cache guarda el navegador, no las librerías del sistema que necesita.
-      - if: steps.playwright-cache.outputs.cache-hit == 'true'
-        run: pnpm exec playwright install-deps chromium
+      # Sin playwright install: las e2e usan el Chrome que ya trae el runner (playwright.config.ts).
       - run: pnpm test:e2e
 
   secretos:

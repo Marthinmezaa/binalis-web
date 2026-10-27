@@ -8,7 +8,12 @@ export default defineConfig({
   testMatch: "*.e2e.ts",
   forbidOnly: !!process.env["CI"],
   reporter: process.env["CI"] ? "github" : "list",
-  use: { baseURL: `http://localhost:${port}` },
+  use: {
+    baseURL: `http://localhost:${port}`,
+    // CI uses the runner's preinstalled Chrome: installing Playwright's Chromium needs apt,
+    // whose mirror has stalled the job for minutes.
+    ...(process.env["CI"] && { channel: "chrome" }),
+  },
   projects: [
     { name: "escritorio", use: { ...devices["Desktop Chrome"] } },
     { name: "celular", use: { ...devices["Pixel 7"] } },

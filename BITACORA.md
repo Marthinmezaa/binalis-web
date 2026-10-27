@@ -55,7 +55,8 @@ Pendientes, en orden:
 - Minutos de Actions: el repo es público (no consume la cuota del plan), así que el cambio es liviano. Se sacó el `push` a `main` del workflow DevSecOps: repetía los 4 jobs que ya corrieron en el PR. Queda el `schedule` semanal, que corre sobre `main` y mantiene al día CodeQL y el audit.
 - Se mantuvieron los 4 jobs con sus nombres: el ruleset y la protección de `main` los exigen por nombre, y CodeQL necesita sus propios permisos.
 - Cache de los navegadores de Playwright (`~/.cache/ms-playwright`, clave por versión de Playwright). Con cache solo se instalan las librerías del sistema (`install-deps`). Con cache el paso tarda lo mismo (35 s contra 23 s): `apt` domina, no la descarga de Chromium. En el PR #92 `install --with-deps` tardó 9 min 20 s por el mirror de `apt` de Azure, y el cache no evita eso. Un cache creado en un PR solo lo reutiliza ese PR; los demás leen el de `main`, que ahora lo crea el `schedule` del lunes.
-- `timeout-minutes`: 15 en calidad (por ese apt lento), 10 en CodeQL y 5 en gitleaks y dependencias.
+- `timeout-minutes`: 15 en calidad (por ese apt lento), 10 en CodeQL y 5 en gitleaks y dependencias. Mergeado como #93; en su última corrida, `install-deps` con cache tardó 5 min 40 s.
+- Arreglo de fondo: en CI las e2e usan el Chrome que ya trae el runner (`channel: "chrome"` solo con `CI`), sin `playwright install`, sin `apt` y sin cache. Calidad vuelve a `timeout-minutes: 10`. En local sigue el Chromium de Playwright. Costo: CI prueba la versión de Chrome del runner, no exactamente la de Playwright.
 
 ### 2026-10-26 (36)
 

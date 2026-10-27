@@ -8,7 +8,7 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Repo público en GitHub con `main` protegida (4 checks obligatorios: calidad, gitleaks, dependencias, CodeQL).
 - Dominio `binalis.com.py` habilitado y con DNS delegado a Cloudflare (`aurora` / `johnny.ns.cloudflare.com`).
 - Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04), Proyectos (RF-05), "siguiente proyecto cargando…" (RF-06), "Quién está detrás" (RF-10, resumen en portada + página `/quien-soy/`), Cotización por WhatsApp y correo (RF-08), pie con versión (RF-09), testimonios (RF-07) y 404 propia (RF-11); rediseño con sello (la "b" que se dibuja, etiquetas de código, aparición al bajar, barra fija); captura real en los tres proyectos; el sitio entero sin placeholders (textos aprobados por el dueño); favicon e íconos de app; SEO básico (canonical, Open Graph con imagen, `sitemap.xml` y `robots.txt`).
-- Pruebas e2e con Playwright + axe en el CI (escritorio y celular), bajo la misma CSP de producción.
+- Pruebas e2e con Playwright + axe en el CI (escritorio y celular), bajo la misma CSP de producción. En CI corren con el Chrome del runner; en local, con el Chromium de Playwright.
 - release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. La versión actual está en `package.json`.
 - Repo con README, SECURITY.md (reporte privado de vulnerabilidades activado), descripción, topics y sitio web.
 
@@ -56,7 +56,8 @@ Pendientes, en orden:
 - Se mantuvieron los 4 jobs con sus nombres: el ruleset y la protección de `main` los exigen por nombre, y CodeQL necesita sus propios permisos.
 - Cache de los navegadores de Playwright (`~/.cache/ms-playwright`, clave por versión de Playwright). Con cache solo se instalan las librerías del sistema (`install-deps`). Con cache el paso tarda lo mismo (35 s contra 23 s): `apt` domina, no la descarga de Chromium. En el PR #92 `install --with-deps` tardó 9 min 20 s por el mirror de `apt` de Azure, y el cache no evita eso. Un cache creado en un PR solo lo reutiliza ese PR; los demás leen el de `main`, que ahora lo crea el `schedule` del lunes.
 - `timeout-minutes`: 15 en calidad (por ese apt lento), 10 en CodeQL y 5 en gitleaks y dependencias. Mergeado como #93; en su última corrida, `install-deps` con cache tardó 5 min 40 s.
-- Arreglo de fondo: en CI las e2e usan el Chrome que ya trae el runner (`channel: "chrome"` solo con `CI`), sin `playwright install`, sin `apt` y sin cache. Calidad vuelve a `timeout-minutes: 10`. En local sigue el Chromium de Playwright. Costo: CI prueba la versión de Chrome del runner, no exactamente la de Playwright.
+- Arreglo de fondo: en CI las e2e usan el Chrome que ya trae el runner (`channel: "chrome"` solo con `CI`), sin `playwright install`, sin `apt` y sin cache. Calidad vuelve a `timeout-minutes: 10`. En local sigue el Chromium de Playwright. Costo: CI prueba la versión de Chrome del runner, no exactamente la de Playwright. Mergeado como #94: calidad en 1 min 9 s, 64/64. Si algo falla solo en CI, revisar primero esa diferencia de navegador.
+- El cache de Playwright de #93 (280 MiB) quedó sin uso; GitHub lo borra solo a los 7 días.
 
 ### 2026-10-26 (36)
 
@@ -186,11 +187,3 @@ Pendientes, en orden:
 - La "b" ahora es la del lienzo de marca, a pedido del dueño: el aro toca la barra (antes se superponían), barra cian sólida y aro con degradé violeta→cian. Brillo más suave: solo cian, en reposo 0,5rem al 35 % y en el pico 1rem al 55 % (antes había además un halo violeta grande). Sigue pulsando (RF-02).
 - Íconos chicos como la lámina de aplicaciones: favicon = "b" oscura sobre disco cian (se lee en pestañas claras y oscuras, cierra el problema de contraste de la entrada 15); ícono de iOS = la misma "b" de la portada (proporciones incluidas) sobre tile superficie `#0D1220`: `pnpm icons` toma el SVG directo de `BinalisSymbol.astro`, así no hay geometría copiada a mano. El favicon conserva trazos más gruesos para leerse a 16 px.
 - Foto de "Quién soy" con borde cian sólido y glow, como el perfil de Instagram del lienzo.
-
-### 2026-10-15 (22)
-
-- La "b" de la portada ahora "respira": el glow crece y baja cada 2,4 s, copiado del pulso de promoyeron.com.py (que lo aplica a su botón principal). Solo cambia la sombra, nunca posición ni opacidad, y no corre con `prefers-reduced-motion`.
-- Foto de "Quién soy": de 22rem a un avatar redondo de 6rem junto al nombre, a pedido del dueño ("la empresa es el centro"). La historia va primero y la tarjeta de código a la derecha (abajo en celular), así `/quien-soy/` arranca con el `h1`.
-- Versículo de Binalis en el pie de todas las páginas: Mateo 11:28 en RVR1960, en `<figure>` con `<blockquote>` y la cita en `figcaption`. Prueba e2e de la cita.
-- Nueva e2e: la "b" tiene una animación y ninguna con `reducedMotion: "reduce"` (verificado que falla si se quita la media query). Revisado en Chrome: pulso de 55% a 90% de intensidad, avatar de 96 px en WebP, orden de lectura foto → `h1` → código, consola limpia bajo la CSP. La vista previa de Workers no se revisó: el Chrome de la PC no tiene sesión en Cloudflare.
-- Esta PC necesitó `pnpm exec playwright install chromium` (el headless shell 1248 no estaba). 36/36.

@@ -10,6 +10,12 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-15 — La "b" respira y versículo en el pie (entrada 22)
+
+- El glow de la "b" pulsa cada 2,4 s (solo la sombra) y se apaga con `prefers-reduced-motion`; e2e que lo verifica.
+- "Quién soy": la foto pasa a un avatar de 6rem junto al nombre ("la empresa es el centro") y la página arranca con el `h1`.
+- Mateo 11:28 (RVR1960) en el pie de todas las páginas, con su e2e. 36/36.
+
 ### 2026-10-15 — "Quién soy" en página propia (entrada 21)
 
 - La portada muestra un resumen y `/quien-soy/` la historia completa, con un solo componente `About.astro` y la prop `full`.

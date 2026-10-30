@@ -72,6 +72,7 @@ Blog, versión en otros idiomas, panel de administración, pagos. Para v2: formu
 - Repositorio **público** en GitHub (`Marthinmezaa/binalis-web`), `main` protegida, cambios solo por PR. CodeQL activo.
 - Proyectos a mostrar (RF-05), elegidos por el dueño (2026-10-14): Cosmos Trak · Sitio web, Cosmos Trak · Sistema administrativo y YERON · Promoción con sorteos. El contenido sale de sus repositorios (privados, sin enlace al código).
 - Correo: `contacto@binalis.com.py` en Zoho Mail Lite (2026-10-19). El plan gratis no estaba disponible. Configuración en `BITACORA.md`.
+- Analítica: Cloudflare Web Analytics, que Cloudflare inyecta en el sitio (2026-10-30, aprobado por el dueño). La CSP permite solo su script, para poder medir las visitas.
 
 ## 9. Preguntas abiertas
 

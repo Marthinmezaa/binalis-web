@@ -416,6 +416,42 @@ test("las secciones se separan con bandas alternas", async ({ page }) => {
   expect(await background("proyectos")).toBe(await background("servicios"));
 });
 
+test("en el celular, el menú cubre la pantalla y lleva al contacto", async ({
+  page,
+}) => {
+  const menuButton = page.getByRole("button", { name: "Menú" });
+  test.skip(!(await menuButton.isVisible()), "El menú solo existe en celular");
+
+  await menuButton.click();
+  const nav = page.getByRole("navigation", { name: "Principal" });
+  await expect(nav.getByRole("link", { name: "WhatsApp" })).toHaveAttribute(
+    "href",
+    /^https:\/\/wa\.me\//,
+  );
+  await expect(nav.getByRole("link", { name: "Correo" })).toHaveAttribute(
+    "href",
+    /^mailto:/,
+  );
+
+  // Starts right under the header and reaches the bottom of the screen.
+  const box = await nav.boundingBox();
+  const header = await page.getByRole("banner").boundingBox();
+  const viewport = page.viewportSize();
+  expect(box?.y).toBeCloseTo((header?.y ?? 0) + (header?.height ?? 0), 0);
+  expect((box?.y ?? 0) + (box?.height ?? 0)).toBe(viewport?.height);
+  expect(box?.width).toBe(viewport?.width);
+
+  // Finished rising in, so axe doesn't measure the contrast of a half-faded row.
+  await page.waitForTimeout(600);
+  const { violations } = await new AxeBuilder({ page })
+    .withTags(WCAG_22_AA)
+    .analyze();
+  expect(violations).toEqual([]);
+
+  await page.keyboard.press("Escape");
+  await expect(nav.getByRole("link", { name: "Servicios" })).toBeHidden();
+});
+
 test("la barra superior sigue a mano al bajar", async ({ page }) => {
   await page.getByRole("region", { name: "Proceso" }).scrollIntoViewIfNeeded();
   await expect(page.getByRole("banner")).toBeInViewport();

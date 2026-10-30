@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.32.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.31.1...binalis-web-v0.32.0) (2026-10-30)
+
+
+### Features
+
+* títulos con postura y siguiente proyecto en desarrollo ([#116](https://github.com/Marthinmezaa/binalis-web/issues/116)) ([071c877](https://github.com/Marthinmezaa/binalis-web/commit/071c87789c0018910009e252c89c1644ba14069f))
+
 ## [0.31.1](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.31.0...binalis-web-v0.31.1) (2026-10-30)
 
 

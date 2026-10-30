@@ -61,6 +61,7 @@ Pendientes, en orden:
 - Lección: Prettier realinea toda la tabla de requisitos al cambiar el ancho de una fila, así que dos PR que tocan la spec chocan. Si hay varios PR en paralelo, los cambios de spec van juntos en uno solo.
 - Mergeados como v0.31.0. En producción, Lighthouse móvil 100/100/100/100, LCP 1,1 s, TBT 20-30 ms. El dueño probó el menú en su celular: perfecto.
 - Onda, segundo ajuste a pedido del dueño: volvió al tamaño y la duración originales (1,4 s, crecimiento 3), porque al cubrir todo el campo la "b" se deformaba en bloques. Se conserva el apagado gradual, que era lo que faltaba.
+- Títulos aprobados por el dueño: "Hecho a la medida de tu empresa.", "Sabés en qué está tu proyecto, siempre." y "Sistemas reales, funcionando hoy.". El bloque final de Proyectos pasa a "Siguiente proyecto en desarrollo". La barra y el menú conservan los nombres cortos.
 
 ### 2026-10-30 (39)
 

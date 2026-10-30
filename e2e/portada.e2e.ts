@@ -314,13 +314,41 @@ test("el pie muestra WhatsApp, el correo, el año y la versión", async ({
 test("el brillo de la b pulsa, salvo con movimiento reducido", async ({
   page,
 }) => {
-  const symbol = page.locator(".symbol");
+  const glowLayer = page.locator(".symbol + .symbol");
   const animationCount = () =>
-    symbol.evaluate((element) => element.getAnimations().length);
+    glowLayer.evaluate((element) => element.getAnimations().length);
 
   expect(await animationCount()).toBe(1);
   await page.emulateMedia({ reducedMotion: "reduce" });
   expect(await animationCount()).toBe(0);
+});
+
+test("las animaciones que no terminan solo mueven opacity o transform", async ({
+  page,
+}) => {
+  // Scrolled, so the header's CTA is pulsing too.
+  await scrollToEnd(page);
+  const endlessProperties = () =>
+    page.evaluate(() => {
+      const timingKeys = ["offset", "computedOffset", "easing", "composite"];
+      return document
+        .getAnimations()
+        .filter(
+          (animation) => animation.effect?.getTiming().iterations === Infinity,
+        )
+        .flatMap((animation) =>
+          (animation.effect as KeyframeEffect)
+            .getKeyframes()
+            .flatMap((keyframe) => Object.keys(keyframe)),
+        )
+        .filter((key) => !timingKeys.includes(key));
+    });
+
+  await expect.poll(endlessProperties).toContain("opacity");
+  const repainting = (await endlessProperties()).filter(
+    (property) => !["opacity", "transform"].includes(property),
+  );
+  expect(repainting).toEqual([]);
 });
 
 test("una URL que no existe muestra la 404 de Binalis con status 404", async ({
@@ -419,8 +447,9 @@ test("el botón de cotizar de la barra brilla al bajar, salvo con movimiento red
   const cta = page.getByRole("banner").getByRole("link", {
     name: "Cotizá tu proyecto",
   });
+  // The glow is a pseudo-element, which only `subtree` reaches.
   const animationCount = () =>
-    cta.evaluate((element) => element.getAnimations().length);
+    cta.evaluate((element) => element.getAnimations({ subtree: true }).length);
 
   expect(await animationCount()).toBe(0);
   await scrollToEnd(page);

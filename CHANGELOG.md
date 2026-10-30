@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.27.3](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.27.2...binalis-web-v0.27.3) (2026-10-30)
+
+
+### Bug Fixes
+
+* permitir en la CSP la analítica de Cloudflare ([#97](https://github.com/Marthinmezaa/binalis-web/issues/97)) ([990f366](https://github.com/Marthinmezaa/binalis-web/commit/990f366b60005283a165b9b6edae8240c8098699))
+
 ## [0.27.2](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.27.1...binalis-web-v0.27.2) (2026-10-26)
 
 

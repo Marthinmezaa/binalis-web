@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.31.1](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.31.0...binalis-web-v0.31.1) (2026-10-30)
+
+
+### Bug Fixes
+
+* la onda vuelve a su tamaño original, con apagado gradual ([#115](https://github.com/Marthinmezaa/binalis-web/issues/115)) ([554609c](https://github.com/Marthinmezaa/binalis-web/commit/554609c41ea7da0e0d60eb85167756d0d31fb723))
+
 ## [0.31.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.30.2...binalis-web-v0.31.0) (2026-10-30)
 
 

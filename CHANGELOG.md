@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.32.5](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.32.4...binalis-web-v0.32.5) (2026-10-30)
+
+
+### Bug Fixes
+
+* título de Proceso más claro ([#130](https://github.com/Marthinmezaa/binalis-web/issues/130)) ([3a08990](https://github.com/Marthinmezaa/binalis-web/commit/3a089904f6000f3b75d39b77af0748e38aba7188))
+
 ## [0.32.4](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.32.3...binalis-web-v0.32.4) (2026-10-30)
 
 

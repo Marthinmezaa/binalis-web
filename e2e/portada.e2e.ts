@@ -149,7 +149,7 @@ test("los íconos declarados en el head existen", async ({ page, request }) => {
   }
 });
 
-const PROCESS_TITLE = "Sabés en qué está tu proyecto, siempre.";
+const PROCESS_TITLE = "De tu idea al resultado, en 4 pasos.";
 const PROJECTS_TITLE = "Sistemas reales, funcionando hoy.";
 
 // Exact items from ESPECIFICACIONES.md (RF-03, RF-04 and the projects chosen for RF-05).

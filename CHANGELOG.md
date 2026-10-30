@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.33.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.32.5...binalis-web-v0.33.0) (2026-10-30)
+
+
+### Features
+
+* el logo del pie lleva al inicio ([#127](https://github.com/Marthinmezaa/binalis-web/issues/127)) ([a2c1c4b](https://github.com/Marthinmezaa/binalis-web/commit/a2c1c4b7017312c3ec536e975e448771e8ac632e))
+
 ## [0.32.5](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.32.4...binalis-web-v0.32.5) (2026-10-30)
 
 

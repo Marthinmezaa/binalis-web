@@ -60,6 +60,8 @@ Pendientes, en orden:
 - **Transiciones entre páginas descartadas.** La prueba en Chrome real mostró que cerca de la mitad de las navegaciones abortaban con `ViewTransition opt-in disabled` (6/12 y 7/12 sin el `@media`; 8/12 y 6/12 con `<link rel="expect">`). No se encontró la causa. Las e2e no lo detectaban porque no navegan entre páginas. Spec actualizada.
 - Lección: las capturas de Claude in Chrome se cuelgan después de hacer clic en un link que cambia de página (`Page.captureScreenshot` da timeout), también en producción sin estos cambios. La página sigue respondiendo: se revisa con `javascript_tool` o navegando directo con la URL. Antes de medir, recordar que la animación de aparición mueve los elementos: esperar a que termine o el clic cae afuera.
 
+- Prueba móvil: Claude in Chrome no baja de 500 px de ancho y no simula toques (`hover: true`), así que sirve para ver el diseño de celular, no un celular. Para 320, 360 y 390 px con toques reales se usó Playwright con emulación: onda, menú y botones funcionan, sin scroll horizontal ni errores. Observación de diseño: en el celular la "b" queda abajo de los botones, y el campo se luce recién al bajar (a 320 px, la "b" queda fuera de la primera pantalla).
+
 ### 2026-10-30 (38)
 
 - Pedido del dueño: analizar omarchy.org, coe22.com y lakepointe.church para llevar Binalis a otro nivel. Eligió la **opción A, "sello binario"**. Spec actualizada (RF-02, RF-08, RF-12, requisitos no funcionales y decisión en la sección 8); todavía sin implementar.

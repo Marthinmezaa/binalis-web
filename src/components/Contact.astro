@@ -1,5 +1,5 @@
 ---
-import { email, emailQuoteUrl, whatsappUrl } from "../contact";
+import { email, emailQuoteUrl, whatsappNeeds } from "../contact";
 ---
 
 <section id="cotizacion" class="section" aria-labelledby="cotizacion-title">
@@ -15,10 +15,13 @@ import { email, emailQuoteUrl, whatsappUrl } from "../contact";
       </p>
     </div>
     <div class="ways">
+      <p class="ways-label">Elegí qué necesitás y seguimos por WhatsApp</p>
       <div class="actions">
-        <a class="button button-primary" href={whatsappUrl}>
-          Hablemos por WhatsApp
-        </a>
+        {whatsappNeeds.map(({ label, url }) => (
+          <a class="button button-primary" href={url}>
+            {label}
+          </a>
+        ))}
         <a class="button button-secondary" href={emailQuoteUrl}>
           Escribime un correo
         </a>
@@ -73,11 +76,16 @@ import { email, emailQuoteUrl, whatsappUrl } from "../contact";
     text-align: center;
   }
 
+  .ways-label {
+    margin: 0 0 1rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+  }
+
   .actions {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
+    display: grid;
+    gap: 0.75rem;
   }
 
   /* Both ways to quote glow, WhatsApp brighter as the main one, both below the "b". This is the resting state:

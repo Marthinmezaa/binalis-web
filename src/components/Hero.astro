@@ -28,6 +28,8 @@ import BinaryField from "./BinaryField.astro";
     <figure class="hero-symbol">
       <div class="symbol-box" data-field-source>
         <BinalisSymbol />
+        {/* The pulsing glow layer: see BinalisSymbol. */}
+        <BinalisSymbol />
       </div>
       <figcaption data-field-quiet>
         // la b de binalis es un 1 y un 0
@@ -142,6 +144,7 @@ import BinaryField from "./BinaryField.astro";
   }
 
   .symbol-box {
+    position: relative;
     width: 8rem;
     margin-inline: auto;
   }

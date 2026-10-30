@@ -252,7 +252,7 @@ test("/quien-soy/ cuenta la historia completa y la barra lleva a Quién está de
   await expect(
     page
       .getByRole("region", { name: "Cotizá tu proyecto" })
-      .getByRole("link", { name: "Hablemos por WhatsApp" }),
+      .getByRole("link", { name: "Necesito una página" }),
   ).toBeVisible();
 });
 
@@ -268,9 +268,22 @@ test("se cotiza por WhatsApp o por correo, sin el número escrito en la página"
   }
 
   const contact = page.getByRole("region", { name: "Cotizá tu proyecto" });
-  await expect(
-    contact.getByRole("link", { name: "Hablemos por WhatsApp" }),
-  ).toHaveAttribute("href", /^https:\/\/wa\.me\/595983755161\?text=.+/);
+  const messages = new Set<string | null>();
+  for (const name of [
+    "Necesito una página",
+    "Necesito un sistema",
+    "Necesito una promo",
+  ]) {
+    const whatsapp = contact.getByRole("link", { name });
+    await expect(whatsapp).toHaveAttribute(
+      "href",
+      /^https:\/\/wa\.me\/595983755161\?text=.+/,
+    );
+    const href = await whatsapp.getAttribute("href");
+    messages.add(new URL(href ?? "").searchParams.get("text"));
+  }
+  // Each need opens the chat with its own message.
+  expect(messages.size).toBe(3);
   await expect(
     contact.getByRole("link", { name: "Escribime un correo" }),
   ).toHaveAttribute(
@@ -301,13 +314,41 @@ test("el pie muestra WhatsApp, el correo, el año y la versión", async ({
 test("el brillo de la b pulsa, salvo con movimiento reducido", async ({
   page,
 }) => {
-  const symbol = page.locator(".symbol");
+  const glowLayer = page.locator(".symbol + .symbol");
   const animationCount = () =>
-    symbol.evaluate((element) => element.getAnimations().length);
+    glowLayer.evaluate((element) => element.getAnimations().length);
 
   expect(await animationCount()).toBe(1);
   await page.emulateMedia({ reducedMotion: "reduce" });
   expect(await animationCount()).toBe(0);
+});
+
+test("las animaciones que no terminan solo mueven opacity o transform", async ({
+  page,
+}) => {
+  // Scrolled, so the header's CTA is pulsing too.
+  await scrollToEnd(page);
+  const endlessProperties = () =>
+    page.evaluate(() => {
+      const timingKeys = ["offset", "computedOffset", "easing", "composite"];
+      return document
+        .getAnimations()
+        .filter(
+          (animation) => animation.effect?.getTiming().iterations === Infinity,
+        )
+        .flatMap((animation) =>
+          (animation.effect as KeyframeEffect)
+            .getKeyframes()
+            .flatMap((keyframe) => Object.keys(keyframe)),
+        )
+        .filter((key) => !timingKeys.includes(key));
+    });
+
+  await expect.poll(endlessProperties).toContain("opacity");
+  const repainting = (await endlessProperties()).filter(
+    (property) => !["opacity", "transform"].includes(property),
+  );
+  expect(repainting).toEqual([]);
 });
 
 test("una URL que no existe muestra la 404 de Binalis con status 404", async ({
@@ -406,8 +447,9 @@ test("el botón de cotizar de la barra brilla al bajar, salvo con movimiento red
   const cta = page.getByRole("banner").getByRole("link", {
     name: "Cotizá tu proyecto",
   });
+  // The glow is a pseudo-element, which only `subtree` reaches.
   const animationCount = () =>
-    cta.evaluate((element) => element.getAnimations().length);
+    cta.evaluate((element) => element.getAnimations({ subtree: true }).length);
 
   expect(await animationCount()).toBe(0);
   await scrollToEnd(page);
@@ -510,6 +552,6 @@ test("los botones para cotizar brillan", async ({ page }) => {
   expect(await glow("Cotizá tu proyecto")).not.toBe("none");
   // The quote buttons switch on as their section comes into view.
   await scrollToEnd(page);
-  expect(await glow("Hablemos por WhatsApp")).not.toBe("none");
+  expect(await glow("Necesito una página")).not.toBe("none");
   expect(await glow("Escribime un correo")).not.toBe("none");
 });

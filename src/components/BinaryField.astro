@@ -19,9 +19,10 @@
   const THRESHOLD_RANGE = 0.5;
   // The cells that light up most easily are cyan, so the violet field carries brand sparks.
   const CYAN_BELOW_THRESHOLD = 0.25;
-  const WAVE_MS = 2400;
-  // Born one cell per shape pixel: a sharp "b" made of bits, which then grows past the field's edges as it fades.
+  const WAVE_MS = 1400;
+  // Born one cell per shape pixel: a sharp "b" made of bits, which then grows and fades.
   const WAVE_START_SCALE = 1;
+  const WAVE_GROWTH = 3;
   const LIT_ALPHA_GAIN = 1.5;
   const AUTO_WAVE_MS = 7000;
   const MAX_WAVES = 3;
@@ -65,7 +66,6 @@
     let dpr = 1;
     let columns = 0;
     let rows = 0;
-    let waveEndScale = WAVE_START_SCALE;
     let mask = new Float32Array();
     let thresholds = new Float32Array();
     let bits = new Uint8Array();
@@ -117,8 +117,6 @@
       field.height = Math.round(origin.height * dpr);
       columns = Math.ceil(origin.width / CELL_PX);
       rows = Math.ceil(origin.height / CELL_PX);
-      // Wide enough to cover the field from any starting point.
-      waveEndScale = (2 * Math.hypot(columns, rows)) / SHAPE_COLUMNS;
 
       const violet = brand("--color-violet");
       const cyan = brand("--color-cyan");
@@ -148,8 +146,7 @@
 
     const waveAt = (wave: Wave, x: number, y: number, now: number) => {
       const age = (now - wave.born) / WAVE_MS;
-      const scale =
-        CELL_PX * (WAVE_START_SCALE + age * (waveEndScale - WAVE_START_SCALE));
+      const scale = CELL_PX * (WAVE_START_SCALE + age * WAVE_GROWTH);
       const shapeX = Math.floor((x - wave.x) / scale + SHAPE_COLUMNS / 2);
       const shapeY = Math.floor((y - wave.y) / scale + SHAPE_ROWS / 2);
       return B_SHAPE[shapeY]?.[shapeX] === "1" ? (1 - age) ** 2 : 0;

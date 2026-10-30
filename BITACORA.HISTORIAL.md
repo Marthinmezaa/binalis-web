@@ -10,6 +10,11 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-19 — Proyectos sin placeholders (entrada 24)
+
+- Textos de Proyectos aprobados por el dueño, entre ellos el rescate del sitio de Cosmos Trak. Sistema administrativo y YERON con tarjeta de stack (`CodeCard`), reemplazada después por capturas.
+- No se publica nada sensible de los CLAUDE.md de los proyectos. Las e2e fallan si un proyecto muestra un placeholder.
+
 ### 2026-10-16 — La "b" del lienzo de marca (entrada 23)
 
 - La "b" pasa a la del lienzo: el aro toca la barra, barra cian sólida, aro con degradé violeta→cian y brillo más suave.

@@ -16,9 +16,9 @@ const year = new Date().getFullYear();
     <figcaption>Mateo 11:28</figcaption>
   </figure>
   <div class="container footer-inner">
-    <p class="wordmark">
+    <a class="wordmark" href="/" aria-label="Binalis, inicio">
       bin<span class="wordmark-accent">alis</span>
-    </p>
+    </a>
     <ul class="links">
       <li>
         <a href={whatsappUrl}>WhatsApp</a>
@@ -83,9 +83,11 @@ const year = new Date().getFullYear();
   }
 
   .wordmark {
+    color: var(--color-text);
     font-family: var(--font-heading);
     font-size: 1.25rem;
     font-weight: 700;
+    text-decoration: none;
   }
 
   .links {

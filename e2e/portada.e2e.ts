@@ -309,6 +309,9 @@ test("el pie muestra WhatsApp, el correo, el año y la versión", async ({
   page,
 }) => {
   const footer = page.getByRole("contentinfo");
+  await expect(
+    footer.getByRole("link", { name: "Binalis, inicio" }),
+  ).toHaveAttribute("href", "/");
   await expect(footer.getByRole("link", { name: "WhatsApp" })).toBeVisible();
   await expect(
     footer.getByRole("link", { name: "contacto@binalis.com.py" }),

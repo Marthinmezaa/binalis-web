@@ -66,7 +66,6 @@
     let dpr = 1;
     let columns = 0;
     let rows = 0;
-    let waveGrowth = WAVE_GROWTH;
     let mask = new Float32Array();
     let thresholds = new Float32Array();
     let bits = new Uint8Array();
@@ -118,11 +117,6 @@
       field.height = Math.round(origin.height * dpr);
       columns = Math.ceil(origin.width / CELL_PX);
       rows = Math.ceil(origin.height / CELL_PX);
-      // On narrow screens the "b" only grows until it fills the width, so it fades on screen instead of leaving it.
-      waveGrowth = Math.min(
-        WAVE_GROWTH,
-        columns / SHAPE_COLUMNS - WAVE_START_SCALE,
-      );
 
       const violet = brand("--color-violet");
       const cyan = brand("--color-cyan");
@@ -152,7 +146,7 @@
 
     const waveAt = (wave: Wave, x: number, y: number, now: number) => {
       const age = (now - wave.born) / WAVE_MS;
-      const scale = CELL_PX * (WAVE_START_SCALE + age * waveGrowth);
+      const scale = CELL_PX * (WAVE_START_SCALE + age * WAVE_GROWTH);
       const shapeX = Math.floor((x - wave.x) / scale + SHAPE_COLUMNS / 2);
       const shapeY = Math.floor((y - wave.y) / scale + SHAPE_ROWS / 2);
       return B_SHAPE[shapeY]?.[shapeX] === "1" ? (1 - age) ** 2 : 0;

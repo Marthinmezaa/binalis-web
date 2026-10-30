@@ -406,6 +406,16 @@ test("el menú lleva a la sección y se cierra solo", async ({ page }) => {
   });
 });
 
+test("las secciones se separan con bandas alternas", async ({ page }) => {
+  const background = (id: string) =>
+    page
+      .locator(`#${id}`)
+      .evaluate((section) => getComputedStyle(section).backgroundColor);
+
+  expect(await background("proceso")).not.toBe(await background("servicios"));
+  expect(await background("proyectos")).toBe(await background("servicios"));
+});
+
 test("la barra superior sigue a mano al bajar", async ({ page }) => {
   await page.getByRole("region", { name: "Proceso" }).scrollIntoViewIfNeeded();
   await expect(page.getByRole("banner")).toBeInViewport();

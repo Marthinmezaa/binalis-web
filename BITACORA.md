@@ -38,9 +38,9 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-**Siguiente tarea: implementar el "sello binario" cuando el dueño mergee el PR de la spec.** Orden: latidos con `opacity`, cotización por necesidad (RF-08), campo binario (RF-12), textura y transiciones, y títulos cuando el dueño apruebe los textos. Las redes siguen pendientes y dependen del dueño.
+**Siguiente tarea: mergear #99, #100, #101 y el PR de las bandas, y revisar en producción** (Lighthouse real y un celular de verdad). Después, los títulos con postura, cuando el dueño apruebe los textos. Las redes siguen pendientes y dependen del dueño.
 
-Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **62/62**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
+Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **78/78** con esos PR mergeados. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
 
 Pendientes, en orden:
 
@@ -49,6 +49,18 @@ Pendientes, en orden:
 3. **Resultado de YERON** con los números reales al cierre de la campaña (15 de enero de 2027).
 
 ## Entradas
+
+### 2026-10-30 (39)
+
+- Sello binario implementado en cuatro PR sin conflictos entre sí: #99 (latidos), #100 (cotización por necesidad, RF-08), #101 (campo binario, RF-12) y el de las bandas. Falta que el dueño los mergee y apruebe los textos de #100.
+- Analítica de Cloudflare verificada en producción después de #97: script 200, `POST /cdn-cgi/rum` 204 y consola sin errores.
+- Latidos: 30-39 % del hilo principal bajó a 0 %. La portada renderiza la "b" dos veces porque `pnpm icons` no admite un segundo `<svg>` en `BinalisSymbol.astro`.
+- Campo binario: la primera versión era demasiado tenue y quedaba en los bordes. Lo que cambió el resultado fue proteger solo el texto y no toda la figura de la "b". Bajó a 20 cuadros por segundo: 35 % del hilo principal en un celular emulado con CPU x4 y sin GPU (Omarchy, 88 %), 0 % fuera de pantalla. No se probó la fluidez real: en Claude in Chrome `requestAnimationFrame` corre a 1 cuadro por segundo, también en Omarchy.
+- Los cuatro combinados, en local: Lighthouse móvil 100/96/100/100, LCP 0,9 s (sin latencia de red), TBT 0 ms, CLS 0,018, E2E 78/78. Accesibilidad sigue en 96 por el título de Servicios a mitad de su aparición (entrada 38).
+- **Transiciones entre páginas descartadas.** La prueba en Chrome real mostró que cerca de la mitad de las navegaciones abortaban con `ViewTransition opt-in disabled` (6/12 y 7/12 sin el `@media`; 8/12 y 6/12 con `<link rel="expect">`). No se encontró la causa. Las e2e no lo detectaban porque no navegan entre páginas. Spec actualizada.
+- Lección: las capturas de Claude in Chrome se cuelgan después de hacer clic en un link que cambia de página (`Page.captureScreenshot` da timeout), también en producción sin estos cambios. La página sigue respondiendo: se revisa con `javascript_tool` o navegando directo con la URL. Antes de medir, recordar que la animación de aparición mueve los elementos: esperar a que termine o el clic cae afuera.
+
+- Prueba móvil: Claude in Chrome no baja de 500 px de ancho y no simula toques (`hover: true`), así que sirve para ver el diseño de celular, no un celular. Para 320, 360 y 390 px con toques reales se usó Playwright con emulación: onda, menú y botones funcionan, sin scroll horizontal ni errores. Observación de diseño: en el celular la "b" queda abajo de los botones, y el campo se luce recién al bajar (a 320 px, la "b" queda fuera de la primera pantalla).
 
 ### 2026-10-30 (38)
 
@@ -182,12 +194,3 @@ Pendientes, en orden:
 - `wrangler` pasa a devDependency fijada en 4.151.1. Antes `npx wrangler deploy` descargaba en cada deploy la última versión: la 4.151.2 se usó horas después de publicarse. Ahora la versión la decide el lockfile.
 - Se eligió la 4.151.1 y no la 4.151.2 porque la política `minimumReleaseAge` de pnpm frena versiones recién publicadas. No se agregan excepciones a esa política.
 - `pnpm-workspace.yaml` con `allowBuilds` en `false` para `esbuild` y `workerd`: los binarios llegan como dependencias opcionales, sin correr scripts de instalación. Verificado con `wrangler deploy --dry-run`.
-
-### 2026-10-19 (24)
-
-- Proyectos sin placeholders visibles, con textos dados y aprobados por el dueño. Cosmos Trak · Sitio web cuenta el rescate: el programador anterior se fue sin dejar código ni acceso al hosting; se recuperó desde el sitio publicado, se migró de hosting y se cambió el DNS en NIC.PY. Resultado: las consultas, que antes no llegaban, ahora entran y se cuentan, más métricas de Meta. Bancard queda afuera hasta que esté habilitado.
-- Sistema administrativo y YERON muestran una tarjeta de código con su stack en lugar de captura. `CodeCard.astro` sale de la tarjeta de "Quién soy" y la usan los dos lugares. En el sistema se corrigieron los roles (vendedor e instalador ahora son uno) y el resultado ("en producción las 24 horas").
-- YERON: Problema (sin códigos precargados, la única prueba es la foto de la factura) y Resultado "en línea desde el 15 de octubre de 2026". `shortcut:` cambiarlo por los números reales al cierre (15 de enero de 2027).
-- No se publica nada sensible de los CLAUDE.md de los proyectos: ni correos internos, ni precios, ni contactos, ni detalles del antifraude.
-- E2E: cada proyecto falla si muestra un texto `[EN MAYÚSCULAS]` (verificado inyectando uno). 36/36.
-- La regla de la spec "ocultar Problema/Resultado si falta" no se implementó porque hoy no falta ninguno. Se hace cuando aparezca un proyecto sin esos datos.

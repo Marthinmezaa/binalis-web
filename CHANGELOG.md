@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.32.3](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.32.2...binalis-web-v0.32.3) (2026-10-30)
+
+
+### Bug Fixes
+
+* favicon con la b centrada y sin fondo ([#121](https://github.com/Marthinmezaa/binalis-web/issues/121)) ([18f56ae](https://github.com/Marthinmezaa/binalis-web/commit/18f56aee639896dcd9fb1f036bc6ea6450209fbd))
+
 ## [0.32.2](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.32.1...binalis-web-v0.32.2) (2026-10-30)
 
 

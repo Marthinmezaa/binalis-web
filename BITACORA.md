@@ -7,6 +7,7 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Diseño de la web aprobado en lienzo (4 láminas: logo, color y tipografía, aplicaciones, web).
 - Repo público en GitHub con `main` protegida (4 checks obligatorios: calidad, gitleaks, dependencias, CodeQL).
 - Dominio `binalis.com.py` habilitado y con DNS delegado a Cloudflare (`aurora` / `johnny.ns.cloudflare.com`).
+- Sello binario en producción: campo binario (RF-12), cotización por necesidad (RF-08), bandas entre secciones y latidos con `opacity`.
 - Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04), Proyectos (RF-05), "siguiente proyecto cargando…" (RF-06), "Quién está detrás" (RF-10, resumen en portada + página `/quien-soy/`), Cotización por WhatsApp y correo (RF-08), pie con versión (RF-09), testimonios (RF-07) y 404 propia (RF-11); rediseño con sello (la "b" que se dibuja, etiquetas de código, aparición al bajar, barra fija); captura real en los tres proyectos; el sitio entero sin placeholders (textos aprobados por el dueño); favicon e íconos de app; SEO básico (canonical, Open Graph con imagen, `sitemap.xml` y `robots.txt`).
 - Pruebas e2e con Playwright + axe en el CI (escritorio y celular), bajo la misma CSP de producción. En CI corren con el Chrome del runner; en local, con el Chromium de Playwright.
 - release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. La versión actual está en `package.json`.
@@ -38,9 +39,9 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-**Siguiente tarea: mergear #99, #100, #101 y el PR de las bandas, y revisar en producción** (Lighthouse real y un celular de verdad). Después, los títulos con postura, cuando el dueño apruebe los textos. Las redes siguen pendientes y dependen del dueño.
+**Siguiente tarea: que el dueño pruebe el sitio en un celular real** y decida si la "b" sube en el celular, porque hoy queda debajo de los botones. Después, los títulos con postura, cuando apruebe los textos. Las redes siguen pendientes y dependen del dueño.
 
-Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **78/78** con esos PR mergeados. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
+Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **78/78**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
 
 Pendientes, en orden:
 
@@ -61,6 +62,8 @@ Pendientes, en orden:
 - Lección: las capturas de Claude in Chrome se cuelgan después de hacer clic en un link que cambia de página (`Page.captureScreenshot` da timeout), también en producción sin estos cambios. La página sigue respondiendo: se revisa con `javascript_tool` o navegando directo con la URL. Antes de medir, recordar que la animación de aparición mueve los elementos: esperar a que termine o el clic cae afuera.
 
 - Prueba móvil: Claude in Chrome no baja de 500 px de ancho y no simula toques (`hover: true`), así que sirve para ver el diseño de celular, no un celular. Para 320, 360 y 390 px con toques reales se usó Playwright con emulación: onda, menú y botones funcionan, sin scroll horizontal ni errores. Observación de diseño: en el celular la "b" queda abajo de los botones, y el campo se luce recién al bajar (a 320 px, la "b" queda fuera de la primera pantalla).
+
+- Sello binario en producción (v0.30.0, #99 a #102 mergeados). PageSpeed Insights, móvil: 100/96/100/100, LCP 0,9 s, TBT 0 ms, CLS 0,015. Lighthouse 13 local contra producción, 3 corridas: 100/96/100/100, LCP 1,1 s, TBT 10 ms, peso 190 KB. Todos dentro de los límites de la spec. Consola sin errores y analítica enviando (`POST /cdn-cgi/rum` 204). CPU en un celular emulado con CPU x4 y sin GPU: 57 % en la portada (35-42 % en el build local) y 0 % fuera de ella. Sin datos de usuarios reales todavía (CrUX: "No hay datos").
 
 ### 2026-10-30 (38)
 

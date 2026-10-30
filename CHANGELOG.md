@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.32.1](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.32.0...binalis-web-v0.32.1) (2026-10-30)
+
+
+### Bug Fixes
+
+* en pantallas angostas la onda se apaga dentro de la pantalla ([#119](https://github.com/Marthinmezaa/binalis-web/issues/119)) ([ce5b26b](https://github.com/Marthinmezaa/binalis-web/commit/ce5b26bef8c50316defc3b4df5a4707d1e69c2a3))
+
 ## [0.32.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.31.1...binalis-web-v0.32.0) (2026-10-30)
 
 

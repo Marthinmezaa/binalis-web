@@ -416,15 +416,26 @@ test("el botón de cotizar de la barra brilla al bajar, salvo con movimiento red
   await expect.poll(animationCount).toBe(0);
 });
 
-const paintedPixels = (page: Page) =>
-  page.locator(".binary-field").evaluate((element) => {
+const paintedPixels = (page: Page, underId?: string) =>
+  page.locator(".binary-field").evaluate((element, id) => {
     const canvas = element as HTMLCanvasElement;
+    const origin = canvas.getBoundingClientRect();
+    const scale = canvas.width / origin.width;
+    const box =
+      (id && document.getElementById(id)?.getBoundingClientRect()) || origin;
+    // A bit next to an element can spill a few pixels over its edge.
+    const inset = id ? 22 : 0;
     const pixels = canvas
       .getContext("2d")
-      ?.getImageData(0, 0, canvas.width, canvas.height).data;
+      ?.getImageData(
+        (box.left - origin.left + inset) * scale,
+        (box.top - origin.top + inset) * scale,
+        (box.width - 2 * inset) * scale,
+        (box.height - 2 * inset) * scale,
+      ).data;
     return pixels?.filter((_, index) => index % 4 === 3 && pixels[index])
       .length;
-  });
+  }, underId);
 
 test("el campo binario se anima sin estorbar y se pausa fuera de pantalla", async ({
   page,
@@ -443,29 +454,7 @@ test("el campo binario no dibuja debajo del texto de la portada", async ({
   page,
 }) => {
   await expect.poll(() => paintedPixels(page)).toBeGreaterThan(0);
-  const pixelsUnderTitle = await page
-    .locator(".binary-field")
-    .evaluate((element) => {
-      const canvas = element as HTMLCanvasElement;
-      const title = document.getElementById("hero-title");
-      if (!title) throw new Error("Hero title not found");
-      const origin = canvas.getBoundingClientRect();
-      const box = title.getBoundingClientRect();
-      const scale = canvas.width / origin.width;
-      // A bit next to the title can spill a few pixels over its edge.
-      const inset = 22;
-      const pixels = canvas
-        .getContext("2d")
-        ?.getImageData(
-          (box.left - origin.left + inset) * scale,
-          (box.top - origin.top + inset) * scale,
-          (box.width - 2 * inset) * scale,
-          (box.height - 2 * inset) * scale,
-        ).data;
-      return pixels?.filter((_, index) => index % 4 === 3 && pixels[index])
-        .length;
-    });
-  expect(pixelsUnderTitle).toBe(0);
+  expect(await paintedPixels(page, "hero-title")).toBe(0);
 });
 
 test("con movimiento reducido el campo binario es un cuadro quieto", async ({

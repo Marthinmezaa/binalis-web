@@ -43,7 +43,6 @@
   const SHAPE_COLUMNS = 11;
   const SHAPE_ROWS = B_SHAPE.length;
 
-  type Rect = { left: number; top: number; right: number; bottom: number };
   type Wave = { x: number; y: number; born: number };
   type Sprites = [HTMLCanvasElement, HTMLCanvasElement];
 
@@ -60,7 +59,6 @@
     const reducedMotion = matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    const canHover = matchMedia("(hover: hover) and (pointer: fine)").matches;
     const quiet = [...area.querySelectorAll("[data-field-quiet]")];
     const symbol = area.querySelector("[data-field-source]");
 
@@ -74,7 +72,6 @@
     let bright: Sprites | null = null;
     let waves: Wave[] = [];
     let pointer: { x: number; y: number } | null = null;
-    let pointerStrength = 0;
     let lastFrame = 0;
     let lastAutoWave = 0;
     let frame = 0;
@@ -96,17 +93,17 @@
       return image;
     };
 
-    const relativeRect = (element: Element, origin: DOMRect): Rect => {
+    const relativeRect = (element: Element, origin: DOMRect) => {
       const box = element.getBoundingClientRect();
-      return {
-        left: box.left - origin.left,
-        top: box.top - origin.top,
-        right: box.right - origin.left,
-        bottom: box.bottom - origin.top,
-      };
+      return new DOMRect(
+        box.x - origin.x,
+        box.y - origin.y,
+        box.width,
+        box.height,
+      );
     };
 
-    const distanceTo = (rect: Rect, x: number, y: number) =>
+    const distanceTo = (rect: DOMRect, x: number, y: number) =>
       Math.hypot(
         Math.max(rect.left - x, 0, x - rect.right),
         Math.max(rect.top - y, 0, y - rect.bottom),
@@ -114,7 +111,7 @@
 
     const layout = () => {
       const origin = area.getBoundingClientRect();
-      dpr = Math.min(devicePixelRatio || 1, MAX_DPR);
+      dpr = Math.min(devicePixelRatio, MAX_DPR);
       field.width = Math.round(origin.width * dpr);
       field.height = Math.round(origin.height * dpr);
       columns = Math.ceil(origin.width / CELL_PX);
@@ -156,9 +153,8 @@
 
     const draw = (now: number) => {
       if (!dim || !bright) return;
-      const seconds = reducedMotion ? 0 : now / 1000;
+      const seconds = now / 1000;
       waves = waves.filter((wave) => now - wave.born < WAVE_MS);
-      pointerStrength += ((pointer ? 1 : 0) - pointerStrength) * 0.15;
       paint.clearRect(0, 0, field.width, field.height);
 
       for (let row = 0; row < rows; row++) {
@@ -180,7 +176,6 @@
           if (pointer) {
             const distance = Math.hypot(x - pointer.x, y - pointer.y);
             lit = Math.max(0, 1 - distance / POINTER_REACH_PX) ** 2;
-            lit *= pointerStrength;
           }
           for (const wave of waves) {
             lit = Math.max(lit, waveAt(wave, x, y, now));
@@ -255,43 +250,28 @@
         setRunning(entry?.isIntersecting ?? false);
       }).observe(area);
 
-      area.addEventListener(
-        "pointerdown",
-        (event) => {
-          const isControl =
-            event.target instanceof Element &&
-            event.target.closest("a, button");
-          if (isControl) return;
-          const origin = area.getBoundingClientRect();
-          launchWave(
-            event.clientX - origin.left,
-            event.clientY - origin.top,
-            performance.now(),
-          );
-        },
-        { passive: true },
-      );
+      area.addEventListener("pointerdown", (event) => {
+        const isControl =
+          event.target instanceof Element && event.target.closest("a, button");
+        if (isControl) return;
+        const origin = area.getBoundingClientRect();
+        launchWave(
+          event.clientX - origin.left,
+          event.clientY - origin.top,
+          performance.now(),
+        );
+      });
 
-      if (canHover) {
-        area.addEventListener(
-          "pointermove",
-          (event) => {
-            const origin = area.getBoundingClientRect();
-            pointer = {
-              x: event.clientX - origin.left,
-              y: event.clientY - origin.top,
-            };
-          },
-          { passive: true },
-        );
-        area.addEventListener(
-          "pointerleave",
-          () => {
-            pointer = null;
-          },
-          { passive: true },
-        );
-      }
+      area.addEventListener("pointermove", (event) => {
+        const origin = area.getBoundingClientRect();
+        pointer = {
+          x: event.clientX - origin.left,
+          y: event.clientY - origin.top,
+        };
+      });
+      area.addEventListener("pointerleave", () => {
+        pointer = null;
+      });
     };
 
     // The font is already on the page; waiting avoids baking fallback glyphs into the sprites.
@@ -313,11 +293,5 @@
 
   .binary-field[data-ready] {
     opacity: 1;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .binary-field {
-      transition: none;
-    }
   }
 </style>

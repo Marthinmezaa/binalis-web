@@ -252,7 +252,7 @@ test("/quien-soy/ cuenta la historia completa y la barra lleva a Quién está de
   await expect(
     page
       .getByRole("region", { name: "Cotizá tu proyecto" })
-      .getByRole("link", { name: "Hablemos por WhatsApp" }),
+      .getByRole("link", { name: "Necesito una página" }),
   ).toBeVisible();
 });
 
@@ -268,9 +268,22 @@ test("se cotiza por WhatsApp o por correo, sin el número escrito en la página"
   }
 
   const contact = page.getByRole("region", { name: "Cotizá tu proyecto" });
-  await expect(
-    contact.getByRole("link", { name: "Hablemos por WhatsApp" }),
-  ).toHaveAttribute("href", /^https:\/\/wa\.me\/595983755161\?text=.+/);
+  const messages = new Set<string | null>();
+  for (const name of [
+    "Necesito una página",
+    "Necesito un sistema",
+    "Necesito una promo",
+  ]) {
+    const whatsapp = contact.getByRole("link", { name });
+    await expect(whatsapp).toHaveAttribute(
+      "href",
+      /^https:\/\/wa\.me\/595983755161\?text=.+/,
+    );
+    const href = await whatsapp.getAttribute("href");
+    messages.add(new URL(href ?? "").searchParams.get("text"));
+  }
+  // Each need opens the chat with its own message.
+  expect(messages.size).toBe(3);
   await expect(
     contact.getByRole("link", { name: "Escribime un correo" }),
   ).toHaveAttribute(
@@ -301,13 +314,41 @@ test("el pie muestra WhatsApp, el correo, el año y la versión", async ({
 test("el brillo de la b pulsa, salvo con movimiento reducido", async ({
   page,
 }) => {
-  const symbol = page.locator(".symbol");
+  const glowLayer = page.locator(".symbol + .symbol");
   const animationCount = () =>
-    symbol.evaluate((element) => element.getAnimations().length);
+    glowLayer.evaluate((element) => element.getAnimations().length);
 
   expect(await animationCount()).toBe(1);
   await page.emulateMedia({ reducedMotion: "reduce" });
   expect(await animationCount()).toBe(0);
+});
+
+test("las animaciones que no terminan solo mueven opacity o transform", async ({
+  page,
+}) => {
+  // Scrolled, so the header's CTA is pulsing too.
+  await scrollToEnd(page);
+  const endlessProperties = () =>
+    page.evaluate(() => {
+      const timingKeys = ["offset", "computedOffset", "easing", "composite"];
+      return document
+        .getAnimations()
+        .filter(
+          (animation) => animation.effect?.getTiming().iterations === Infinity,
+        )
+        .flatMap((animation) =>
+          (animation.effect as KeyframeEffect)
+            .getKeyframes()
+            .flatMap((keyframe) => Object.keys(keyframe)),
+        )
+        .filter((key) => !timingKeys.includes(key));
+    });
+
+  await expect.poll(endlessProperties).toContain("opacity");
+  const repainting = (await endlessProperties()).filter(
+    (property) => !["opacity", "transform"].includes(property),
+  );
+  expect(repainting).toEqual([]);
 });
 
 test("una URL que no existe muestra la 404 de Binalis con status 404", async ({
@@ -416,14 +457,97 @@ test("el botón de cotizar de la barra brilla al bajar, salvo con movimiento red
   const cta = page.getByRole("banner").getByRole("link", {
     name: "Cotizá tu proyecto",
   });
+  // The glow is a pseudo-element, which only `subtree` reaches.
   const animationCount = () =>
-    cta.evaluate((element) => element.getAnimations().length);
+    cta.evaluate((element) => element.getAnimations({ subtree: true }).length);
 
   expect(await animationCount()).toBe(0);
   await scrollToEnd(page);
   await expect.poll(animationCount).toBe(1);
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect.poll(animationCount).toBe(0);
+});
+
+const paintedPixels = (page: Page, underId?: string) =>
+  page.locator(".binary-field").evaluate((element, id) => {
+    const canvas = element as HTMLCanvasElement;
+    const origin = canvas.getBoundingClientRect();
+    const scale = canvas.width / origin.width;
+    const box =
+      (id && document.getElementById(id)?.getBoundingClientRect()) || origin;
+    // A bit next to an element can spill a few pixels over its edge.
+    const inset = id ? 22 : 0;
+    const pixels = canvas
+      .getContext("2d")
+      ?.getImageData(
+        (box.left - origin.left + inset) * scale,
+        (box.top - origin.top + inset) * scale,
+        (box.width - 2 * inset) * scale,
+        (box.height - 2 * inset) * scale,
+      ).data;
+    return pixels?.filter((_, index) => index % 4 === 3 && pixels[index])
+      .length;
+  }, underId);
+
+test("el campo binario se anima sin estorbar y se pausa fuera de pantalla", async ({
+  page,
+}) => {
+  const field = page.locator(".binary-field");
+  await expect(field).toHaveAttribute("aria-hidden", "true");
+  await expect(field).toHaveCSS("pointer-events", "none");
+  await expect(field).toHaveAttribute("data-running", "true");
+  await expect.poll(() => paintedPixels(page)).toBeGreaterThan(0);
+
+  await scrollToEnd(page);
+  await expect(field).toHaveAttribute("data-running", "false");
+});
+
+test("el campo binario no dibuja debajo del texto de la portada", async ({
+  page,
+}) => {
+  await expect.poll(() => paintedPixels(page)).toBeGreaterThan(0);
+  expect(await paintedPixels(page, "hero-title")).toBe(0);
+});
+
+test("con movimiento reducido el campo binario es un cuadro quieto", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  const field = page.locator(".binary-field");
+  await expect(field).toHaveAttribute("data-ready", "true");
+  await expect.poll(() => paintedPixels(page)).toBeGreaterThan(0);
+
+  const snapshot = () =>
+    field.evaluate((element) => (element as HTMLCanvasElement).toDataURL());
+  const before = await snapshot();
+  await page.waitForTimeout(300);
+  expect(await snapshot()).toBe(before);
+  await expect(field).not.toHaveAttribute("data-running");
+});
+
+test("el campo binario respeta el límite de peso", async ({ page }) => {
+  const scriptBytes = await page.evaluate(() =>
+    performance
+      .getEntriesByType("resource")
+      .filter(({ name }) => name.includes("BinaryField"))
+      .map((entry) => (entry as PerformanceResourceTiming).decodedBodySize),
+  );
+  expect(scriptBytes).toHaveLength(1);
+  // Uncompressed: stricter than the spec's 10 KB compressed.
+  expect(scriptBytes[0]).toBeLessThan(10 * 1024);
+});
+
+test.describe("sin JavaScript", () => {
+  test.use({ javaScriptEnabled: false });
+
+  test("la portada muestra la grilla", async ({ page }) => {
+    const gridOpacity = await page
+      .locator(".hero")
+      .evaluate((hero) => getComputedStyle(hero, "::after").opacity);
+    expect(gridOpacity).toBe("1");
+    await expect(page.locator(".binary-field")).toHaveCSS("opacity", "0");
+  });
 });
 
 test("los botones para cotizar brillan", async ({ page }) => {
@@ -438,6 +562,6 @@ test("los botones para cotizar brillan", async ({ page }) => {
   expect(await glow("Cotizá tu proyecto")).not.toBe("none");
   // The quote buttons switch on as their section comes into view.
   await scrollToEnd(page);
-  expect(await glow("Hablemos por WhatsApp")).not.toBe("none");
+  expect(await glow("Necesito una página")).not.toBe("none");
   expect(await glow("Escribime un correo")).not.toBe("none");
 });

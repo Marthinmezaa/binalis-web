@@ -30,6 +30,7 @@
   --color-magenta: #ff2e9a;
   --color-bg: #06080f;
   --color-surface: #0d1220;
+  --color-band: #0d1220;
   --color-text: #e8ecf7;
   --color-text-muted: #8a94b0;
 
@@ -163,6 +164,15 @@ a {
 
 .section {
   padding-block: clamp(2rem, 5vw, 3.5rem);
+}
+
+/* Every other section sits on a band, so sections separate without relying on space alone.
+   Inside a band, cards invert to the page's background instead of disappearing into it. */
+main > .section:nth-of-type(odd) {
+  --color-surface: var(--color-bg);
+
+  border-block: 1px solid rgb(255 255 255 / 6%);
+  background: var(--color-band);
 }
 
 .section-title {

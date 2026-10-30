@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.27.4](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.27.3...binalis-web-v0.27.4) (2026-10-30)
+
+
+### Bug Fixes
+
+* mover los latidos de brillo a opacity para liberar el hilo principal ([#99](https://github.com/Marthinmezaa/binalis-web/issues/99)) ([6363adf](https://github.com/Marthinmezaa/binalis-web/commit/6363adf59456e326f89067e5c642433b7c611080))
+
 ## [0.27.3](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.27.2...binalis-web-v0.27.3) (2026-10-30)
 
 

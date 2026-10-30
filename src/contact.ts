@@ -9,7 +9,7 @@ export const whatsappUrl = whatsappLink("Hola, quiero cotizar un proyecto.");
 
 export const whatsappNeeds = [
   {
-    label: "Necesito una página",
+    label: "Necesito una página web",
     url: whatsappLink("Hola, necesito una página web."),
   },
   {
@@ -17,8 +17,8 @@ export const whatsappNeeds = [
     url: whatsappLink("Hola, necesito un sistema a medida."),
   },
   {
-    label: "Necesito una promo",
-    url: whatsappLink("Hola, necesito una landing page o una promoción."),
+    label: "Necesito una landing",
+    url: whatsappLink("Hola, necesito una landing page."),
   },
 ];
 

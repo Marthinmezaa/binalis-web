@@ -53,7 +53,7 @@ Pendientes, en orden:
 
 ### 2026-10-30 (40)
 
-- El dueño probó el sitio en su celular y en su PC: le encantó. Pidió tres cambios, uno por PR: #108 (onda), #109 (textos) y #111 (menú). Falta que los mergee.
+- El dueño probó el sitio en su celular y en su PC: le encantó. Pidió tres cambios, uno por PR: #108 (onda), #109 (textos) y #111 (menú).
 - Onda: desaparecía de golpe porque el brillo de cada bit se cortaba al bajar del 10 %, todavía con un 45 % de opacidad. Ahora el brillo es una capa con su propia opacidad, dura 2,4 s y crece hasta cubrir el campo, según su tamaño. El campo termina donde termina la portada.
 - Textos: "Necesito una página web" y "Necesito una landing", con el mensaje "Hola, necesito una landing page.".
 - Menú del celular: pantalla completa, links grandes con números en estilo código y líneas separadoras, y WhatsApp y Correo abajo. Toma de COE22 la estructura y de Omarchy los accesos abajo. Sigue siendo el `popover` nativo. `--header-height` del celular ahora es exacto y el wordmark lleva `line-height: 1`, para que el menú empiece justo debajo de la barra.
@@ -82,6 +82,8 @@ Pendientes, en orden:
 - Brillo al pasar el mouse (#120): el brillo fijo de los botones pisaba el del hover, y la animación de encendido lo atenuaba cerca del final de la página. Lo encontró la e2e nueva. El brillo fijo pasa a `--button-glow`, para que nunca le gane al hover.
 - Prueba inestable: "Quién está detrás ... lleva a su historia" falló dos veces en CI (#115 y #120), y pasaba al relanzar. En local dio 84 de 84 clics con la CPU hasta 8 veces más lenta: causa sin confirmar. La e2e ahora revisa el `href` en lugar de hacer clic.
 - Otra prueba inestable, la del hover (#120), frenó el release #128. Se reprodujo 6 de 60 veces con carga: al saltar hasta un bloque que todavía está apareciendo, Playwright calcula la posición con el bloque en movimiento y el mouse cae al lado del botón. Probablemente sea lo mismo que le pasó al clic de arriba, aunque ahí no se reprodujo. Lección: antes de hacer hover o clic en un bloque con `.reveal`, llevarlo a la vista con scroll instantáneo y esperar un cuadro. Y al estabilizar una prueba, volver a comprobar que siga fallando con el error real: el primer arreglo la dejó estable pero ya no detectaba nada.
+
+- El logo del pie ahora lleva al inicio (#127). Cierre del día: **v0.33.0** en producción, con Lighthouse móvil 100/96/100/100, LCP 1,0 s, TBT 10 ms, consola sin errores y sin PR abiertos. Falta que el dueño confirme la onda en su iPhone.
 
 ### 2026-10-30 (38)
 

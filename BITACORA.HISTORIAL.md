@@ -10,6 +10,11 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-19 — wrangler fijado (entrada 25)
+
+- `wrangler` pasa a devDependency fijada, para que la versión la decida el lockfile y no `npx`. No se agregan excepciones a `minimumReleaseAge`.
+- `allowBuilds` en `false` para `esbuild` y `workerd`: sus binarios llegan sin correr scripts de instalación.
+
 ### 2026-10-19 — Proyectos sin placeholders (entrada 24)
 
 - Textos de Proyectos aprobados por el dueño, entre ellos el rescate del sitio de Cosmos Trak. Sistema administrativo y YERON con tarjeta de stack (`CodeCard`), reemplazada después por capturas.

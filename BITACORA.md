@@ -39,9 +39,9 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-**Siguiente tarea: que el dueño pruebe el sitio en un celular real** y decida si la "b" sube en el celular, porque hoy queda debajo de los botones. Después, los títulos con postura, cuando apruebe los textos. Las redes siguen pendientes y dependen del dueño.
+**Siguiente tarea: mergear #108, #109, #111 y el PR de la spec, y que el dueño pruebe el menú en su celular.** Después, los títulos con postura, cuando apruebe los textos. Las redes siguen pendientes y dependen del dueño.
 
-Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **78/78**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
+Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **79 pasadas y 1 salteada** con esos PR mergeados. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
 
 Pendientes, en orden:
 
@@ -50,6 +50,16 @@ Pendientes, en orden:
 3. **Resultado de YERON** con los números reales al cierre de la campaña (15 de enero de 2027).
 
 ## Entradas
+
+### 2026-10-30 (40)
+
+- El dueño probó el sitio en su celular y en su PC: le encantó. Pidió tres cambios, uno por PR: #108 (onda), #109 (textos) y #111 (menú). Falta que los mergee.
+- Onda: desaparecía de golpe porque el brillo de cada bit se cortaba al bajar del 10 %, todavía con un 45 % de opacidad. Ahora el brillo es una capa con su propia opacidad, dura 2,4 s y crece hasta cubrir el campo, según su tamaño. El campo termina donde termina la portada.
+- Textos: "Necesito una página web" y "Necesito una landing", con el mensaje "Hola, necesito una landing page.".
+- Menú del celular: pantalla completa, links grandes con números en estilo código y líneas separadoras, y WhatsApp y Correo abajo. Toma de COE22 la estructura y de Omarchy los accesos abajo. Sigue siendo el `popover` nativo. `--header-height` del celular ahora es exacto y el wordmark lleva `line-height: 1`, para que el menú empiece justo debajo de la barra.
+- Regla del dueño: **`/ponytail-review` de verdad antes de cada PR**, no una revisión a ojo. En la sesión anterior solo se había corrido en #99, y correrlo encontró unas 40 líneas de más en #101.
+- Lección: Prettier realinea toda la tabla de requisitos al cambiar el ancho de una fila, así que dos PR que tocan la spec chocan. Si hay varios PR en paralelo, los cambios de spec van juntos en uno solo.
+- Sin probar en un celular real: el menú nuevo y los textos. La onda se revisó con capturas y midiendo el brillo, no en movimiento.
 
 ### 2026-10-30 (39)
 
@@ -190,10 +200,3 @@ Pendientes, en orden:
 - Captura de 1416 × 793 px (50 KB): `astro:assets` sirve WebP de 8 a 24 KB.
 - YERON: primera pantalla de la landing pública promoyeron.com.py (banner "Puede ser en Río" y botón "Quiero participar"), 1440 × 810 con Playwright headless, sin sesión. El formulario solo tiene textos de ejemplo. Se guarda en JPG (171 KB contra 1,26 MB en PNG) porque el banner es casi una foto.
 - Con los tres proyectos con captura, la tarjeta de stack sale de Proyectos (`CodeCard` sigue en "Quién soy"). La regla de la spec "proyecto sin capturas → tarjeta de stack" se vuelve a implementar cuando aparezca uno; está en el historial de git.
-
-### 2026-10-19 (25)
-
-- La build de producción de la 0.15.0 falló al instalar Node.js 24.22.0 en Workers Builds (falla de descarga de Cloudflare); la siguiente pasó con la misma versión. El sitio no se vio afectado: la build de #48 ya había desplegado.
-- `wrangler` pasa a devDependency fijada en 4.151.1. Antes `npx wrangler deploy` descargaba en cada deploy la última versión: la 4.151.2 se usó horas después de publicarse. Ahora la versión la decide el lockfile.
-- Se eligió la 4.151.1 y no la 4.151.2 porque la política `minimumReleaseAge` de pnpm frena versiones recién publicadas. No se agregan excepciones a esa política.
-- `pnpm-workspace.yaml` con `allowBuilds` en `false` para `esbuild` y `workerd`: los binarios llegan como dependencias opcionales, sin correr scripts de instalación. Verificado con `wrangler deploy --dry-run`.

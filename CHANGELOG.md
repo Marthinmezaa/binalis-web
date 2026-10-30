@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.30.1](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.30.0...binalis-web-v0.30.1) (2026-10-30)
+
+
+### Bug Fixes
+
+* textos de cotización pedidos por el dueño ([#109](https://github.com/Marthinmezaa/binalis-web/issues/109)) ([6f1e20c](https://github.com/Marthinmezaa/binalis-web/commit/6f1e20c7c2f4ba9aae89a4e38b3ff15fcc74de7f))
+
 ## [0.30.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.29.0...binalis-web-v0.30.0) (2026-10-30)
 
 

@@ -252,7 +252,7 @@ test("/quien-soy/ cuenta la historia completa y la barra lleva a Quién está de
   await expect(
     page
       .getByRole("region", { name: "Cotizá tu proyecto" })
-      .getByRole("link", { name: "Necesito una página" }),
+      .getByRole("link", { name: "Necesito una página web" }),
   ).toBeVisible();
 });
 
@@ -270,9 +270,9 @@ test("se cotiza por WhatsApp o por correo, sin el número escrito en la página"
   const contact = page.getByRole("region", { name: "Cotizá tu proyecto" });
   const messages = new Set<string | null>();
   for (const name of [
-    "Necesito una página",
+    "Necesito una página web",
     "Necesito un sistema",
-    "Necesito una promo",
+    "Necesito una landing",
   ]) {
     const whatsapp = contact.getByRole("link", { name });
     await expect(whatsapp).toHaveAttribute(
@@ -562,6 +562,6 @@ test("los botones para cotizar brillan", async ({ page }) => {
   expect(await glow("Cotizá tu proyecto")).not.toBe("none");
   // The quote buttons switch on as their section comes into view.
   await scrollToEnd(page);
-  expect(await glow("Necesito una página")).not.toBe("none");
+  expect(await glow("Necesito una página web")).not.toBe("none");
   expect(await glow("Escribime un correo")).not.toBe("none");
 });

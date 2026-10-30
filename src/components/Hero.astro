@@ -26,6 +26,8 @@ import BinalisSymbol from "./BinalisSymbol.astro";
     <figure class="hero-symbol">
       <div class="symbol-box">
         <BinalisSymbol />
+        {/* The pulsing glow layer: see BinalisSymbol. */}
+        <BinalisSymbol />
       </div>
       <figcaption>// la b de binalis es un 1 y un 0</figcaption>
     </figure>
@@ -124,6 +126,7 @@ import BinalisSymbol from "./BinalisSymbol.astro";
   }
 
   .symbol-box {
+    position: relative;
     width: 8rem;
     margin-inline: auto;
   }

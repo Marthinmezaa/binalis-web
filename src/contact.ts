@@ -2,9 +2,25 @@ const WHATSAPP_NUMBER = "595983755161";
 
 export const email = "contacto@binalis.com.py";
 
-export const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-  "Hola, quiero cotizar un proyecto.",
-)}`;
+const whatsappLink = (message: string) =>
+  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+export const whatsappUrl = whatsappLink("Hola, quiero cotizar un proyecto.");
+
+export const whatsappNeeds = [
+  {
+    label: "Necesito una página",
+    url: whatsappLink("Hola, necesito una página web."),
+  },
+  {
+    label: "Necesito un sistema",
+    url: whatsappLink("Hola, necesito un sistema a medida."),
+  },
+  {
+    label: "Necesito una promo",
+    url: whatsappLink("Hola, necesito una landing page o una promoción."),
+  },
+];
 
 // RFC 6068: mailto needs %20 (not "+") and CRLF line breaks, which encodeURIComponent gives.
 const quoteSubject = "Cotización de proyecto";

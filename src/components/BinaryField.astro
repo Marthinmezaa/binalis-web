@@ -1,0 +1,323 @@
+---
+// RF-12: the logo's idea (a 1 and a 0) as the hero's living background. Purely decorative.
+---
+
+<canvas class="binary-field" aria-hidden="true"></canvas>
+
+<script>
+  const CELL_PX = 22;
+  const FONT_PX = 13;
+  // Bits drift slowly: more frames would only burn battery.
+  const FRAME_MS = 50;
+  const MAX_DPR = 2;
+  // Bits fade out this close to the text, so they never lower its contrast.
+  const QUIET_MARGIN_PX = 28;
+  const BOTTOM_FADE_ROWS = 4;
+  const POINTER_REACH_PX = 180;
+  const FLIPS_PER_FRAME = 4;
+  const MIN_THRESHOLD = 0.15;
+  const THRESHOLD_RANGE = 0.5;
+  // The cells that light up most easily are cyan, so the violet field carries brand sparks.
+  const CYAN_BELOW_THRESHOLD = 0.25;
+  const WAVE_MS = 1400;
+  // Born one cell per shape pixel: a sharp "b" made of bits, which then grows and fades.
+  const WAVE_START_SCALE = 1;
+  const WAVE_GROWTH = 3;
+  const AUTO_WAVE_MS = 7000;
+  const MAX_WAVES = 3;
+  // The bar (1) touching the ring (0), as in BinalisSymbol.
+  const B_SHAPE = [
+    "11.........",
+    "11.........",
+    "11.........",
+    "11.........",
+    "11.........",
+    "11..11111..",
+    "11.11...11.",
+    "1111.....11",
+    "111......11",
+    "1111.....11",
+    "11.11...11.",
+    "11..11111..",
+  ];
+  const SHAPE_COLUMNS = 11;
+  const SHAPE_ROWS = B_SHAPE.length;
+
+  type Rect = { left: number; top: number; right: number; bottom: number };
+  type Wave = { x: number; y: number; born: number };
+  type Sprites = [HTMLCanvasElement, HTMLCanvasElement];
+
+  const canvas = document.querySelector<HTMLCanvasElement>(".binary-field");
+  const hero = canvas?.parentElement;
+  const context = canvas?.getContext("2d");
+  if (canvas && hero && context) start(canvas, hero, context);
+
+  function start(
+    field: HTMLCanvasElement,
+    area: HTMLElement,
+    paint: CanvasRenderingContext2D,
+  ) {
+    const reducedMotion = matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const canHover = matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const quiet = [...area.querySelectorAll("[data-field-quiet]")];
+    const symbol = area.querySelector("[data-field-source]");
+
+    let dpr = 1;
+    let columns = 0;
+    let rows = 0;
+    let mask = new Float32Array();
+    let thresholds = new Float32Array();
+    let bits = new Uint8Array();
+    let dim: Sprites | null = null;
+    let bright: Sprites | null = null;
+    let waves: Wave[] = [];
+    let pointer: { x: number; y: number } | null = null;
+    let pointerStrength = 0;
+    let lastFrame = 0;
+    let lastAutoWave = 0;
+    let frame = 0;
+
+    const brand = (token: string) =>
+      getComputedStyle(document.documentElement).getPropertyValue(token).trim();
+
+    const sprite = (bit: string, color: string) => {
+      const image = document.createElement("canvas");
+      image.width = image.height = CELL_PX * dpr;
+      const pen = image.getContext("2d");
+      if (pen) {
+        pen.font = `${FONT_PX * dpr}px "JetBrains Mono", monospace`;
+        pen.textAlign = "center";
+        pen.textBaseline = "middle";
+        pen.fillStyle = color;
+        pen.fillText(bit, image.width / 2, image.height / 2);
+      }
+      return image;
+    };
+
+    const relativeRect = (element: Element, origin: DOMRect): Rect => {
+      const box = element.getBoundingClientRect();
+      return {
+        left: box.left - origin.left,
+        top: box.top - origin.top,
+        right: box.right - origin.left,
+        bottom: box.bottom - origin.top,
+      };
+    };
+
+    const distanceTo = (rect: Rect, x: number, y: number) =>
+      Math.hypot(
+        Math.max(rect.left - x, 0, x - rect.right),
+        Math.max(rect.top - y, 0, y - rect.bottom),
+      );
+
+    const layout = () => {
+      const origin = area.getBoundingClientRect();
+      dpr = Math.min(devicePixelRatio || 1, MAX_DPR);
+      field.width = Math.round(origin.width * dpr);
+      field.height = Math.round(origin.height * dpr);
+      columns = Math.ceil(origin.width / CELL_PX);
+      rows = Math.ceil(origin.height / CELL_PX);
+
+      const violet = brand("--color-violet");
+      const cyan = brand("--color-cyan");
+      dim = [sprite("0", violet), sprite("1", violet)];
+      bright = [sprite("0", cyan), sprite("1", cyan)];
+
+      const quietRects = quiet.map((element) => relativeRect(element, origin));
+      const cells = columns * rows;
+      mask = new Float32Array(cells);
+      thresholds = new Float32Array(cells);
+      bits = new Uint8Array(cells);
+      for (let row = 0; row < rows; row++) {
+        const bottomFade = Math.min(1, (rows - 1 - row) / BOTTOM_FADE_ROWS);
+        for (let column = 0; column < columns; column++) {
+          const x = (column + 0.5) * CELL_PX;
+          const y = (row + 0.5) * CELL_PX;
+          const nearest = Math.min(
+            ...quietRects.map((rect) => distanceTo(rect, x, y)),
+          );
+          const cell = row * columns + column;
+          mask[cell] = Math.min(1, nearest / QUIET_MARGIN_PX) * bottomFade;
+          thresholds[cell] = MIN_THRESHOLD + Math.random() * THRESHOLD_RANGE;
+          bits[cell] = Math.random() < 0.5 ? 0 : 1;
+        }
+      }
+    };
+
+    const waveAt = (wave: Wave, x: number, y: number, now: number) => {
+      const age = (now - wave.born) / WAVE_MS;
+      const scale = CELL_PX * (WAVE_START_SCALE + age * WAVE_GROWTH);
+      const shapeX = Math.floor((x - wave.x) / scale + SHAPE_COLUMNS / 2);
+      const shapeY = Math.floor((y - wave.y) / scale + SHAPE_ROWS / 2);
+      return B_SHAPE[shapeY]?.[shapeX] === "1" ? (1 - age) ** 2 : 0;
+    };
+
+    const draw = (now: number) => {
+      if (!dim || !bright) return;
+      const seconds = reducedMotion ? 0 : now / 1000;
+      waves = waves.filter((wave) => now - wave.born < WAVE_MS);
+      pointerStrength += ((pointer ? 1 : 0) - pointerStrength) * 0.15;
+      paint.clearRect(0, 0, field.width, field.height);
+
+      for (let row = 0; row < rows; row++) {
+        for (let column = 0; column < columns; column++) {
+          const cell = row * columns + column;
+          const quietness = mask[cell] ?? 0;
+          if (quietness === 0) continue;
+
+          const x = (column + 0.5) * CELL_PX;
+          const y = (row + 0.5) * CELL_PX;
+          const drift =
+            0.5 +
+            0.3 *
+              Math.sin(column * 0.21 + seconds * 0.5) *
+              Math.sin(row * 0.27 - seconds * 0.35) +
+            0.2 * Math.sin((column + row) * 0.09 + seconds * 0.25);
+
+          let lit = 0;
+          if (pointer) {
+            const distance = Math.hypot(x - pointer.x, y - pointer.y);
+            lit = Math.max(0, 1 - distance / POINTER_REACH_PX) ** 2;
+            lit *= pointerStrength;
+          }
+          for (const wave of waves) {
+            lit = Math.max(lit, waveAt(wave, x, y, now));
+          }
+
+          const threshold = thresholds[cell] ?? 1;
+          const isLit = lit > 0.1;
+          const intensity = quietness * drift;
+          if (!isLit && intensity <= threshold) continue;
+
+          const set = isLit || threshold < CYAN_BELOW_THRESHOLD ? bright : dim;
+          paint.globalAlpha = isLit
+            ? quietness * Math.min(1, 0.35 + lit)
+            : Math.min(0.6, intensity * 0.8);
+          paint.drawImage(
+            set[bits[cell] === 1 ? 1 : 0],
+            column * CELL_PX * dpr,
+            row * CELL_PX * dpr,
+          );
+        }
+      }
+
+      for (let flip = 0; flip < FLIPS_PER_FRAME; flip++) {
+        const cell = Math.floor(Math.random() * bits.length);
+        bits[cell] = bits[cell] === 1 ? 0 : 1;
+      }
+    };
+
+    const launchWave = (x: number, y: number, born: number) => {
+      waves = [...waves.slice(-(MAX_WAVES - 1)), { x, y, born }];
+    };
+
+    const launchFromSymbol = (now: number) => {
+      if (!symbol) return;
+      const { left, top, right, bottom } = relativeRect(
+        symbol,
+        area.getBoundingClientRect(),
+      );
+      launchWave((left + right) / 2, (top + bottom) / 2, now);
+    };
+
+    const tick = (now: number) => {
+      frame = requestAnimationFrame(tick);
+      if (now - lastFrame < FRAME_MS) return;
+      lastFrame = now;
+      if (now - lastAutoWave > AUTO_WAVE_MS) {
+        lastAutoWave = now;
+        launchFromSymbol(now);
+      }
+      draw(now);
+    };
+
+    const setRunning = (running: boolean) => {
+      field.dataset.running = String(running);
+      if (running && !frame) frame = requestAnimationFrame(tick);
+      if (!running && frame) {
+        cancelAnimationFrame(frame);
+        frame = 0;
+      }
+    };
+
+    const begin = () => {
+      // Also fires once on observing, which does the first layout.
+      new ResizeObserver(() => {
+        layout();
+        field.dataset.ready = "true";
+        if (reducedMotion) draw(0);
+      }).observe(area);
+      if (reducedMotion) return;
+
+      new IntersectionObserver(([entry]) => {
+        setRunning(entry?.isIntersecting ?? false);
+      }).observe(area);
+
+      area.addEventListener(
+        "pointerdown",
+        (event) => {
+          const isControl =
+            event.target instanceof Element &&
+            event.target.closest("a, button");
+          if (isControl) return;
+          const origin = area.getBoundingClientRect();
+          launchWave(
+            event.clientX - origin.left,
+            event.clientY - origin.top,
+            performance.now(),
+          );
+        },
+        { passive: true },
+      );
+
+      if (canHover) {
+        area.addEventListener(
+          "pointermove",
+          (event) => {
+            const origin = area.getBoundingClientRect();
+            pointer = {
+              x: event.clientX - origin.left,
+              y: event.clientY - origin.top,
+            };
+          },
+          { passive: true },
+        );
+        area.addEventListener(
+          "pointerleave",
+          () => {
+            pointer = null;
+          },
+          { passive: true },
+        );
+      }
+    };
+
+    // The font is already on the page; waiting avoids baking fallback glyphs into the sprites.
+    document.fonts.load(`${FONT_PX}px "JetBrains Mono"`).then(begin, begin);
+  }
+</script>
+
+<style>
+  .binary-field {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.9s ease-out;
+  }
+
+  .binary-field[data-ready] {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .binary-field {
+      transition: none;
+    }
+  }
+</style>

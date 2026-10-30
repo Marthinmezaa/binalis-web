@@ -1,10 +1,12 @@
 ---
 import BinalisSymbol from "./BinalisSymbol.astro";
+import BinaryField from "./BinaryField.astro";
 ---
 
 <section class="hero" aria-labelledby="hero-title">
+  <BinaryField />
   <div class="container hero-inner">
-    <div class="hero-copy">
+    <div class="hero-copy" data-field-quiet>
       <p class="eyebrow">// binalis · desarrollo de software</p>
       <h1 id="hero-title">
         Desarrollo hecho con pasión y <span class="accent">al detalle.</span>
@@ -24,10 +26,12 @@ import BinalisSymbol from "./BinalisSymbol.astro";
       </div>
     </div>
     <figure class="hero-symbol">
-      <div class="symbol-box">
+      <div class="symbol-box" data-field-source>
         <BinalisSymbol />
       </div>
-      <figcaption>// la b de binalis es un 1 y un 0</figcaption>
+      <figcaption data-field-quiet>
+        // la b de binalis es un 1 y un 0
+      </figcaption>
     </figure>
   </div>
 </section>
@@ -39,12 +43,21 @@ import BinalisSymbol from "./BinalisSymbol.astro";
     padding-block: clamp(3rem, 10vw, 7rem);
   }
 
-  /* Brand atmosphere: violet and cyan glow behind the symbol over a faint grid, fading out at the edges. */
-  .hero::before {
+  /* Brand atmosphere: violet and cyan glow behind the symbol, fading out at the edges. */
+  .hero::before,
+  .hero::after {
     content: "";
     position: absolute;
     inset: 0;
     z-index: -1;
+    mask-image: radial-gradient(
+      ellipse 70% 80% at 60% 45%,
+      #000 40%,
+      transparent 100%
+    );
+  }
+
+  .hero::before {
     background:
       radial-gradient(
         32rem 26rem at 78% 45%,
@@ -55,16 +68,21 @@ import BinalisSymbol from "./BinalisSymbol.astro";
         22rem 18rem at 75% 50%,
         rgb(0 240 255 / 14%),
         transparent 70%
-      ),
+      );
+  }
+
+  /* Faint grid: the background without JavaScript. The binary field takes its place once it's ready. */
+  .hero::after {
+    background:
       linear-gradient(rgb(255 255 255 / 5%) 1px, transparent 1px) 0 0 / 3rem
         3rem,
       linear-gradient(90deg, rgb(255 255 255 / 5%) 1px, transparent 1px) 0 0 /
         3rem 3rem;
-    mask-image: radial-gradient(
-      ellipse 70% 80% at 60% 45%,
-      #000 40%,
-      transparent 100%
-    );
+    transition: opacity 0.9s ease-out;
+  }
+
+  .hero:has(:global(.binary-field[data-ready]))::after {
+    opacity: 0;
   }
 
   .hero-inner {

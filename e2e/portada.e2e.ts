@@ -416,6 +416,99 @@ test("el botón de cotizar de la barra brilla al bajar, salvo con movimiento red
   await expect.poll(animationCount).toBe(0);
 });
 
+const paintedPixels = (page: Page) =>
+  page.locator(".binary-field").evaluate((element) => {
+    const canvas = element as HTMLCanvasElement;
+    const pixels = canvas
+      .getContext("2d")
+      ?.getImageData(0, 0, canvas.width, canvas.height).data;
+    return pixels?.filter((_, index) => index % 4 === 3 && pixels[index])
+      .length;
+  });
+
+test("el campo binario se anima sin estorbar y se pausa fuera de pantalla", async ({
+  page,
+}) => {
+  const field = page.locator(".binary-field");
+  await expect(field).toHaveAttribute("aria-hidden", "true");
+  await expect(field).toHaveCSS("pointer-events", "none");
+  await expect(field).toHaveAttribute("data-running", "true");
+  await expect.poll(() => paintedPixels(page)).toBeGreaterThan(0);
+
+  await scrollToEnd(page);
+  await expect(field).toHaveAttribute("data-running", "false");
+});
+
+test("el campo binario no dibuja debajo del texto de la portada", async ({
+  page,
+}) => {
+  await expect.poll(() => paintedPixels(page)).toBeGreaterThan(0);
+  const pixelsUnderTitle = await page
+    .locator(".binary-field")
+    .evaluate((element) => {
+      const canvas = element as HTMLCanvasElement;
+      const title = document.getElementById("hero-title");
+      if (!title) throw new Error("Hero title not found");
+      const origin = canvas.getBoundingClientRect();
+      const box = title.getBoundingClientRect();
+      const scale = canvas.width / origin.width;
+      // A bit next to the title can spill a few pixels over its edge.
+      const inset = 22;
+      const pixels = canvas
+        .getContext("2d")
+        ?.getImageData(
+          (box.left - origin.left + inset) * scale,
+          (box.top - origin.top + inset) * scale,
+          (box.width - 2 * inset) * scale,
+          (box.height - 2 * inset) * scale,
+        ).data;
+      return pixels?.filter((_, index) => index % 4 === 3 && pixels[index])
+        .length;
+    });
+  expect(pixelsUnderTitle).toBe(0);
+});
+
+test("con movimiento reducido el campo binario es un cuadro quieto", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  const field = page.locator(".binary-field");
+  await expect(field).toHaveAttribute("data-ready", "true");
+  await expect.poll(() => paintedPixels(page)).toBeGreaterThan(0);
+
+  const snapshot = () =>
+    field.evaluate((element) => (element as HTMLCanvasElement).toDataURL());
+  const before = await snapshot();
+  await page.waitForTimeout(300);
+  expect(await snapshot()).toBe(before);
+  await expect(field).not.toHaveAttribute("data-running");
+});
+
+test("el campo binario respeta el límite de peso", async ({ page }) => {
+  const scriptBytes = await page.evaluate(() =>
+    performance
+      .getEntriesByType("resource")
+      .filter(({ name }) => name.includes("BinaryField"))
+      .map((entry) => (entry as PerformanceResourceTiming).decodedBodySize),
+  );
+  expect(scriptBytes).toHaveLength(1);
+  // Uncompressed: stricter than the spec's 10 KB compressed.
+  expect(scriptBytes[0]).toBeLessThan(10 * 1024);
+});
+
+test.describe("sin JavaScript", () => {
+  test.use({ javaScriptEnabled: false });
+
+  test("la portada muestra la grilla", async ({ page }) => {
+    const gridOpacity = await page
+      .locator(".hero")
+      .evaluate((hero) => getComputedStyle(hero, "::after").opacity);
+    expect(gridOpacity).toBe("1");
+    await expect(page.locator(".binary-field")).toHaveCSS("opacity", "0");
+  });
+});
+
 test("los botones para cotizar brillan", async ({ page }) => {
   const glow = (name: string) =>
     page

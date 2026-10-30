@@ -80,7 +80,7 @@ Pendientes, en orden:
 - Favicon, a pedido del dueño: vuelve la "b" con degradé y sin fondo (la de la entrada 15), porque la "b" oscura sobre disco cian estaba descentrada (ocupaba de 30 a 120 en un cuadro de 160). Revisada a 16, 32, 64 y 128 px sobre pestañas oscura, clara y blanca: se lee en las tres. El ícono de iOS y la imagen para compartir no cambian. Lección: `pnpm icons` también regenera `og-image.png` con diferencias de píxeles; si no cambió el titular, restaurarla.
 - Onda en el celular (#119): el código ya era el mismo y el apagado gradual funcionaba, pero el aro se salía de la pantalla mientras brillaba. En pantallas angostas la "b" crece solo hasta llenar el ancho.
 - Brillo al pasar el mouse (#120): el brillo fijo de los botones pisaba el del hover, y la animación de encendido lo atenuaba cerca del final de la página. Lo encontró la e2e nueva. El brillo fijo pasa a `--button-glow`, para que nunca le gane al hover.
-- Prueba inestable: "Quién está detrás ... lleva a su historia" falló una vez en CI, en celular, con un commit de solo documentación (#115). En local dio 40/40 y al relanzar pasó. Causa sin confirmar; si se repite, sospechar que el clic cae mientras el botón todavía se mueve con la aparición.
+- Prueba inestable: "Quién está detrás ... lleva a su historia" falló dos veces en CI (#115 y #120), y pasaba al relanzar. En local dio 84 de 84 clics con la CPU hasta 8 veces más lenta: causa sin confirmar. La e2e ahora revisa el `href` en lugar de hacer clic.
 
 ### 2026-10-30 (38)
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.30.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.29.0...binalis-web-v0.30.0) (2026-10-30)
+
+
+### Features
+
+* bandas entre secciones ([#102](https://github.com/Marthinmezaa/binalis-web/issues/102)) ([974728c](https://github.com/Marthinmezaa/binalis-web/commit/974728c3ee414784c31a679ee985970126c8d28f))
+
 ## [0.29.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.28.0...binalis-web-v0.29.0) (2026-10-30)
 
 

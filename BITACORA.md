@@ -61,7 +61,7 @@ Pendientes, en orden:
 - Lección: Prettier realinea toda la tabla de requisitos al cambiar el ancho de una fila, así que dos PR que tocan la spec chocan. Si hay varios PR en paralelo, los cambios de spec van juntos en uno solo.
 - Mergeados como v0.31.0. En producción, Lighthouse móvil 100/100/100/100, LCP 1,1 s, TBT 20-30 ms. El dueño probó el menú en su celular: perfecto.
 - Onda, segundo ajuste a pedido del dueño: volvió al tamaño y la duración originales (1,4 s, crecimiento 3), porque al cubrir todo el campo la "b" se deformaba en bloques. Se conserva el apagado gradual, que era lo que faltaba.
-- Títulos aprobados por el dueño: "Hecho a la medida de tu empresa.", "Sabés en qué está tu proyecto, siempre." y "Sistemas reales, funcionando hoy.". El bloque final de Proyectos pasa a "Siguiente proyecto en desarrollo". La barra y el menú conservan los nombres cortos.
+- Títulos aprobados por el dueño: "Hecho a la medida de tu empresa.", "Sabés en qué está tu proyecto, siempre." y "Sistemas reales, funcionando hoy.". El de Proceso se cambió enseguida por "De tu idea al resultado, en 4 pasos.", porque el dueño no entendía el primero. El bloque final de Proyectos pasa a "Siguiente proyecto en desarrollo". La barra y el menú conservan los nombres cortos.
 
 ### 2026-10-30 (39)
 
@@ -81,6 +81,7 @@ Pendientes, en orden:
 - Onda en el celular: #119 limitó el crecimiento en pantallas angostas para que el aro no se saliera de la pantalla, pero en un teléfono real la "b" quedó casi sin crecer y se veía trabada. Revertido a pedido del dueño: crece igual que en la PC, y conserva el apagado gradual. No volver a limitarlo sin probarlo en un teléfono real.
 - Brillo al pasar el mouse (#120): el brillo fijo de los botones pisaba el del hover, y la animación de encendido lo atenuaba cerca del final de la página. Lo encontró la e2e nueva. El brillo fijo pasa a `--button-glow`, para que nunca le gane al hover.
 - Prueba inestable: "Quién está detrás ... lleva a su historia" falló dos veces en CI (#115 y #120), y pasaba al relanzar. En local dio 84 de 84 clics con la CPU hasta 8 veces más lenta: causa sin confirmar. La e2e ahora revisa el `href` en lugar de hacer clic.
+- Otra prueba inestable, la del hover (#120), frenó el release #128. Se reprodujo 6 de 60 veces con carga: al saltar hasta un bloque que todavía está apareciendo, Playwright calcula la posición con el bloque en movimiento y el mouse cae al lado del botón. Probablemente sea lo mismo que le pasó al clic de arriba, aunque ahí no se reprodujo. Lección: antes de hacer hover o clic en un bloque con `.reveal`, llevarlo a la vista con scroll instantáneo y esperar un cuadro. Y al estabilizar una prueba, volver a comprobar que siga fallando con el error real: el primer arreglo la dejó estable pero ya no detectaba nada.
 
 ### 2026-10-30 (38)
 

@@ -149,7 +149,7 @@ test("los íconos declarados en el head existen", async ({ page, request }) => {
   }
 });
 
-const PROCESS_TITLE = "Sabés en qué está tu proyecto, siempre.";
+const PROCESS_TITLE = "De tu idea al resultado, en 4 pasos.";
 const PROJECTS_TITLE = "Sistemas reales, funcionando hoy.";
 
 // Exact items from ESPECIFICACIONES.md (RF-03, RF-04 and the projects chosen for RF-05).
@@ -606,16 +606,25 @@ test("los botones para cotizar brillan más al pasar el mouse", async ({
   );
   test.skip(!canHover, "Sin mouse no hay hover");
 
-  await scrollToEnd(page);
+  const expectHoverGlow = async (name: string) => {
+    const button = page.getByRole("main").getByRole("link", { name }).first();
+    await button.hover();
+    await expect(button).toHaveCSS("box-shadow", /40px/);
+  };
+
+  await expectHoverGlow("Cotizá tu proyecto");
+  // Barely in view, where the switch-on animation is still running and must not dim the hover. Scrolled first and
+  // instantly: hovering would jump here while the blocks are still rising in, and the mouse would land beside the button.
+  await page.locator("#cotizacion .actions").evaluate(async (actions) => {
+    actions.scrollIntoView({ block: "end", behavior: "instant" });
+    await new Promise(requestAnimationFrame);
+  });
   for (const name of [
-    "Cotizá tu proyecto",
     "Necesito una página web",
     "Necesito un sistema",
     "Necesito una landing",
   ]) {
-    const button = page.getByRole("main").getByRole("link", { name }).first();
-    await button.hover();
-    await expect(button).toHaveCSS("box-shadow", /40px/);
+    await expectHoverGlow(name);
   }
 });
 

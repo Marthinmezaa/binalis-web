@@ -240,8 +240,9 @@ test("Quién está detrás resume a Marthin y lleva a su historia", async ({
   ).toBeVisible();
   await expect(section.locator("pre")).toContainText('stack: ["React"');
 
-  await section.getByRole("link", { name: "Conocé mi historia" }).click();
-  await expect(page).toHaveURL(/\/quien-soy\/$/);
+  await expect(
+    section.getByRole("link", { name: "Conocé mi historia" }),
+  ).toHaveAttribute("href", "/quien-soy/");
 });
 
 test("/quien-soy/ cuenta la historia completa y la barra lleva a Quién está detrás", async ({

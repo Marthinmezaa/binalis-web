@@ -595,6 +595,27 @@ test.describe("sin JavaScript", () => {
   });
 });
 
+test("los botones para cotizar brillan más al pasar el mouse", async ({
+  page,
+}) => {
+  const canHover = await page.evaluate(
+    () => matchMedia("(hover: hover)").matches,
+  );
+  test.skip(!canHover, "Sin mouse no hay hover");
+
+  await scrollToEnd(page);
+  for (const name of [
+    "Cotizá tu proyecto",
+    "Necesito una página web",
+    "Necesito un sistema",
+    "Necesito una landing",
+  ]) {
+    const button = page.getByRole("main").getByRole("link", { name }).first();
+    await button.hover();
+    await expect(button).toHaveCSS("box-shadow", /40px/);
+  }
+});
+
 test("los botones para cotizar brillan", async ({ page }) => {
   const glow = (name: string) =>
     page

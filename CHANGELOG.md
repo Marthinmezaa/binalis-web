@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.29.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.28.0...binalis-web-v0.29.0) (2026-10-30)
+
+
+### Features
+
+* campo binario en la portada ([#101](https://github.com/Marthinmezaa/binalis-web/issues/101)) ([997493c](https://github.com/Marthinmezaa/binalis-web/commit/997493c956781771067871c5167a712c83185741))
+
 ## [0.28.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.27.4...binalis-web-v0.28.0) (2026-10-30)
 
 

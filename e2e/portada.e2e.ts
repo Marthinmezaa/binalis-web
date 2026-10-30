@@ -252,7 +252,7 @@ test("/quien-soy/ cuenta la historia completa y la barra lleva a Quién está de
   await expect(
     page
       .getByRole("region", { name: "Cotizá tu proyecto" })
-      .getByRole("link", { name: "Necesito una página" }),
+      .getByRole("link", { name: "Necesito una página web" }),
   ).toBeVisible();
 });
 
@@ -270,9 +270,9 @@ test("se cotiza por WhatsApp o por correo, sin el número escrito en la página"
   const contact = page.getByRole("region", { name: "Cotizá tu proyecto" });
   const messages = new Set<string | null>();
   for (const name of [
-    "Necesito una página",
+    "Necesito una página web",
     "Necesito un sistema",
-    "Necesito una promo",
+    "Necesito una landing",
   ]) {
     const whatsapp = contact.getByRole("link", { name });
     await expect(whatsapp).toHaveAttribute(
@@ -414,6 +414,42 @@ test("las secciones se separan con bandas alternas", async ({ page }) => {
 
   expect(await background("proceso")).not.toBe(await background("servicios"));
   expect(await background("proyectos")).toBe(await background("servicios"));
+});
+
+test("en el celular, el menú cubre la pantalla y lleva al contacto", async ({
+  page,
+}) => {
+  const menuButton = page.getByRole("button", { name: "Menú" });
+  test.skip(!(await menuButton.isVisible()), "El menú solo existe en celular");
+
+  await menuButton.click();
+  const nav = page.getByRole("navigation", { name: "Principal" });
+  await expect(nav.getByRole("link", { name: "WhatsApp" })).toHaveAttribute(
+    "href",
+    /^https:\/\/wa\.me\//,
+  );
+  await expect(nav.getByRole("link", { name: "Correo" })).toHaveAttribute(
+    "href",
+    /^mailto:/,
+  );
+
+  // Starts right under the header and reaches the bottom of the screen.
+  const box = await nav.boundingBox();
+  const header = await page.getByRole("banner").boundingBox();
+  const viewport = page.viewportSize();
+  expect(box?.y).toBeCloseTo((header?.y ?? 0) + (header?.height ?? 0), 0);
+  expect((box?.y ?? 0) + (box?.height ?? 0)).toBe(viewport?.height);
+  expect(box?.width).toBe(viewport?.width);
+
+  // Finished rising in, so axe doesn't measure the contrast of a half-faded row.
+  await page.waitForTimeout(600);
+  const { violations } = await new AxeBuilder({ page })
+    .withTags(WCAG_22_AA)
+    .analyze();
+  expect(violations).toEqual([]);
+
+  await page.keyboard.press("Escape");
+  await expect(nav.getByRole("link", { name: "Servicios" })).toBeHidden();
 });
 
 test("la barra superior sigue a mano al bajar", async ({ page }) => {
@@ -562,6 +598,6 @@ test("los botones para cotizar brillan", async ({ page }) => {
   expect(await glow("Cotizá tu proyecto")).not.toBe("none");
   // The quote buttons switch on as their section comes into view.
   await scrollToEnd(page);
-  expect(await glow("Necesito una página")).not.toBe("none");
+  expect(await glow("Necesito una página web")).not.toBe("none");
   expect(await glow("Escribime un correo")).not.toBe("none");
 });

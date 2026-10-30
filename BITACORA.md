@@ -38,7 +38,7 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-**Siguiente tarea: el punto 1 (redes sociales).** La v1 está completa salvo las redes, que dependen del dueño.
+**Siguiente tarea: implementar el "sello binario" cuando el dueño mergee el PR de la spec.** Orden: latidos con `opacity`, cotización por necesidad (RF-08), campo binario (RF-12), textura y transiciones, y títulos cuando el dueño apruebe los textos. Las redes siguen pendientes y dependen del dueño.
 
 Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **62/62**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
 
@@ -49,6 +49,16 @@ Pendientes, en orden:
 3. **Resultado de YERON** con los números reales al cierre de la campaña (15 de enero de 2027).
 
 ## Entradas
+
+### 2026-10-30 (38)
+
+- Pedido del dueño: analizar omarchy.org, coe22.com y lakepointe.church para llevar Binalis a otro nivel. Eligió la **opción A, "sello binario"**. Spec actualizada (RF-02, RF-08, RF-12, requisitos no funcionales y decisión en la sección 8); todavía sin implementar.
+- Lighthouse móvil, versión 13.6 (rendimiento, sin datos reales salvo donde se aclara): Binalis 99-100, LCP 1,5 s, TBT 0 ms; Omarchy 56-57; COE22 56; Lakepointe 59. Usuarios reales (CrUX, 28 días): las tres referencias aprueban, con LCP de 1,6, 1,8 y 1,7 s. Binalis no tiene datos reales porque aún tiene pocas visitas. La emulación es mucho más dura que la experiencia real: no comparar un número de laboratorio con uno de campo.
+- Omarchy: Astro 7 con islas de React, Tailwind y canvas 2D propio. El código está en `omacom/omarchy-site`, **sin licencia publicada**: se puede estudiar, no copiar. Sirve desde Cloudflare; el repo también despliega a GitHub Pages, pero la respuesta de producción no trae cabeceras de GitHub. DigitalOcean es para sus builds y agentes, no para la web.
+- **Bug encontrado:** Cloudflare inyecta el script de Web Analytics y la CSP (`script-src 'self'`) lo bloquea. Hay un error en la consola de producción y esa analítica no registra nada. Por eso buenas prácticas da 92. El dueño aprobó permitirla: basta sumar `https://static.cloudflareinsights.com` a `script-src`, porque con inyección automática los datos van al mismo dominio (`POST /cdn-cgi/rum`). Probado contra producción interceptando la cabecera: sin errores y con respuesta 204. Va en un PR propio (`fix:`).
+- Los latidos de la "b" y del botón de la barra animan `filter` y `box-shadow`, y ocupan 30-39 % del hilo principal en un celular emulado con CPU x4. Una prueba con un latido de `opacity` en la "b" y el botón quieto (la portada no lo muestra latiendo) bajó ese consumo a 0 %. Pasa a ser requisito.
+- Accesibilidad da 96 por el título de Servicios medido a mitad de su aparición (contraste 2,72), la trampa de la entrada 30. El color final no es el problema, pero el título asoma atenuado al pie de la portada. CLS 0,018, causado por `figure.hero-symbol`: dentro del límite.
+- Lección: la herramienta de Lighthouse 12 falló en Binalis con el Chromium de Playwright (`NO_NAVSTART`); con la 13 y el Chrome instalado funciona. La API de PageSpeed sin clave dio 429; la página pagespeed.web.dev sí responde.
 
 ### 2026-10-26 (37)
 
@@ -181,9 +191,3 @@ Pendientes, en orden:
 - No se publica nada sensible de los CLAUDE.md de los proyectos: ni correos internos, ni precios, ni contactos, ni detalles del antifraude.
 - E2E: cada proyecto falla si muestra un texto `[EN MAYÚSCULAS]` (verificado inyectando uno). 36/36.
 - La regla de la spec "ocultar Problema/Resultado si falta" no se implementó porque hoy no falta ninguno. Se hace cuando aparezca un proyecto sin esos datos.
-
-### 2026-10-16 (23)
-
-- La "b" ahora es la del lienzo de marca, a pedido del dueño: el aro toca la barra (antes se superponían), barra cian sólida y aro con degradé violeta→cian. Brillo más suave: solo cian, en reposo 0,5rem al 35 % y en el pico 1rem al 55 % (antes había además un halo violeta grande). Sigue pulsando (RF-02).
-- Íconos chicos como la lámina de aplicaciones: favicon = "b" oscura sobre disco cian (se lee en pestañas claras y oscuras, cierra el problema de contraste de la entrada 15); ícono de iOS = la misma "b" de la portada (proporciones incluidas) sobre tile superficie `#0D1220`: `pnpm icons` toma el SVG directo de `BinalisSymbol.astro`, así no hay geometría copiada a mano. El favicon conserva trazos más gruesos para leerse a 16 px.
-- Foto de "Quién soy" con borde cian sólido y glow, como el perfil de Instagram del lienzo.

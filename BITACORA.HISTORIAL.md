@@ -10,6 +10,11 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-16 — La "b" del lienzo de marca (entrada 23)
+
+- La "b" pasa a la del lienzo: el aro toca la barra, barra cian sólida, aro con degradé violeta→cian y brillo más suave.
+- Favicon con "b" oscura sobre disco cian; ícono de iOS generado por `pnpm icons` desde `BinalisSymbol.astro`. Foto de "Quién soy" con borde cian y glow.
+
 ### 2026-10-15 — La "b" respira y versículo en el pie (entrada 22)
 
 - El glow de la "b" pulsa cada 2,4 s (solo la sombra) y se apaga con `prefers-reduced-motion`; e2e que lo verifica.

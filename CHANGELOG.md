@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.28.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.27.4...binalis-web-v0.28.0) (2026-10-30)
+
+
+### Features
+
+* cotizar por WhatsApp según la necesidad ([#100](https://github.com/Marthinmezaa/binalis-web/issues/100)) ([b8e2f92](https://github.com/Marthinmezaa/binalis-web/commit/b8e2f920d323921a1952901123c5e5608720bd7a))
+
 ## [0.27.4](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.27.3...binalis-web-v0.27.4) (2026-10-30)
 
 

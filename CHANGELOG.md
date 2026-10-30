@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.30.2](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.30.1...binalis-web-v0.30.2) (2026-10-30)
+
+
+### Bug Fixes
+
+* la onda del campo binario se desvanece y cubre todo el campo ([#108](https://github.com/Marthinmezaa/binalis-web/issues/108)) ([01b0fb2](https://github.com/Marthinmezaa/binalis-web/commit/01b0fb26ab72dc77fafd0dca8b0ff6174d389baa))
+
 ## [0.30.1](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.30.0...binalis-web-v0.30.1) (2026-10-30)
 
 

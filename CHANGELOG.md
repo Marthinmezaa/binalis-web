@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.31.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.30.2...binalis-web-v0.31.0) (2026-10-30)
+
+
+### Features
+
+* menú de celular a pantalla completa ([#111](https://github.com/Marthinmezaa/binalis-web/issues/111)) ([dae4408](https://github.com/Marthinmezaa/binalis-web/commit/dae4408b9629f874f4b722646206c19fae504741))
+
 ## [0.30.2](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.30.1...binalis-web-v0.30.2) (2026-10-30)
 
 

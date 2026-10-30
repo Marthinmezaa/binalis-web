@@ -149,10 +149,14 @@ test("los íconos declarados en el head existen", async ({ page, request }) => {
   }
 });
 
-// Exact titles from ESPECIFICACIONES.md (RF-03, RF-04 and the projects chosen for RF-05).
+const PROCESS_TITLE = "Sabés en qué está tu proyecto, siempre.";
+const PROJECTS_TITLE = "Sistemas reales, funcionando hoy.";
+
+// Exact items from ESPECIFICACIONES.md (RF-03, RF-04 and the projects chosen for RF-05).
 const SECTIONS = [
   {
-    name: "Servicios",
+    link: "Servicios",
+    title: "Hecho a la medida de tu empresa.",
     items: [
       "Páginas web",
       "Sistemas y apps a medida",
@@ -160,7 +164,8 @@ const SECTIONS = [
     ],
   },
   {
-    name: "Proceso",
+    link: "Proceso",
+    title: PROCESS_TITLE,
     items: [
       "Conversamos",
       "Diseñamos",
@@ -169,7 +174,8 @@ const SECTIONS = [
     ],
   },
   {
-    name: "Proyectos",
+    link: "Proyectos",
+    title: PROJECTS_TITLE,
     items: [
       "Cosmos Trak · Sitio web",
       "Cosmos Trak · Sistema administrativo",
@@ -182,7 +188,7 @@ test("cada proyecto muestra etiquetas, medio y Problema / Solución / Resultado"
   page,
 }) => {
   const projects = page
-    .getByRole("region", { name: "Proyectos" })
+    .getByRole("region", { name: PROJECTS_TITLE })
     .getByRole("article");
   await expect(projects).toHaveCount(3);
 
@@ -199,22 +205,22 @@ test("cada proyecto muestra etiquetas, medio y Problema / Solución / Resultado"
   }
 });
 
-test("Proyectos cierra con 'Siguiente proyecto cargando…'", async ({
+test("Proyectos cierra con 'Siguiente proyecto en desarrollo'", async ({
   page,
 }) => {
   await expect(
-    page.getByRole("region", { name: "Proyectos" }).locator(".next-project"),
-  ).toContainText("Siguiente proyecto cargando…");
+    page.getByRole("region", { name: PROJECTS_TITLE }).locator(".next-project"),
+  ).toContainText("Siguiente proyecto en desarrollo");
 });
 
-for (const { name, items } of SECTIONS) {
-  test(`la sección ${name} tiene lo que pide la spec y se llega desde la barra`, async ({
+for (const { link, title, items } of SECTIONS) {
+  test(`la sección ${link} tiene lo que pide la spec y se llega desde la barra`, async ({
     page,
   }) => {
-    const section = page.getByRole("region", { name });
+    const section = page.getByRole("region", { name: title });
     await expect(section.getByRole("heading", { level: 3 })).toHaveText(items);
 
-    const navLink = (await mainNav(page)).getByRole("link", { name });
+    const navLink = (await mainNav(page)).getByRole("link", { name: link });
     await expect(navLink).toHaveAttribute(
       "href",
       `/#${await section.getAttribute("id")}`,
@@ -453,13 +459,15 @@ test("en el celular, el menú cubre la pantalla y lleva al contacto", async ({
 });
 
 test("la barra superior sigue a mano al bajar", async ({ page }) => {
-  await page.getByRole("region", { name: "Proceso" }).scrollIntoViewIfNeeded();
+  await page
+    .getByRole("region", { name: PROCESS_TITLE })
+    .scrollIntoViewIfNeeded();
   await expect(page.getByRole("banner")).toBeInViewport();
 });
 
 test("los proyectos públicos llevan a su sitio en vivo", async ({ page }) => {
   const liveLinks = page
-    .getByRole("region", { name: "Proyectos" })
+    .getByRole("region", { name: PROJECTS_TITLE })
     .getByRole("link", { name: /^Ver sitio en vivo/ });
 
   await expect(liveLinks).toHaveCount(2);

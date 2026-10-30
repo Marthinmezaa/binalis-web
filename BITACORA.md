@@ -39,9 +39,9 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-**Siguiente tarea: mergear #108, #109, #111 y el PR de la spec, y que el dueño pruebe el menú en su celular.** Después, los títulos con postura, cuando apruebe los textos. Las redes siguen pendientes y dependen del dueño.
+**Siguiente tarea: las redes sociales (punto 1).** Dependen del dueño. Los títulos con postura ya están aprobados y van en su propio PR.
 
-Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **79 pasadas y 1 salteada** con esos PR mergeados. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
+Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **79 pasadas y 1 salteada**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
 
 Pendientes, en orden:
 
@@ -59,7 +59,8 @@ Pendientes, en orden:
 - Menú del celular: pantalla completa, links grandes con números en estilo código y líneas separadoras, y WhatsApp y Correo abajo. Toma de COE22 la estructura y de Omarchy los accesos abajo. Sigue siendo el `popover` nativo. `--header-height` del celular ahora es exacto y el wordmark lleva `line-height: 1`, para que el menú empiece justo debajo de la barra.
 - Regla del dueño: **`/ponytail-review` de verdad antes de cada PR**, no una revisión a ojo. En la sesión anterior solo se había corrido en #99, y correrlo encontró unas 40 líneas de más en #101.
 - Lección: Prettier realinea toda la tabla de requisitos al cambiar el ancho de una fila, así que dos PR que tocan la spec chocan. Si hay varios PR en paralelo, los cambios de spec van juntos en uno solo.
-- Sin probar en un celular real: el menú nuevo y los textos. La onda se revisó con capturas y midiendo el brillo, no en movimiento.
+- Mergeados como v0.31.0. En producción, Lighthouse móvil 100/100/100/100, LCP 1,1 s, TBT 20-30 ms. El dueño probó el menú en su celular: perfecto.
+- Onda, segundo ajuste a pedido del dueño: volvió al tamaño y la duración originales (1,4 s, crecimiento 3), porque al cubrir todo el campo la "b" se deformaba en bloques. Se conserva el apagado gradual, que era lo que faltaba.
 
 ### 2026-10-30 (39)
 

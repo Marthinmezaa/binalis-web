@@ -91,7 +91,7 @@ import { email, emailQuoteUrl, whatsappNeeds } from "../contact";
   /* Both ways to quote glow, WhatsApp brighter as the main one, both below the "b". This is the resting state:
      without scroll-driven animations or with reduced motion they are simply lit. */
   .actions .button-primary {
-    box-shadow: 0 0 1.25rem rgb(0 240 255 / 40%);
+    --button-glow: 0 0 1.25rem rgb(0 240 255 / 40%);
   }
 
   .actions .button-secondary {
@@ -107,6 +107,11 @@ import { email, emailQuoteUrl, whatsappNeeds } from "../contact";
         animation-fill-mode: backwards;
         animation-timeline: view();
         animation-range: entry 60% cover 45%;
+      }
+
+      /* Near the end of the page the animation is still running and would dim the hover glow. */
+      .actions .button:hover {
+        animation-name: none;
       }
     }
   }

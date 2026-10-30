@@ -122,11 +122,15 @@ a {
 
 .button-primary {
   background: var(--color-cyan);
+  /* Each section sets its own resting glow here, so it never outranks the hover below. */
+  box-shadow: var(--button-glow, none);
   color: var(--color-bg);
 }
 
 .button-primary:hover {
-  box-shadow: 0 0 1.5rem rgb(0 240 255 / 45%);
+  box-shadow:
+    0 0 0.75rem rgb(0 240 255 / 90%),
+    0 0 2.5rem rgb(0 240 255 / 60%);
 }
 
 .button-secondary {

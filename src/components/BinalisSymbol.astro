@@ -37,9 +37,17 @@
     filter: drop-shadow(0 0 0.5rem rgb(0 240 255 / 35%));
   }
 
-  /* Neon "breathing": the glow swells and settles. Only the glow changes, never position or opacity. */
+  /* Neon "breathing": a copy with the peak glow fades in and out over the resting "b".
+     Fading a layer runs on the compositor; animating the filter itself would repaint on the main thread every frame. */
+  .symbol + .symbol {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    filter: drop-shadow(0 0 1rem rgb(0 240 255 / 55%));
+  }
+
   @media (prefers-reduced-motion: no-preference) {
-    .symbol {
+    .symbol + .symbol {
       animation: glow-pulse 2.4s ease-in-out infinite;
     }
   }
@@ -76,7 +84,7 @@
 
   @keyframes glow-pulse {
     50% {
-      filter: drop-shadow(0 0 1rem rgb(0 240 255 / 55%));
+      opacity: 1;
     }
   }
 </style>

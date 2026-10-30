@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.32.4](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.32.3...binalis-web-v0.32.4) (2026-10-30)
+
+
+### Bug Fixes
+
+* la onda del teléfono vuelve a crecer como al principio ([#126](https://github.com/Marthinmezaa/binalis-web/issues/126)) ([d81ef5b](https://github.com/Marthinmezaa/binalis-web/commit/d81ef5b34b350b1471f272925f37052ad82c99b0))
+
 ## [0.32.3](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.32.2...binalis-web-v0.32.3) (2026-10-30)
 
 

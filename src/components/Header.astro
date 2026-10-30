@@ -1,4 +1,6 @@
 ---
+import { email, whatsappUrl } from "../contact";
+
 // Absolute anchors ("/#…") so they also work from /quien-soy.
 const links = [
   { href: "/#servicios", label: "Servicios" },
@@ -21,19 +23,31 @@ const links = [
       aria-label="Menú"
     >
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M4 7h16M4 12h16M4 17h16"></path>
+        <path class="icon-open" d="M4 7h16M4 12h16M4 17h16"></path>
+        <path class="icon-close" d="M6 6l12 12M18 6L6 18"></path>
       </svg>
     </button>
     <nav id="menu" aria-label="Principal" popover>
       <ul class="nav-list">
-        {links.map(({ href, label }) => (
+        {links.map(({ href, label }, index) => (
           <li>
             <a class="nav-link" href={href}>
+              <span class="nav-index" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
               {label}
             </a>
           </li>
         ))}
       </ul>
+      <div class="nav-contact">
+        <a class="button button-primary" href={whatsappUrl}>
+          WhatsApp
+        </a>
+        <a class="button button-secondary" href={`mailto:${email}`}>
+          Correo
+        </a>
+      </div>
     </nav>
     <a class="cta button button-primary" href="#cotizacion">
       Cotizá tu proyecto
@@ -64,9 +78,7 @@ const links = [
     container-type: scroll-state;
   }
 
-  /* The open phone menu shares the header's glass. */
-  .header,
-  nav:popover-open {
+  .header {
     background: rgb(6 8 15 / 80%);
     backdrop-filter: blur(12px);
   }
@@ -102,14 +114,36 @@ const links = [
     stroke-width: 2;
   }
 
-  /* The open menu drops below the header, across the screen. */
+  .header:not(:has(nav:popover-open)) .icon-close,
+  .header:has(nav:popover-open) .icon-open {
+    display: none;
+  }
+
+  /* The open menu takes the whole screen below the header, and the page behind it stays put. */
+  :global(html:has(#menu:popover-open)) {
+    overflow: hidden;
+  }
+
   nav:popover-open {
-    inset: var(--header-height) 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+    inset: var(--header-height) 0 0;
     width: auto;
+    height: auto;
     margin: 0;
-    padding: 0.5rem var(--gutter) 1rem;
+    padding: 0.5rem var(--gutter)
+      calc(var(--gutter) + env(safe-area-inset-bottom));
+    overflow-y: auto;
     border: 0;
-    border-bottom: 1px solid rgb(255 255 255 / 6%);
+    background:
+      radial-gradient(
+        28rem 22rem at 100% 100%,
+        rgb(123 92 255 / 18%),
+        transparent 70%
+      ),
+      var(--color-bg);
     color: inherit;
   }
 
@@ -119,10 +153,72 @@ const links = [
     gap: 0;
   }
 
+  nav:popover-open li {
+    border-bottom: 1px solid rgb(255 255 255 / 10%);
+  }
+
   nav:popover-open .nav-link {
-    display: block;
-    padding-block: 0.75rem;
-    font-size: 1.125rem;
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding-block: 1.125rem;
+    color: var(--color-text);
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 8vw, 2.25rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .nav-index,
+  .nav-contact {
+    display: none;
+  }
+
+  nav:popover-open .nav-index {
+    display: inline;
+    color: var(--color-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  nav:popover-open .nav-contact {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  /* Rows rise in one after another each time the menu opens. */
+  @media (prefers-reduced-motion: no-preference) {
+    nav:popover-open li,
+    nav:popover-open .nav-contact {
+      animation: menu-rise 0.35s ease-out backwards;
+    }
+
+    nav:popover-open li:nth-child(2) {
+      animation-delay: 50ms;
+    }
+
+    nav:popover-open li:nth-child(3) {
+      animation-delay: 100ms;
+    }
+
+    nav:popover-open li:nth-child(4) {
+      animation-delay: 150ms;
+    }
+
+    nav:popover-open .nav-contact {
+      animation-delay: 200ms;
+    }
+  }
+
+  @keyframes menu-rise {
+    from {
+      opacity: 0;
+      translate: 0 0.75rem;
+    }
   }
 
   @media (min-width: 48rem) {
@@ -208,6 +304,8 @@ const links = [
     font-size: 1.75rem;
     font-weight: 700;
     letter-spacing: -0.02em;
+    /* The button sets the header's height, which --header-height relies on. */
+    line-height: 1;
     text-decoration: none;
   }
 

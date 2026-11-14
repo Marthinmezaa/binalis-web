@@ -10,6 +10,12 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-19 — Capturas reales en Proyectos (entrada 26)
+
+- Cosmos Trak y YERON con capturas reales (WebP/JPG vía `astro:assets`); la tarjeta de stack sale de Proyectos y `CodeCard` queda en "Quién soy".
+- Cambio de spec aprobado: las capturas nunca muestran datos personales de clientes, pero sí métricas agregadas con aprobación del dueño.
+- Método: captura por CDP sobre un Chromium visible donde el dueño inició sesión; la sesión se borró al terminar.
+
 ### 2026-10-19 — wrangler fijado (entrada 25)
 
 - `wrangler` pasa a devDependency fijada, para que la versión la decida el lockfile y no `npx`. No se agregan excepciones a `minimumReleaseAge`.

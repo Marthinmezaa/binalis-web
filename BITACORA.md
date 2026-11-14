@@ -51,6 +51,13 @@ Pendientes, en orden:
 
 ## Entradas
 
+### 2026-11-14 (41)
+
+- El PR de Dependabot #135 (astro 7.4.7, Playwright 1.65, eslint, typescript-eslint, Vitest 5.1 y wrangler 4.158) fallaba en `pnpm typecheck`. Astro decía que faltaban `@astrojs/check` y `typescript`, pero los dos estaban instalados.
+- Causa: el lockfile nuevo resolvía `@emnapi/runtime@2.0.0-beta.2` junto con `@emnapi/core@1.11.3`, dos versiones con APIs incompatibles, como peers de `@napi-rs/wasm-runtime` (vía `@astrojs/check` → `@astrojs/astro2tsx`). Al importar `@astrojs/check`, el código revienta con `bridge.setLastError is not a function`; Astro atrapa el error y muestra el mensaje engañoso.
+- Arreglo: override en `pnpm-workspace.yaml` que fija `@emnapi/core` y `@emnapi/runtime` en `1.11.3`, la versión estable que usa el resto del árbol. Lleva un comentario `shortcut:` que dice cuándo quitarlo. Mergeado con el #135, con el CI en verde.
+- Lección: desde astro 7.4.6, `astro check` falla si no puede cargar `@astrojs/check`; antes salía con 0 sin chequear nada. Si vuelve el mensaje de "falta @astrojs/check", probar `import('@astrojs/check')` a mano para ver el error real.
+
 ### 2026-10-30 (40)
 
 - El dueño probó el sitio en su celular y en su PC: le encantó. Pidió tres cambios, uno por PR: #108 (onda), #109 (textos) y #111 (menú).
@@ -201,12 +208,3 @@ Pendientes, en orden:
 - Las capturas de Cosmos y YERON (#52) se revisaron en producción con Chrome: cargan las tres y la consola no muestra errores con la CSP real. La vista previa de Cloudflare pide sesión y no se revisó.
 - El release 0.17.0 (#55) tenía en rojo el build de vista previa de Workers. El log mostraba un error de la API de Cloudflare al subir los archivos (`assets-upload-session`, "unknown error"), no del código. Con "Retry build" en el panel pasó. Ese check no es obligatorio para el merge.
 - Testimonios (RF-07): la sección se va a llamar "Lo que dicen mis clientes", en primera persona como el resto del sitio. Se piden con un formulario de Google creado con Claude in Chrome (ver "Configuración fuera del repo"). La sección se arma cuando llegue la primera respuesta con autorización.
-
-### 2026-10-19 (26)
-
-- Sistema administrativo de Cosmos Trak con captura real en lugar de la tarjeta de stack: % de atraso, meta de ventas y el gráfico de avance anual de instalaciones (2024–2026). El dueño aprobó publicar esas métricas reales. Los montos salen ocultos por el modo privado de la app y no aparece ningún cliente.
-- Cambio de spec aprobado por el dueño: las capturas nunca muestran datos personales de clientes, pero sí métricas agregadas con su aprobación (antes: "datos de prueba, nunca reales").
-- Método: Chromium de Playwright visible con `--remote-debugging-port`. El dueño inició sesión en esa ventana, Claude capturó conectándose por CDP y recortó por los bordes de las tarjetas. El ancho de la ventana se ajustó a 2140 px para que el recorte quede en 16:9, como la otra captura. La sesión se borró al terminar y no hubo contraseñas en juego.
-- Captura de 1416 × 793 px (50 KB): `astro:assets` sirve WebP de 8 a 24 KB.
-- YERON: primera pantalla de la landing pública promoyeron.com.py (banner "Puede ser en Río" y botón "Quiero participar"), 1440 × 810 con Playwright headless, sin sesión. El formulario solo tiene textos de ejemplo. Se guarda en JPG (171 KB contra 1,26 MB en PNG) porque el banner es casi una foto.
-- Con los tres proyectos con captura, la tarjeta de stack sale de Proyectos (`CodeCard` sigue en "Quién soy"). La regla de la spec "proyecto sin capturas → tarjeta de stack" se vuelve a implementar cuando aparezca uno; está en el historial de git.

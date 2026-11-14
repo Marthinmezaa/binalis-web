@@ -4,3 +4,6 @@ allowBuilds:
 # shortcut: miniflare fija undici 7.29.1 (GHSA-xjj6-f33q-929c). Quitar cuando wrangler traiga un miniflare con undici >= 7.30.1.
 overrides:
   miniflare>undici: 7.30.1
+  # shortcut: pnpm resolvía @emnapi/runtime 2.0.0-beta con @emnapi/core 1.x (APIs incompatibles) y rompía `astro check`. Quitar cuando @astrojs/check no arrastre la beta.
+  "@emnapi/core": 1.11.3
+  "@emnapi/runtime": 1.11.3

@@ -8,7 +8,7 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Repo público en GitHub con `main` protegida (4 checks obligatorios: calidad, gitleaks, dependencias, CodeQL).
 - Dominio `binalis.com.py` habilitado y con DNS delegado a Cloudflare (`aurora` / `johnny.ns.cloudflare.com`).
 - Sello binario en producción: campo binario (RF-12), cotización por necesidad (RF-08), bandas entre secciones y latidos con `opacity`.
-- Intro de la portada (RF-13) en producción desde v0.34.0 (#139). En el teléfono la "b" no volaba: arreglo en `fix/intro-vuelo-celular`, falta probarlo en el iPhone del dueño.
+- Intro de la portada (RF-13) en producción desde v0.34.0 (#139); desde v0.34.1 (#143) la "b" también vuela en el teléfono, probado por el dueño en su iPhone.
 - Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04), Proyectos (RF-05), "siguiente proyecto cargando…" (RF-06), "Quién está detrás" (RF-10, resumen en portada + página `/quien-soy/`), Cotización por WhatsApp y correo (RF-08), pie con versión (RF-09), testimonios (RF-07) y 404 propia (RF-11); rediseño con sello (la "b" que se dibuja, etiquetas de código, aparición al bajar, barra fija); captura real en los tres proyectos; el sitio entero sin placeholders (textos aprobados por el dueño); favicon e íconos de app; SEO básico (canonical, Open Graph con imagen, `sitemap.xml` y `robots.txt`).
 - Pruebas e2e con Playwright + axe en el CI (escritorio y celular), bajo la misma CSP de producción. En CI corren con el Chrome del runner; en local, con el Chromium de Playwright.
 - release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. La versión actual está en `package.json`.
@@ -40,7 +40,7 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-**Siguiente tarea: probar en el iPhone el arreglo de la intro (RF-13).** El dueño abre la vista previa de Workers Builds del PR en el mismo teléfono y graba la pantalla. Si la "b" vuela a su lugar, se mergea. Si sigue fundiéndose en el centro, la otra causa posible es que el script de la intro llegue después de los 3 s (conexión lenta) y no alcance a apuntar el vuelo. Después: las redes sociales (punto 1). Los títulos con postura ya están aprobados y van en su propio PR.
+**Siguiente tarea: las redes sociales (punto 1).** Los títulos con postura ya están aprobados y van en su propio PR. Queda abierto el #142 de Dependabot (9 actualizaciones menores).
 
 Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **86 pasadas y 2 salteadas**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
 
@@ -54,6 +54,7 @@ Pendientes, en orden:
 
 ### 2026-11-27 (43)
 
+- Mergeado como v0.34.1 (#143 y #144). El dueño lo probó en su iPhone: la "b" vuela a su lugar. Queda perfecto.
 - El dueño mandó una grabación del iPhone: la "b" grande se dibujaba bien pero no volaba. Se quedaba en el centro y se fundía encima del titular.
 - Causa: el script solo apuntaba el vuelo si la caja de la "b" de la portada entraba entera en pantalla. En teléfonos de unos 660 px de alto visible (iPhone 15 Pro en Safari, iPhone SE) la caja termina unos 10 px debajo del borde, así que la intro la tomaba como "fuera de pantalla" y se fundía en el lugar. En el Pixel 7 de la e2e entra, por eso los tests no lo vieron.
 - Arreglo: ahora decide por el centro de la "b". Una "b" que asoma bajo el borde vuela; solo se funde en el lugar si su centro está fuera de pantalla. La spec no cambia: el código era más estricto que ella.

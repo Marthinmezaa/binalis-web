@@ -8,7 +8,7 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Repo público en GitHub con `main` protegida (4 checks obligatorios: calidad, gitleaks, dependencias, CodeQL).
 - Dominio `binalis.com.py` habilitado y con DNS delegado a Cloudflare (`aurora` / `johnny.ns.cloudflare.com`).
 - Sello binario en producción: campo binario (RF-12), cotización por necesidad (RF-08), bandas entre secciones y latidos con `opacity`.
-- Intro de la portada (RF-13): en PR, pendiente de probar en el celular del dueño.
+- Intro de la portada (RF-13) en producción desde v0.34.0 (#139), con algo para arreglar en el teléfono.
 - Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04), Proyectos (RF-05), "siguiente proyecto cargando…" (RF-06), "Quién está detrás" (RF-10, resumen en portada + página `/quien-soy/`), Cotización por WhatsApp y correo (RF-08), pie con versión (RF-09), testimonios (RF-07) y 404 propia (RF-11); rediseño con sello (la "b" que se dibuja, etiquetas de código, aparición al bajar, barra fija); captura real en los tres proyectos; el sitio entero sin placeholders (textos aprobados por el dueño); favicon e íconos de app; SEO básico (canonical, Open Graph con imagen, `sitemap.xml` y `robots.txt`).
 - Pruebas e2e con Playwright + axe en el CI (escritorio y celular), bajo la misma CSP de producción. En CI corren con el Chrome del runner; en local, con el Chromium de Playwright.
 - release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. La versión actual está en `package.json`.
@@ -40,7 +40,7 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-**Siguiente tarea: las redes sociales (punto 1).** Dependen del dueño. Los títulos con postura ya están aprobados y van en su propio PR.
+**Siguiente tarea: el arreglo de la intro (RF-13) en el teléfono.** La intro ya está en producción (v0.34.0, #139), pero el dueño vio algo para arreglar en el celular; todavía no dijo qué. Empezar preguntándole qué ve (si puede, con una grabación de pantalla del celular) y arreglarlo en una rama `fix/`. Después: las redes sociales (punto 1). Los títulos con postura ya están aprobados y van en su propio PR.
 
 Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **84 pasadas y 2 salteadas**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
 
@@ -54,7 +54,7 @@ Pendientes, en orden:
 
 ### 2026-11-27 (42)
 
-- El dueño pidió una intro como la carga del sitio de ABi (grabación de pantalla): la "b" se arma, se achica hasta su lugar y el logo brilla. Cambio de spec aprobado: **RF-13**.
+- Mergeada como v0.34.0 (#139 y #140). El dueño pidió una intro como la carga del sitio de ABi (grabación de pantalla): la "b" se arma, se achica hasta su lugar y el logo brilla. Cambio de spec aprobado: **RF-13**.
 - Cómo quedó, tras varias pruebas en local con el dueño: la pantalla se cubre con el fondo de marca y el campo binario animado; a 1,5 s la "b" se dibuja grande en el centro, se achica y vuela hasta la "b" de la portada mientras el fondo se funde en el campo de la portada, y después "al detalle." y "binalis" brillan una vez con un barrido de luz. Unos 4 s.
 - Decisiones del dueño: en cada carga y no una vez por visita, aunque se le propuso lo segundo (suma unos 4 s de espera). Si se recarga más abajo, el navegador conserva el lugar y la intro se desvanece en medio segundo; lo mismo si se baja durante la intro. Se descartaron llevar siempre arriba al recargar (`history.scrollRestoration = "manual"`) y ocultar la intro con una animación ligada al scroll, porque al volver arriba reaparecía de golpe.
 - Técnica: la intro es CSS (también sin JS, aunque sin volar) y un script chico solo apunta el vuelo, la hace irse si la página se mueve y la saca del DOM al terminar para que su campo binario no siga corriendo. `BinaryField` ahora arranca un campo por cada canvas; `BinalisSymbol` acepta `--draw-delay`; la banda de luz es el token `--shine-band`. No aparece con un ancla (`/#cotizacion`, vía `:has(:target)`) ni con movimiento reducido.

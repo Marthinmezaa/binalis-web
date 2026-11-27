@@ -25,16 +25,15 @@ import BinaryField from "./BinaryField.astro";
     if (animationName !== "intro-fly" || !intro || !target) return;
     const from = intro.getBoundingClientRect();
     const to = target.getBoundingClientRect();
-    // Off screen: it fades where it is instead.
-    if (to.top < 0 || to.bottom > from.height) return;
+    // Off screen, judged by its center: on phones the hero's "b" pokes a few px past the bottom edge and
+    // must still fly. Only a "b" mostly out of view fades where it is instead.
+    const centerY = to.top + to.height / 2;
+    if (centerY < 0 || centerY > from.height) return;
     symbol.style.setProperty(
       "--fly-x",
       `${to.left + to.width / 2 - from.width / 2}px`,
     );
-    symbol.style.setProperty(
-      "--fly-y",
-      `${to.top + to.height / 2 - from.height / 2}px`,
-    );
+    symbol.style.setProperty("--fly-y", `${centerY - from.height / 2}px`);
     symbol.style.setProperty(
       "--fly-scale",
       String(to.width / symbol.offsetWidth),

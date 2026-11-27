@@ -8,7 +8,7 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Repo público en GitHub con `main` protegida (4 checks obligatorios: calidad, gitleaks, dependencias, CodeQL).
 - Dominio `binalis.com.py` habilitado y con DNS delegado a Cloudflare (`aurora` / `johnny.ns.cloudflare.com`).
 - Sello binario en producción: campo binario (RF-12), cotización por necesidad (RF-08), bandas entre secciones y latidos con `opacity`.
-- Intro de la portada (RF-13) en producción desde v0.34.0 (#139), con algo para arreglar en el teléfono.
+- Intro de la portada (RF-13) en producción desde v0.34.0 (#139). En el teléfono la "b" no volaba: arreglo en `fix/intro-vuelo-celular`, falta probarlo en el iPhone del dueño.
 - Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04), Proyectos (RF-05), "siguiente proyecto cargando…" (RF-06), "Quién está detrás" (RF-10, resumen en portada + página `/quien-soy/`), Cotización por WhatsApp y correo (RF-08), pie con versión (RF-09), testimonios (RF-07) y 404 propia (RF-11); rediseño con sello (la "b" que se dibuja, etiquetas de código, aparición al bajar, barra fija); captura real en los tres proyectos; el sitio entero sin placeholders (textos aprobados por el dueño); favicon e íconos de app; SEO básico (canonical, Open Graph con imagen, `sitemap.xml` y `robots.txt`).
 - Pruebas e2e con Playwright + axe en el CI (escritorio y celular), bajo la misma CSP de producción. En CI corren con el Chrome del runner; en local, con el Chromium de Playwright.
 - release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. La versión actual está en `package.json`.
@@ -40,9 +40,9 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 ## Próximo paso
 
-**Siguiente tarea: el arreglo de la intro (RF-13) en el teléfono.** La intro ya está en producción (v0.34.0, #139), pero el dueño vio algo para arreglar en el celular; todavía no dijo qué. Empezar preguntándole qué ve (si puede, con una grabación de pantalla del celular) y arreglarlo en una rama `fix/`. Después: las redes sociales (punto 1). Los títulos con postura ya están aprobados y van en su propio PR.
+**Siguiente tarea: probar en el iPhone el arreglo de la intro (RF-13).** El dueño abre la vista previa de Workers Builds del PR en el mismo teléfono y graba la pantalla. Si la "b" vuela a su lugar, se mergea. Si sigue fundiéndose en el centro, la otra causa posible es que el script de la intro llegue después de los 3 s (conexión lenta) y no alcance a apuntar el vuelo. Después: las redes sociales (punto 1). Los títulos con postura ya están aprobados y van en su propio PR.
 
-Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **84 pasadas y 2 salteadas**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
+Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **86 pasadas y 2 salteadas**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
 
 Pendientes, en orden:
 
@@ -51,6 +51,14 @@ Pendientes, en orden:
 3. **Resultado de YERON** con los números reales al cierre de la campaña (15 de enero de 2027).
 
 ## Entradas
+
+### 2026-11-27 (43)
+
+- El dueño mandó una grabación del iPhone: la "b" grande se dibujaba bien pero no volaba. Se quedaba en el centro y se fundía encima del titular.
+- Causa: el script solo apuntaba el vuelo si la caja de la "b" de la portada entraba entera en pantalla. En teléfonos de unos 660 px de alto visible (iPhone 15 Pro en Safari, iPhone SE) la caja termina unos 10 px debajo del borde, así que la intro la tomaba como "fuera de pantalla" y se fundía en el lugar. En el Pixel 7 de la e2e entra, por eso los tests no lo vieron.
+- Arreglo: ahora decide por el centro de la "b". Una "b" que asoma bajo el borde vuela; solo se funde en el lugar si su centro está fuera de pantalla. La spec no cambia: el código era más estricto que ella.
+- Nueva e2e a 393 × 659 que espera a que se apunte el vuelo. Falló antes del arreglo y pasa después. Lección: `?.` sobre un elemento que ya se eliminó da `undefined`, y `undefined !== ""` es verdadero. La primera versión del test pasaba en falso.
+- Sacar fotogramas del video: no hay ffmpeg instalado. Sirve `imageio-ffmpeg` en un venv temporal (trae el binario). En esta PC, `PLAYWRIGHT_BROWSERS_PATH` apunta a `F:ms-playwright`, donde no hay navegadores. Correr la e2e con `CI=1` usa el Chrome del sistema.
 
 ### 2026-11-27 (42)
 
@@ -199,11 +207,3 @@ Pendientes, en orden:
 - El dueño la conectó a Outlook para Windows por IMAP.
 - Pie (RF-09): se suma `contacto@binalis.com.py` con `mailto:`, definido en `src/contact.ts` junto al WhatsApp. La e2e del pie revisa el link. 46/46.
 - Pendiente del dueño: en la bandeja llegaron dos correos "Credits purchase confirmation" a la misma hora. Hay que confirmar si uno es el crédito de regalo del plan anual o si hubo un doble cobro.
-
-### 2026-10-19 (28)
-
-- SEO básico de la spec completo (#57). Canonical y Open Graph en cada página, con URLs absolutas desde `Astro.site`. `robots.txt` apunta al sitemap.
-- Imagen para compartir (`public/og-image.png`, 1200 × 630, 62 KB): la "b" con glow, el wordmark y el titular. La eligió el dueño entre esta y su foto. La genera `pnpm icons`, que toma el titular de `Hero.astro`: **si cambia el titular, correr `pnpm icons`**. Las fuentes van como `data:` porque `setContent` no tiene origen.
-- `sitemap.xml` escrito a mano para las 2 páginas, con un `shortcut:` (pasar a `@astrojs/sitemap` cuando haya muchas). La e2e falla si una página de `PAGES` no está en el sitemap (verificado sacando una). 46/46.
-- Verificado en producción: `robots.txt`, `sitemap.xml` y `og-image.png` responden 200, y la portada tiene canonical y Open Graph.
-- Lección: commitlint rechaza un asunto que empieza en mayúscula ("feat: Open Graph…" cuenta como sentence-case). El asunto empieza en minúscula.

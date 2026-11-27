@@ -669,6 +669,25 @@ test("la intro dibuja la b en cada carga, sin estorbar, y se va sola", async ({
   await expect(page.locator(".hero .symbol-box")).toHaveCSS("opacity", "1");
 });
 
+test("en un teléfono de 659 px de alto, la b vuela aunque la de la portada asome bajo el borde", async ({
+  page,
+}) => {
+  // iPhone 15 Pro in Safari: the hero's "b" box ends about 10 px past the bottom edge.
+  await page.setViewportSize({ width: 393, height: 659 });
+  await page.goto("/");
+  // Polled every frame: the flight starts at 3 s and the intro is gone before 4 s.
+  await page.waitForFunction(
+    () =>
+      Boolean(
+        document
+          .querySelector<HTMLElement>(".intro-symbol")
+          ?.style.getPropertyValue("--fly-y"),
+      ),
+    undefined,
+    { timeout: 10_000 },
+  );
+});
+
 test("la intro no aparece al llegar a una sección ni con movimiento reducido", async ({
   page,
 }) => {

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.34.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.33.0...binalis-web-v0.34.0) (2026-11-27)
+
+
+### Features
+
+* intro de la portada con la b que se dibuja y vuela a su lugar ([#139](https://github.com/Marthinmezaa/binalis-web/issues/139)) ([14ba817](https://github.com/Marthinmezaa/binalis-web/commit/14ba8174f5fdc5b3277ebaf1f8ff52c95037ef5f))
+
 ## [0.33.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.32.5...binalis-web-v0.33.0) (2026-10-30)
 
 

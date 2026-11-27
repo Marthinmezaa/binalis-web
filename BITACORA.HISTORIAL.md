@@ -10,6 +10,12 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-19 — Textos aprobados (entrada 27)
+
+- Titular, subtítulo, Servicios (con "¿Tu idea no entra en ninguna?") y Proceso aprobados por el dueño; la portada no nombra Paraguay, la meta description sí (búsqueda local).
+- "Siguiente proyecto cargando…" nombra el CRM con IA; testimonios en primera persona ("Lo que dicen mis clientes"), pedidos con un formulario de Google.
+- Un build de vista previa de Workers falló por un error de la API de Cloudflare al subir archivos; "Retry build" lo resolvió.
+
 ### 2026-10-19 — Capturas reales en Proyectos (entrada 26)
 
 - Cosmos Trak y YERON con capturas reales (WebP/JPG vía `astro:assets`); la tarjeta de stack sale de Proyectos y `CodeCard` queda en "Quién soy".

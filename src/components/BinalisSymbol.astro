@@ -52,17 +52,19 @@
     }
   }
 
-  /* On load the "b" draws itself: the 1 rises, then the 0 closes around it. */
+  /* On load the "b" draws itself (1.35 s): the 1 rises, then the 0 closes around it. --draw-delay holds it back (RF-13). */
   @media (prefers-reduced-motion: no-preference) {
     .bar {
       transform-box: fill-box;
       transform-origin: bottom;
-      animation: draw-bar 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      animation: draw-bar 0.6s var(--draw-delay, 0s)
+        cubic-bezier(0.2, 0.8, 0.2, 1) both;
     }
 
     /* Backwards fill only: once drawn the ring drops the dash pattern, which would leave a seam where the dash closes. */
     .ring {
-      animation: draw-ring 0.9s 0.45s cubic-bezier(0.6, 0, 0.2, 1) backwards;
+      animation: draw-ring 0.9s calc(var(--draw-delay, 0s) + 0.45s)
+        cubic-bezier(0.6, 0, 0.2, 1) backwards;
     }
   }
 

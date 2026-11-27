@@ -8,6 +8,7 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 - Repo público en GitHub con `main` protegida (4 checks obligatorios: calidad, gitleaks, dependencias, CodeQL).
 - Dominio `binalis.com.py` habilitado y con DNS delegado a Cloudflare (`aurora` / `johnny.ns.cloudflare.com`).
 - Sello binario en producción: campo binario (RF-12), cotización por necesidad (RF-08), bandas entre secciones y latidos con `opacity`.
+- Intro de la portada (RF-13): en PR, pendiente de probar en el celular del dueño.
 - Hechos: barra superior (RF-01), portada (RF-02), Servicios (RF-03), Proceso (RF-04), Proyectos (RF-05), "siguiente proyecto cargando…" (RF-06), "Quién está detrás" (RF-10, resumen en portada + página `/quien-soy/`), Cotización por WhatsApp y correo (RF-08), pie con versión (RF-09), testimonios (RF-07) y 404 propia (RF-11); rediseño con sello (la "b" que se dibuja, etiquetas de código, aparición al bajar, barra fija); captura real en los tres proyectos; el sitio entero sin placeholders (textos aprobados por el dueño); favicon e íconos de app; SEO básico (canonical, Open Graph con imagen, `sitemap.xml` y `robots.txt`).
 - Pruebas e2e con Playwright + axe en el CI (escritorio y celular), bajo la misma CSP de producción. En CI corren con el Chrome del runner; en local, con el Chromium de Playwright.
 - release-please verificado con el secreto `RELEASE_PLEASE_TOKEN` (token fine-grained, solo este repo): el PR de release dispara el CI. La versión actual está en `package.json`.
@@ -41,7 +42,7 @@ Estado actual y trabajo reciente. Se actualiza al cerrar **cada** sesión. Cuand
 
 **Siguiente tarea: las redes sociales (punto 1).** Dependen del dueño. Los títulos con postura ya están aprobados y van en su propio PR.
 
-Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **79 pasadas y 1 salteada**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
+Al empezar en otra PC: `git pull` en `main` y `pnpm install`. Si Playwright no tiene Chromium: `pnpm exec playwright install chromium`. `pnpm build && pnpm test:e2e` debe dar **84 pasadas y 2 salteadas**. Si `pnpm` no existe y `corepack enable` da EPERM: `npm install -g pnpm@11.20.0`.
 
 Pendientes, en orden:
 
@@ -50,6 +51,16 @@ Pendientes, en orden:
 3. **Resultado de YERON** con los números reales al cierre de la campaña (15 de enero de 2027).
 
 ## Entradas
+
+### 2026-11-27 (42)
+
+- El dueño pidió una intro como la carga del sitio de ABi (grabación de pantalla): la "b" se arma, se achica hasta su lugar y el logo brilla. Cambio de spec aprobado: **RF-13**.
+- Cómo quedó, tras varias pruebas en local con el dueño: la pantalla se cubre con el fondo de marca y el campo binario animado; a 1,5 s la "b" se dibuja grande en el centro, se achica y vuela hasta la "b" de la portada mientras el fondo se funde en el campo de la portada, y después "al detalle." y "binalis" brillan una vez con un barrido de luz. Unos 4 s.
+- Decisiones del dueño: en cada carga y no una vez por visita, aunque se le propuso lo segundo (suma unos 4 s de espera). Si se recarga más abajo, el navegador conserva el lugar y la intro se desvanece en medio segundo; lo mismo si se baja durante la intro. Se descartaron llevar siempre arriba al recargar (`history.scrollRestoration = "manual"`) y ocultar la intro con una animación ligada al scroll, porque al volver arriba reaparecía de golpe.
+- Técnica: la intro es CSS (también sin JS, aunque sin volar) y un script chico solo apunta el vuelo, la hace irse si la página se mueve y la saca del DOM al terminar para que su campo binario no siga corriendo. `BinaryField` ahora arranca un campo por cada canvas; `BinalisSymbol` acepta `--draw-delay`; la banda de luz es el token `--shine-band`. No aparece con un ancla (`/#cotizacion`, vía `:has(:target)`) ni con movimiento reducido.
+- Rendimiento: leer `scrollY` al arrancar forzaba un layout completo durante la carga y subía el TBT a 130-190 ms. Se reemplazó por un `IntersectionObserver` sobre la "b" de la portada. Lighthouse móvil local, 4 corridas: 100 de rendimiento, LCP 0,9 s, TBT 0 ms. En esta PC `main` da 0-130 ms de TBT entre corridas: es ruido del equipo, comparar siempre contra `main` en las mismas condiciones.
+- E2E: 84 pasadas y 2 salteadas. Los tests del campo binario apuntan a `.hero .binary-field`, porque ahora hay dos. Dos tests nuevos de RF-13.
+- Lección: en esta PC, `node_modules` apuntaba a la ubicación vieja del repo (`C:/VS Code/Projects/...`); se arregló con `CI=true pnpm install --frozen-lockfile`. Astro permite un solo `astro preview` a la vez: los tests reutilizan el del puerto 4321.
 
 ### 2026-11-14 (41)
 
@@ -196,15 +207,3 @@ Pendientes, en orden:
 - `sitemap.xml` escrito a mano para las 2 páginas, con un `shortcut:` (pasar a `@astrojs/sitemap` cuando haya muchas). La e2e falla si una página de `PAGES` no está en el sitemap (verificado sacando una). 46/46.
 - Verificado en producción: `robots.txt`, `sitemap.xml` y `og-image.png` responden 200, y la portada tiene canonical y Open Graph.
 - Lección: commitlint rechaza un asunto que empieza en mayúscula ("feat: Open Graph…" cuenta como sentence-case). El asunto empieza en minúscula.
-
-### 2026-10-19 (27)
-
-- Textos aprobados por el dueño, uno por uno. Titular: "Desarrollo hecho con pasión y al detalle." Subtítulo: páginas web, landing pages, sistemas y promociones a medida para empresas, y "Escucho tu necesidad y la convierto en una herramienta que realmente funciona." En la portada no se nombra Paraguay, a pedido del dueño.
-- Meta description en primera persona y con "Paraguay", porque ayuda a la búsqueda local (129 caracteres).
-- Servicios: el dueño sentía que las 3 tarjetas lo limitaban (está por empezar un CRM con IA). No se suma una tarjeta de IA sin un proyecto para mostrar. En cambio, la de sistemas nombra CRM y automatizaciones con inteligencia artificial, y debajo de las tarjetas va "¿Tu idea no entra en ninguna? Contame y lo vemos juntos." con link a la cotización (RF-03).
-- "Siguiente proyecto cargando…" nombra el proyecto en curso: CRM con inteligencia artificial (RF-06). Cuando esté terminado, pasa a Proyectos.
-- Proceso: los 4 pasos con texto. Se le pidió al dueño que revisara que fueran promesas reales (presupuesto tras la primera charla, avances mientras construye, soporte después de entregar) y los aprobó.
-- E2E: la prueba de placeholders ahora revisa el cuerpo y la meta description de las dos páginas (verificado que falla con uno inyectado), y los links a la cotización incluyen el nuevo. 40/40.
-- Las capturas de Cosmos y YERON (#52) se revisaron en producción con Chrome: cargan las tres y la consola no muestra errores con la CSP real. La vista previa de Cloudflare pide sesión y no se revisó.
-- El release 0.17.0 (#55) tenía en rojo el build de vista previa de Workers. El log mostraba un error de la API de Cloudflare al subir los archivos (`assets-upload-session`, "unknown error"), no del código. Con "Retry build" en el panel pasó. Ese check no es obligatorio para el merge.
-- Testimonios (RF-07): la sección se va a llamar "Lo que dicen mis clientes", en primera persona como el resto del sitio. Se piden con un formulario de Google creado con Claude in Chrome (ver "Configuración fuera del repo"). La sección se arma cuando llegue la primera respuesta con autorización.

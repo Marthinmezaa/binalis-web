@@ -517,7 +517,7 @@ test("el botón de cotizar de la barra brilla al bajar, salvo con movimiento red
 });
 
 const paintedPixels = (page: Page, underId?: string) =>
-  page.locator(".binary-field").evaluate((element, id) => {
+  page.locator(".hero .binary-field").evaluate((element, id) => {
     const canvas = element as HTMLCanvasElement;
     const origin = canvas.getBoundingClientRect();
     const scale = canvas.width / origin.width;
@@ -540,7 +540,7 @@ const paintedPixels = (page: Page, underId?: string) =>
 test("el campo binario se anima sin estorbar y se pausa fuera de pantalla", async ({
   page,
 }) => {
-  const field = page.locator(".binary-field");
+  const field = page.locator(".hero .binary-field");
   await expect(field).toHaveAttribute("aria-hidden", "true");
   await expect(field).toHaveCSS("pointer-events", "none");
   await expect(field).toHaveAttribute("data-running", "true");
@@ -562,7 +562,7 @@ test("con movimiento reducido el campo binario es un cuadro quieto", async ({
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-  const field = page.locator(".binary-field");
+  const field = page.locator(".hero .binary-field");
   await expect(field).toHaveAttribute("data-ready", "true");
   await expect.poll(() => paintedPixels(page)).toBeGreaterThan(0);
 
@@ -594,7 +594,7 @@ test.describe("sin JavaScript", () => {
       .locator(".hero")
       .evaluate((hero) => getComputedStyle(hero, "::after").opacity);
     expect(gridOpacity).toBe("1");
-    await expect(page.locator(".binary-field")).toHaveCSS("opacity", "0");
+    await expect(page.locator(".hero .binary-field")).toHaveCSS("opacity", "0");
   });
 });
 
@@ -642,4 +642,41 @@ test("los botones para cotizar brillan", async ({ page }) => {
   await scrollToEnd(page);
   expect(await glow("Necesito una página web")).not.toBe("none");
   expect(await glow("Escribime un correo")).not.toBe("none");
+});
+
+test("la intro dibuja la b en cada carga, sin estorbar, y se va sola", async ({
+  page,
+}) => {
+  const intro = page.locator(".intro");
+  const expectIntroPlays = async () => {
+    await expect(intro).toHaveCSS("display", "grid");
+    await expect(intro).toHaveAttribute("aria-hidden", "true");
+    await expect(intro).toHaveCSS("pointer-events", "none");
+    // Removed once it lands, so its binary field doesn't keep running behind the page.
+    await expect(intro).toHaveCount(0, { timeout: 10_000 });
+    await expect(page.locator(".hero .symbol-box")).toHaveCSS("opacity", "1");
+  };
+
+  await expectIntroPlays();
+  await page.reload();
+  await expectIntroPlays();
+
+  // Reloading further down keeps the visitor's place, and the intro fades out of the way for good.
+  await scrollToEnd(page);
+  await page.reload();
+  expect(await page.evaluate(() => scrollY)).toBeGreaterThan(0);
+  await expect(intro).toHaveCount(0, { timeout: 2_000 });
+  await expect(page.locator(".hero .symbol-box")).toHaveCSS("opacity", "1");
+});
+
+test("la intro no aparece al llegar a una sección ni con movimiento reducido", async ({
+  page,
+}) => {
+  const intro = page.locator(".intro");
+  await page.goto("/#cotizacion");
+  await expect(intro).toHaveCSS("display", "none");
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  await expect(intro).toHaveCSS("display", "none");
 });

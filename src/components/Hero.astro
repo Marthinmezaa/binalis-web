@@ -113,8 +113,11 @@ import BinaryField from "./BinaryField.astro";
     letter-spacing: -0.03em;
   }
 
+  /* The light band on top of the brand gradient: the intro sweeps it across (RF-13). */
   .accent {
-    background: linear-gradient(90deg, var(--color-cyan), var(--color-violet));
+    background:
+      var(--shine-band),
+      linear-gradient(90deg, var(--color-cyan), var(--color-violet));
     background-clip: text;
     color: transparent;
   }

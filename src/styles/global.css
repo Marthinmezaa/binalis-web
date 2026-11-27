@@ -42,6 +42,14 @@
   --gutter: clamp(1rem, 4vw, 2rem);
   /* The sticky header's height, so anchored sections don't land under it. */
   --header-height: calc(3.75rem + 1px);
+  /* A band of light parked off to the left of a text; sweeping background-position to 0 0 crosses it (RF-13). */
+  --shine-band: linear-gradient(
+      100deg,
+      transparent 40%,
+      rgb(255 255 255 / 90%) 50%,
+      transparent 60%
+    )
+    100% 0 / 300% 100% no-repeat;
 
   color-scheme: dark;
 }

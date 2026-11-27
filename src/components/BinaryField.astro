@@ -1,5 +1,6 @@
 ---
 // RF-12: the logo's idea (a 1 and a 0) as the hero's living background. Purely decorative.
+// Fills its parent element, so it can also be the backdrop of the home intro (RF-13).
 ---
 
 <canvas class="binary-field" aria-hidden="true"></canvas>
@@ -47,10 +48,14 @@
   type Wave = { x: number; y: number; born: number };
   type Sprites = [HTMLCanvasElement, HTMLCanvasElement];
 
-  const canvas = document.querySelector<HTMLCanvasElement>(".binary-field");
-  const hero = canvas?.parentElement;
-  const context = canvas?.getContext("2d");
-  if (canvas && hero && context) start(canvas, hero, context);
+  // The hero's, and the home intro's backdrop (RF-13).
+  for (const canvas of document.querySelectorAll<HTMLCanvasElement>(
+    ".binary-field",
+  )) {
+    const area = canvas.parentElement;
+    const context = canvas.getContext("2d");
+    if (area && context) start(canvas, area, context);
+  }
 
   function start(
     field: HTMLCanvasElement,

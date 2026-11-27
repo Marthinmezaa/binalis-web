@@ -1,0 +1,180 @@
+---
+import BinalisSymbol from "./BinalisSymbol.astro";
+import BinaryField from "./BinaryField.astro";
+
+// RF-13. Pure CSS, so it plays before any script runs; the script only aims the flight at the hero's "b".
+// Goes after the hero in the page: the symbols share a gradient id, and url(#…) takes the first one.
+---
+
+<div class="intro" aria-hidden="true">
+  <div class="intro-backdrop">
+    <BinaryField />
+  </div>
+  <div class="intro-symbol">
+    <BinalisSymbol />
+  </div>
+</div>
+
+<script>
+  const intro = document.querySelector<HTMLElement>(".intro");
+  const symbol = document.querySelector<HTMLElement>(".intro-symbol");
+  const target = document.querySelector(".hero .symbol-box");
+
+  // Measured when the flight starts, so a scroll during the intro still lands on the hero's "b".
+  symbol?.addEventListener("animationstart", ({ animationName }) => {
+    if (animationName !== "intro-fly" || !intro || !target) return;
+    const from = intro.getBoundingClientRect();
+    const to = target.getBoundingClientRect();
+    // Off screen: it fades where it is instead.
+    if (to.top < 0 || to.bottom > from.height) return;
+    symbol.style.setProperty(
+      "--fly-x",
+      `${to.left + to.width / 2 - from.width / 2}px`,
+    );
+    symbol.style.setProperty(
+      "--fly-y",
+      `${to.top + to.height / 2 - from.height / 2}px`,
+    );
+    symbol.style.setProperty(
+      "--fly-scale",
+      String(to.width / symbol.offsetWidth),
+    );
+  });
+
+  // Hidden is not enough: its binary field would keep animating behind the page.
+  intro?.addEventListener("animationend", ({ animationName }) => {
+    if (animationName === "intro-done") intro.remove();
+  });
+
+  // As soon as the page moves it fades out for good: a scroll during the intro, or a reload further down.
+  const leave = () => {
+    if (!intro?.isConnected) return;
+    intro.dataset["leaving"] = "";
+    // The hero's "b" shows without waiting for a landing that won't happen.
+    for (const animation of target?.getAnimations() ?? []) animation.finish();
+    intro.addEventListener("transitionend", (event) => {
+      if (event.target === intro) intro.remove();
+    });
+  };
+  addEventListener("scroll", leave, { once: true, passive: true });
+  // The hero's "b" out of view at the start means the browser restored a place further down. Asked to an
+  // observer, not to scrollY, which would force a full layout while the page is still loading.
+  if (target) {
+    new IntersectionObserver(([entry], observer) => {
+      observer.disconnect();
+      if (!entry?.isIntersecting) leave();
+    }).observe(target);
+  }
+</script>
+
+<style>
+  /* Bits alone first, then the "b" draws itself (1.35 s, see BinalisSymbol), holds a beat
+     and flies to the hero while the backdrop fades into the hero's own binary field. */
+  :global(:root) {
+    --intro-draw-start: 1.5s;
+    --intro-fly-start: calc(var(--intro-draw-start) + 1.5s);
+    --intro-fly: 0.6s;
+    --intro-land: calc(var(--intro-fly-start) + var(--intro-fly));
+    --intro-swap: 0.2s;
+  }
+
+  .intro {
+    display: none;
+  }
+
+  /* Not when arriving at a section (/#cotizacion), which is scrolled away from the hero. */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html:not(:has(:target))) .intro {
+      display: grid;
+      place-items: center;
+      position: fixed;
+      inset: 0;
+      /* Above the sticky header, below the skip link. */
+      z-index: 9;
+      pointer-events: none;
+      animation: intro-done 0s calc(var(--intro-land) + var(--intro-swap))
+        forwards;
+    }
+
+    .intro[data-leaving] {
+      opacity: 0;
+      transition: opacity 0.5s ease-out;
+    }
+
+    /* The hero's own "b" stays hidden until the flying one lands on it, so the "b" never draws twice. */
+    :global(html:not(:has(:target)) .hero .symbol-box) {
+      animation: intro-appear var(--intro-swap) var(--intro-land) backwards;
+    }
+
+    /* Once it lands, a light sweeps "al detalle." (--shine-band) and the wordmark, once. */
+    :global(html:not(:has(:target)) .hero .accent) {
+      animation: shine-sweep 0.9s var(--intro-land) ease-in-out forwards;
+    }
+
+    /* A copy of the text on top carries the light, so "bin" and "alis" keep their own colors underneath. */
+    :global(html:not(:has(:target)) .header .wordmark) {
+      position: relative;
+    }
+
+    :global(html:not(:has(:target)) .header .wordmark)::after {
+      content: "binalis";
+      position: absolute;
+      inset: 0;
+      background: var(--shine-band);
+      background-clip: text;
+      color: transparent;
+      animation: shine-sweep 0.9s var(--intro-land) ease-in-out forwards;
+    }
+  }
+
+  /* Its own stacking context, so the binary field (z-index -1) paints over this background. */
+  .intro-backdrop {
+    position: absolute;
+    inset: 0;
+    isolation: isolate;
+    background: var(--color-bg);
+    animation: intro-fade var(--intro-fly) var(--intro-fly-start) ease-in
+      forwards;
+  }
+
+  .intro-symbol {
+    --draw-delay: var(--intro-draw-start);
+    position: relative;
+    width: min(60vmin, 26rem);
+    animation:
+      intro-fly var(--intro-fly) var(--intro-fly-start)
+        cubic-bezier(0.6, 0, 0.2, 1) forwards,
+      intro-fade var(--intro-swap) var(--intro-land) forwards;
+  }
+
+  @keyframes intro-fly {
+    to {
+      transform: translate(var(--fly-x, 0), var(--fly-y, 0))
+        scale(var(--fly-scale, 1));
+    }
+  }
+
+  @keyframes intro-fade {
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes intro-appear {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes intro-done {
+    to {
+      visibility: hidden;
+    }
+  }
+
+  @keyframes shine-sweep {
+    to {
+      background-position: 0 0;
+    }
+  }
+</style>

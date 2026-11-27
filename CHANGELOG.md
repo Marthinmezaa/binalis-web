@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.34.1](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.34.0...binalis-web-v0.34.1) (2026-11-27)
+
+
+### Bug Fixes
+
+* la b de la intro vuela en teléfonos donde la de la portada asoma bajo el borde ([#143](https://github.com/Marthinmezaa/binalis-web/issues/143)) ([d57e542](https://github.com/Marthinmezaa/binalis-web/commit/d57e54277bb822ef065af8b4fbe6a68594dad9ab))
+
 ## [0.34.0](https://github.com/Marthinmezaa/binalis-web/compare/binalis-web-v0.33.0...binalis-web-v0.34.0) (2026-11-27)
 
 

@@ -10,6 +10,12 @@ Archivo de entradas antiguas de `BITACORA.md`, resumidas. Más reciente arriba.
 
 ## Historial
 
+### 2026-10-19 — SEO básico (entrada 28)
+
+- Canonical y Open Graph en cada página (#57); imagen para compartir `public/og-image.png` generada con `pnpm icons` desde el titular de `Hero.astro` (si cambia el titular, regenerarla).
+- `sitemap.xml` a mano con un `shortcut:` (pasar a `@astrojs/sitemap` con muchas páginas); la e2e falla si falta una página.
+- commitlint rechaza asuntos que empiezan en mayúscula.
+
 ### 2026-10-19 — Textos aprobados (entrada 27)
 
 - Titular, subtítulo, Servicios (con "¿Tu idea no entra en ninguna?") y Proceso aprobados por el dueño; la portada no nombra Paraguay, la meta description sí (búsqueda local).
